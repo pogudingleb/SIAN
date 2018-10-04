@@ -162,7 +162,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
     end if:
   end do:
  
-  if infolevel > 0 then
+  if infolevel > 1 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
   end if:
 
@@ -286,6 +286,15 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
     globally = map(ParamToOuter, theta_g),
     locally = map(ParamToInner, theta_l)
   ]):
+end proc:
+
+#===============================================================================
+GetParameters := proc(system_ODEs) local initial_values, all_symbols_rhs, mu:
+#===============================================================================
+  initial_values := map(f -> subs({t = 0}, int(f, t)), select( f -> type(int(f, t), function(name)), map(lhs, system_ODEs) )):
+  all_symbols_rhs := foldl(`union`, op( map(e -> indets(rhs(e)), system_ODEs) )) minus {t}:
+  mu := select(s -> not type(s, function), all_symbols_rhs):
+  [op(mu), op(initial_values)]:
 end proc:
 
 #===============================================================================
