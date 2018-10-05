@@ -5,7 +5,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
         eqs_i, JacX, vars, vars_to_add, ord_var, var_index, deg_variety, D2, 
         y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq, 
-        poly_d, separant, leader,vars_local:
+        poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
+        all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
+        subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -93,7 +95,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   d0 := max(op( map(f -> degree( simplify(Q * rhs(f)) ), eqs) ), degree(Q)):
 
   # (b) ---------------
-  D1 := floor( 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p) ):
+  # extra factor nops(theta) + 1 compared to the formula in the paper is to
+  # provide probability gaurantee to the local identifiability test
+  D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p) ):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1: `, D1);
   end if:
