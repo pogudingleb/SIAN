@@ -19,7 +19,7 @@ The main function is **IdentifiabilityODE(system, parameters, p, infolevel, meth
    * **2** - without saturation, with checking memebership using Groebner bases, see item (2) in Remark 7 from the paper
  * **num_nodes** - the maximal number of processes created by the algorithm
 
-Examples of usage can be found in the **examples/** folder. One can run an example by
+Examples of usage can be found in the **examples** folder. One can run an example by
   * either opening it *as a Maple worksheet* and executing it
   * or from the *command line* by 
     * going to **examples** directory
@@ -28,6 +28,6 @@ Examples of usage can be found in the **examples/** folder. One can run an examp
 ## Files
 
 * **IdentifiabiliyODE.mpl**   contains the algorithm
-* **/examples**   folder contains examples
+* **examples**   folder contains examples
   
 The software is partially supported by the National Science Foundation.
