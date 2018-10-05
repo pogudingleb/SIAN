@@ -98,6 +98,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   # extra factor nops(theta) + 1 compared to the formula in the paper is to
   # provide probability gaurantee to the local identifiability test
   D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p) ):
+  prime := nextprime(D1):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1: `, D1);
   end if:
@@ -123,8 +124,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
-        JacX := VectorCalculus[Jacobian](subs(u_hat, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars));
-        if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
+        JacX := LinearAlgebra[Modular][Mod](
+          prime,
+          VectorCalculus[Jacobian](subs(u_hat, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)),
+          integer
+        ):
+        if LinearAlgebra[Modular][Rank](prime, JacX) = nops(eqs_i) then
           Et := [op(Et), Y[i][beta[i] + 1]]:
           beta[i] := beta[i] + 1:
           for j from 1 to s + 1 do
@@ -157,11 +162,15 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   theta_l := []:
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
-    JacX := VectorCalculus[Jacobian]( 
-      subs( { op(u_hat), param = subs(all_subs, param) }, Et), 
-      other_params = subs(all_subs, other_params)
+    JacX := LinearAlgebra[Modular][Mod](
+      prime,
+      VectorCalculus[Jacobian]( 
+        subs( { op(u_hat), param = subs(all_subs, param) }, Et), 
+        other_params = subs(all_subs, other_params)
+      ),
+      integer
     ):
-    if LinearAlgebra[Rank](JacX) <> nops(Et) then
+    if LinearAlgebra[Modular][Rank](prime, JacX) <> nops(Et) then
       theta_l := [op(theta_l), param]:
     end if:
   end do:
