@@ -7,11 +7,16 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq, 
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
-        subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node:
+        subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
+        prime:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
   #----------------------------------------------
+
+  if infolevel > 0 then
+    PrintHeader("0. Extracting states, inputs, outputs, and parameters from the system"):
+  end if:
 
   x_functions := map(f -> int(f, t), select( f -> type(int(f, t), function(name)), map(lhs, system_ODEs) )):
   y_functions := select( f -> not type(int(f, t), function(name)), map(lhs, system_ODEs) ):
@@ -33,18 +38,22 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
 
   if infolevel > 0 then
-    printf("\e[32m%s\e[00m", "\n=== Input info ===\n"):
+    printf("\n=== Input info ===\n"):
     printf("%s %a\n", `State variables: `, x_functions):
     printf("%s %a\n", `Output variables: `, y_functions):
     printf("%s %a\n", `Input variables: `, u_functions):
     printf("%s %a\n", `Parameters in equations: `, mu):
-    printf("\e[32m%s\e[00m", "===================\n\n"):
+    printf("===================\n\n"):
 
   end if:
 
   #----------------------------------------------
   # 1. Construct the maximal system.
   #----------------------------------------------
+
+  if infolevel > 0 then
+    PrintHeader("1. Constructing the maximal polynomial system"):
+  end if:
 
   # (a) ---------------
   n := nops(x_vars):
@@ -91,6 +100,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   # 2. Truncate.
   #----------------------------------------------
 
+  if infolevel > 0 then
+    PrintHeader("2. Truncating the polynomial system based on the Jacobian condition"):
+  end if:
+
   # (a) ---------------
   d0 := max(op( map(f -> degree( simplify(Q * rhs(f)) ), eqs) ), degree(Q)):
 
@@ -100,7 +113,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p) ):
   prime := nextprime(D1):
   if infolevel > 1 then
-    printf("%s %a\n", `Bound D_1: `, D1);
+    printf("%s %a\n", `Bound D_1 for testing the rank of the Jacobian probabilistically: `, D1);
   end if:
 
   # (c, d) ---------------
@@ -152,12 +165,34 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         end if:
       end if: 
     end do:
-    if infolevel > 1 then
-      printf("%s %a\n", `Beta now: `, beta);
-    end if:
   end do:
 
+  # (g) --------------
+  for i from 1 to m do
+    for j from beta[i] + 1 to nops(Y[i]) do
+      to_add := true:
+      for v in GetVars(Y[i][j], x_vars, s + 1) do
+        if not (v in vars) then
+          to_add := false:
+        end if:
+      end do:
+      if to_add = true then
+        beta[i] := beta[i] + 1:
+        Et := [op(Et), Y[i][j]]:
+      end if:
+    end do:
+  end do:
+ 
+  if infolevel > 1 then
+    printf("%s %a\n", `Orders of prolongations of the outputs (beta) = `, beta):
+    printf("%s %a\n", `Orders of prolongations of the state variables (alpha) = `, alpha):
+  end if:
+ 
   ##############################
+
+  if infolevel > 0 then
+    PrintHeader("3. Assessing local identifiability"):
+  end if:
 
   theta_l := []:
   for param in theta do
@@ -178,40 +213,20 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   if infolevel > 1 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
   end if:
-
-  ##############################
-
-
-  # (g) --------------
-  for i from 1 to m do
-    for j from beta[i] + 1 to nops(Y[i]) do
-      to_add := true:
-      for v in GetVars(Y[i][j], x_vars, s + 1) do
-        if not (v in vars) then
-          to_add := false:
-        end if:
-      end do:
-      if to_add = true then
-        beta[i] := beta[i] + 1:
-        Et := [op(Et), Y[i][j]]:
-      end if:
-    end do:
-  end do:
- 
-  if infolevel > 1 then
-    printf("%s %a\n", `Beta = `, beta):
-    printf("%s %a\n", `Alpha = `, alpha):
-  end if:
-  deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
   
   #----------------------------------------------
   # 3. Randomize.
   #----------------------------------------------
 
+  if infolevel > 0 then
+    PrintHeader("4. Randomizing the truncated system"):
+  end if:
+
   # (a) ------------
+  deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
   D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p) ):
   if infolevel > 1 then
-    printf("%s %a\n", `Bound D_2: `, D2):
+    printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
   end if:
 
   # (b, c) ---------
@@ -223,7 +238,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   u_hat := sample[2]:
   theta_hat := sample[3]:
   if infolevel > 1 then
-    printf("%s %a\n", `Random sample is generated from `, theta_hat):
+    printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
   end if:
 
   # (d) ------------
@@ -233,13 +248,17 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
     vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
   end do:
   if infolevel > 1 then
-    printf("%s %a %s %a %s\n", `In total, we have `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
+    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} conatins `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
   end if:
   Q_hat := subs(u_hat, Q):
 
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
+
+  if infolevel > 0 then
+    PrintHeader("5. Assessing global identifiability"):
+  end if:
 
   theta_g := []:
   if method = 1 then
@@ -272,7 +291,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         theta_g := [op(theta_g), theta_l[i]]:
       else
         if infolevel > 1 then
-          printf("%s %a %s %a\n", `Groebner basis for `, theta_l[i], ` is `, gb):
+          printf("%s %a %s %a\n", `Groebner basis corresponding to the parameter `, theta_l[i], ` is `, gb):
         end if:
       end if:
     end do:     
@@ -288,17 +307,25 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   end if:
 
   if infolevel > 0 then
-    printf("\e[32m%s\e[00m", "\n=== Summary ===\n"):
+    printf("\n=== Summary ===\n"):
     printf("%s %a\n", `Globally identifiable parameters: `, map(ParamToOuter, theta_g)):
     printf("%s %a\n", `Locally but not globally identifiable parameters: `, map(ParamToOuter, select(p -> not p in theta_g, theta_l))):
     printf("%s %a\n", `Not identifiable parameters: `, map(ParamToOuter, select(p -> not p in theta_l, theta))):
-    printf("\e[32m%s\e[00m", "===============\n\n"):
+    printf("===============\n\n"):
   end if:
 
   table([
     globally = map(ParamToOuter, theta_g),
     locally = map(ParamToInner, theta_l)
   ]):
+end proc:
+
+#===============================================================================
+PrintHeader := proc(text):
+#===============================================================================
+  printf("\n=======================================================\n"):
+  printf(text):
+  printf("\n=======================================================\n"):
 end proc:
 
 #===============================================================================
