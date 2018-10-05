@@ -1,6 +1,6 @@
 # Identifiability
 
-Maple code for assessing identifiability/observability (local and global) for models defined by systems of ODEs presented. Mostly based on the paper [Global Identifiability of Differential Models](https://cs.nyu.edu/~pogudin/global.pdf).
+Maple code for assessing identifiability/observability (local and global) for models defined by systems of ODEs presented. Mostly based on the paper [Global Identifiability of Differential Models](https://cs.nyu.edu/~pogudin/global.pdf). Supplementary Maple code for the paper is available at https://github.com/pogudingleb/Global_Identifiability
 Tested with Maple 2018, Maple 2017, and Maple 2016.
 
 ## Usage
@@ -19,12 +19,15 @@ The main function is **IdentifiabilityODE(system, parameters, p, infolevel, meth
    * **2** - without saturation, with checking memebership using Groebner bases, see item (2) in Remark 7 from the paper
  * **num_nodes** - the maximal number of processes created by the algorithm
 
-
-Examples of usage can be found in the **examples/** folder
+Examples of usage can be found in the **examples/** folder. One can run an example by
+  * either opening it *as a Maple worksheet* and executing it
+  * or from the *command line* by 
+    * going to **examples** directory
+    * calling *maple name_of_file.mpl* 
 
 ## Files
 
-* **GlobalIdentifiabiliyODE.mpl**   contains the algorithm
+* **IdentifiabiliyODE.mpl**   contains the algorithm
 * **/examples**   folder contains examples
   
 The software is partially supported by the National Science Foundation.
