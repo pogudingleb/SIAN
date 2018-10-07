@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime:
+        prime, max_rank:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -166,6 +166,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
       end if: 
     end do:
   end do:
+  # is used for assessing local identifiabilty
+  max_rank := nops(Et):
 
   # (g) --------------
   for i from 1 to m do
@@ -193,7 +195,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
   if infolevel > 0 then
     PrintHeader("3. Assessing local identifiability"):
   end if:
-
+ 
   theta_l := []:
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
@@ -205,7 +207,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
       ),
       integer
     ):
-    if LinearAlgebra[Modular][Rank](prime, JacX) <> nops(Et) then
+    if LinearAlgebra[Modular][Rank](prime, JacX) <> max_rank then
       theta_l := [op(theta_l), param]:
     end if:
   end do:
@@ -291,10 +293,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         theta_g := [op(theta_g), theta_l[i]]:
       else
         if infolevel > 1 then
-          printf("%s %a %s %a\n", `Groebner basis corresponding to the parameter `, theta_l[i], ` is `, gb):
+          printf("%s %a %s %a\n", `Groebner basis corresponding to the parameter `, theta_l[i], ` is `, gb[i]):
         end if:
       end if:
-    end do:     
+    end do:    
   elif method = 2 then
     gb := Groebner[Basis]([op(Et_hat), z * Q_hat - 1], tdeg(op(vars), z));
     for i from 1 to nops(theta_l) do
