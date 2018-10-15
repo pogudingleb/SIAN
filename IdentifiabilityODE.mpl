@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel := 1, method := 1, num_nodes := 5) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel := 1, method := 1, num_nodes := 7) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank:
+        prime, max_rank, R, tr, e:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -39,12 +39,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
 
   if infolevel > 0 then
     printf("\n=== Input info ===\n"):
-    printf("%s %a\n", `State variables: `, x_functions):
-    printf("%s %a\n", `Output variables: `, y_functions):
-    printf("%s %a\n", `Input variables: `, u_functions):
+    printf("%s %a\n", `State variables:         `, x_functions):
+    printf("%s %a\n", `Output variables:        `, y_functions):
+    printf("%s %a\n", `Input variables:         `, u_functions):
     printf("%s %a\n", `Parameters in equations: `, mu):
     printf("===================\n\n"):
-
   end if:
 
   #----------------------------------------------
@@ -250,7 +249,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
     vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
   end do:
   if infolevel > 1 then
-    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} conatins `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
+    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
   end if:
   Q_hat := subs(u_hat, Q):
 
@@ -304,21 +303,30 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
+  elif method = 3 then
+    R := RegularChains[PolynomialRing](convert(vars, list)):
+    for i from 1 to nops(theta_l) do
+      tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
+      for e in tr do
+        print(RegularChains[Equations](e, R)):
+      end do:
+    end do:
   else
     print(`No such method`):
   end if:
 
   if infolevel > 0 then
     printf("\n=== Summary ===\n"):
-    printf("%s %a\n", `Globally identifiable parameters: `, map(ParamToOuter, theta_g)):
+    printf("%s %a\n", `Globally identifiable parameters:                 `, map(ParamToOuter, theta_g)):
     printf("%s %a\n", `Locally but not globally identifiable parameters: `, map(ParamToOuter, select(p -> not p in theta_g, theta_l))):
-    printf("%s %a\n", `Not identifiable parameters: `, map(ParamToOuter, select(p -> not p in theta_l, theta))):
+    printf("%s %a\n", `Not identifiable parameters:                      `, map(ParamToOuter, select(p -> not p in theta_l, theta))):
     printf("===============\n\n"):
   end if:
 
   table([
     globally = map(ParamToOuter, theta_g),
-    locally = map(ParamToInner, theta_l)
+    locally_not_globally = map(ParamToOuter, select(p -> not p in theta_g, theta_l)),
+    non_identifiable = map(ParamToOuter, select(p -> not p in theta_l, theta))
   ]):
 end proc:
 
