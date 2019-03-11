@@ -8,7 +8,7 @@ Tested with Maple 2018, Maple 2017, and Maple 2016.
 * On https://github.com/pogudingleb/SIAN, press green button "Clone of download", and then "Dowload ZIP"
 
 ## Usage
-The main function is **IdentifiabilityODE(system, parameters, p, infolevel, method, num_nodes)** with arguments
+The main function is **IdentifiabilityODE(system, parameters, p, infolevel, method, num_nodes)** with required positional arguments **system** and **parameters** and optional keyword arguments **p**, **infolevel**, **method**, **num_nodes**.
  * **system** - a system of ODEs in the state-space form. It should include equations of two types
    * *ODEs* with rational right-hand side defining the evolution of the state variables
    * equations of the form *output_variable = rational_function(state_variables, parameters, inputs)* defining the output variables
@@ -23,6 +23,7 @@ The main function is **IdentifiabilityODE(system, parameters, p, infolevel, meth
    * **2** - without saturation, with checking memebership using Groebner bases, see item (2) in Remark 7 from the paper
  * **num_nodes** (optional) - the maximal number of processes created by the algorithm, the default value is 6.
 
+*Example* **IdentifiabilityODE(s, [a, b], infolevel = 2, num_nodes = 5)**. For more details on positional and keyword arguments in Maple, see [here](https://www.maplesoft.com/support/help/maple/view.aspx?path=parameter_classes).
 
 
 Examples of usage can be found in the **examples** folder. One can run an example by
