@@ -12,4 +12,4 @@ sigma := [
   y2(t) = x4(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), 0.99);
+IdentifiabilityODE(sigma, GetParameters(sigma));

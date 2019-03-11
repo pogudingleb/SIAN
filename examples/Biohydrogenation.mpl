@@ -14,4 +14,4 @@ sigma := [
   y2(t) = x5(t)
 ]:
 
-IdentifiabilityODE(sigma, GetParameters(sigma), 0.99):
+IdentifiabilityODE(sigma, GetParameters(sigma), p = 0.999):

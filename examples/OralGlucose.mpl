@@ -14,4 +14,4 @@ sigma := [
   y3(t) = Gb(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), 0.99);
+IdentifiabilityODE(sigma, GetParameters(sigma));

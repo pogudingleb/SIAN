@@ -11,7 +11,7 @@ sigma := [
   diff(eA(t), t) = 0,
   diff(eC(t), t) = 0,
   y1(t) = xC(t),
-  y2(t) = eA * xA(t) + eB * xB(t) + eC * xC(t),
+  y2(t) = eA(t) * xA(t) + eB * xB(t) + eC(t) * xC(t),
   y3(t) = eA(t),
   y4(t) = eC(t)
 ];

@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel := 1, method := 1, num_nodes := 6) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 1, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -244,7 +244,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, p := 0.99, infolevel :
 
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
-  vars := { op(mu) };
+  vars := { op(mu) }:
   for poly in Et_hat do
     vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
   end do:

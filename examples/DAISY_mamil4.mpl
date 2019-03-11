@@ -8,4 +8,4 @@ sigma := [
   y(t) = x1(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), 0.99):
+IdentifiabilityODE(sigma, GetParameters(sigma)):
