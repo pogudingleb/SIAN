@@ -279,7 +279,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         ]),
         i = 1..nops(theta_l)
       ):
-    else
+    elif nops(theta_l) = 1 then
       # This is needed because of a bug in Grid[Seq]
       gb := [ at_node(theta_l[1], [
         [op(Et_hat), z * Q_hat - 1, (theta_l[1] - subs(theta_hat, theta_l[1])) * w - 1],
