@@ -264,7 +264,18 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   theta_g := []:
   if method = 1 then
     at_node := proc(var, args_node)
-      local gb_loc;
+      local gb_loc, fname;
+      if infolevel > 2 then
+        fname := cat("SIAN_GB_computation_separated_for_", var):
+        writedata(fname, 
+          [
+            "with(Groebner):",
+            cat("polys := ", convert(args_node[1], string), ":"),
+            cat("ordering := tdeg(op(", convert(convert(args_node[2], list), string), ")):"),
+            "Basis(polys, ordering);"
+          ], 
+          string):
+      end if:
       gb_loc := Groebner[Basis](op(args_node)):
       gb_loc;
     end proc:
