@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e:
+        prime, max_rank, R, tr, e, p_local:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -36,6 +36,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   }:
   x_eqs := subs(subst_zero_order, subs(subst_first_order, select(e -> type(int(lhs(e), t), function(name)), system_ODEs))):
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
+
+  # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error 
+  # at most 10^(-18) (for Maple 2017)
+  p_local := p + nops(params_to_assess) * 10^(-18):
+  if p_local >= 1 then
+    printf("The probability of success cannot exceed 1 - #params_to_assess 10^{-18}. We reset it to 0.99");
+    p_local := 0.99:
+  end if:
 
   if infolevel > 0 then
     printf("\n=== Input info ===\n"):
@@ -109,7 +117,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   # (b) ---------------
   # extra factor nops(theta) + 1 compared to the formula in the paper is to
   # provide probability gaurantee to the local identifiability test
-  D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p) ):
+  D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p_local) ):
   prime := nextprime(D1):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1 for testing the rank of the Jacobian probabilistically: `, D1);
@@ -225,7 +233,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
 
   # (a) ------------
   deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
-  D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p) ):
+  D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
   end if:

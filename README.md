@@ -13,7 +13,7 @@ The main function is **IdentifiabilityODE(system, parameters, p, infolevel, meth
    * *ODEs* with rational right-hand side defining the evolution of the state variables
    * equations of the form *output_variable = rational_function(state_variables, parameters, inputs)* defining the output variables
  * **parameters** - a list of parameters and initial values whose identifiability is to be assessed. You can use **GetParameters(system)** if you want to check identifibaility of all the parameters and initial values
- * **p** (optional) - the probability of correctness, the default value is 0.99
+ * **p** (optional) - the probability of correctness, the default value is 0.99. For technical reasons
  * **infolevel** (optional) - the variable that regulates the amount of information printed. Options are (the default value is **1**)
    * **0** - nothing is printed
    * **1** - information about the original system, main steps of the algorithm, and the summary of the results are printed
