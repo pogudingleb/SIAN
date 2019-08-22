@@ -118,7 +118,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   # extra factor nops(theta) + 1 compared to the formula in the paper is to
   # provide probability gaurantee to the local identifiability test
   D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p_local) ):
-  prime := nextprime(D1):
+  # prime := nextprime(D1):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1 for testing the rank of the Jacobian probabilistically: `, D1);
   end if:
@@ -131,6 +131,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     all_subs := sample[4]:
   end do:
   u_hat := sample[2]:
+  y_hat := sample[1]:
  
   # (e) ------------------
   alpha := [seq(1, i = 1..n)]:
@@ -144,12 +145,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
-        JacX := LinearAlgebra[Modular][Mod](
-          prime,
-          VectorCalculus[Jacobian](subs(u_hat, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)),
-          integer
-        ):
-        if LinearAlgebra[Modular][Rank](prime, JacX) = nops(eqs_i) then
+        JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)):
+        if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
           Et := [op(Et), Y[i][beta[i] + 1]]:
           beta[i] := beta[i] + 1:
           for j from 1 to s + 1 do
@@ -206,15 +203,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   theta_l := []:
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
-    JacX := LinearAlgebra[Modular][Mod](
-      prime,
-      VectorCalculus[Jacobian]( 
-        subs( { op(u_hat), param = subs(all_subs, param) }, Et), 
+    JacX := VectorCalculus[Jacobian]( 
+        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), 
         other_params = subs(all_subs, other_params)
-      ),
-      integer
     ):
-    if LinearAlgebra[Modular][Rank](prime, JacX) <> max_rank then
+    if LinearAlgebra[Rank](JacX) <> max_rank then
       theta_l := [op(theta_l), param]:
     end if:
   end do:
