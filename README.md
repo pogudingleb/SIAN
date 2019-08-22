@@ -36,5 +36,10 @@ Examples of usage can be found in the **examples** folder. One can run an exampl
 
 * **IdentifiabiliyODE.mpl**   contains the algorithm
 * **examples**   folder contains examples
+
+## References
+
+* [Global Identifiability of Differential Models](https://arxiv.org/abs/1801.08112) - the original paper with underlying theory. Corresponds to [version 0.5](https://github.com/pogudingleb/SIAN/releases/tag/v0.5)
+* [SIAN: software for structural identifiability analysis of ODE models](https://doi.org/10.1093/bioinformatics/bty1069) (Bioinformatics, Volume 35, Issue 16, 15 August 2019, Pages 2873–2874) - an application note. Corresponds to [version 1.1](https://github.com/pogudingleb/SIAN/releases/tag/v1.1)
   
 The software is partially supported by the National Science Foundation.
