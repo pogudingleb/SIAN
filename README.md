@@ -1,5 +1,7 @@
 # SIAN v0.5
 
+For newer versions, check the master branch or recent releases.
+
 Maple implementation of the algorithm for checking global identifiability for systems of ODEs presented in the paper [Global Identifiability of Differential Models](https://cs.nyu.edu/~pogudin/global.pdf).
 Tested with Maple 2017 and Maple 2016.
 
