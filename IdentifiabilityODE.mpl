@@ -14,6 +14,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   # 0. Extract inputs, outputs, states, and parameters from the system
   #----------------------------------------------
 
+  randomize():
+
   if infolevel > 0 then
     PrintHeader("0. Extracting states, inputs, outputs, and parameters from the system"):
   end if:
