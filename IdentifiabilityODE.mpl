@@ -283,7 +283,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       gb_loc;
     end proc:
 
-    if nops(theta_l) > 1 then
+    if nops(theta_l) > 1 and num_nodes > 1 then
       Grid[Setup]("local", numnodes = num_nodes):
       Grid[Set](at_node):
       gb := Grid[Seq](
@@ -293,12 +293,17 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         ]),
         i = 1..nops(theta_l)
       ):
-    elif nops(theta_l) = 1 then
-      # This is needed because of a bug in Grid[Seq]
-      gb := [ at_node(theta_l[1], [
-        [op(Et_hat), z * Q_hat - 1, (theta_l[1] - subs(theta_hat, theta_l[1])) * w - 1],
-        tdeg(op(vars), z, w)
-      ]) ]:
+    else
+      gb := []:
+      for i from 1 to nops(theta_l) do
+        gb := [
+          op(gb), 
+          at_node(
+            theta_l[i], 
+            [[op(Et_hat), z * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w - 1], tdeg(op(vars), z, w)]
+           ) 
+        ]:
+      end do:
     end if:
 
     for i from 1 to nops(theta_l) do
