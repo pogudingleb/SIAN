@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e, p_local:
+        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -23,8 +23,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   x_functions := map(f -> int(f, t), select( f -> type(int(f, t), function(name)), map(lhs, system_ODEs) )):
   y_functions := select( f -> not type(int(f, t), function(name)), map(lhs, system_ODEs) ):
   all_symbols_rhs := foldl(`union`, op( map(e -> indets(rhs(e)), system_ODEs) )) minus {t}:
-  u_functions := select( f -> type(f, function), convert(all_symbols_rhs minus {op(x_functions), op(y_functions)}, list)):
-  mu := convert(all_symbols_rhs minus {op(x_functions), op(y_functions), op(u_functions)}, list):
+  xy_ders := {op(x_functions), op(y_functions), op(select(f -> (f in all_symbols_rhs), map(lhs, system_ODEs)))}:
+  u_functions := select( f -> type(f, function), convert(all_symbols_rhs minus xy_ders, list)):
+  mu := convert(all_symbols_rhs minus {op(xy_ders), op(u_functions)}, list):
 
   x_vars := map(FunctionToVariable, x_functions):
   y_vars := map(FunctionToVariable, y_functions):
@@ -81,13 +82,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     X := [op(X), []]:
     poly := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
     for j from 0 to s do
-      poly_d := Differentiate(poly, all_vars, s, j):
+      poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(x_vars[i], j + 1):
       separant := diff(poly_d, leader):
       X[i] := [op(X[i]), poly_d]:
       X_eq := [op(X_eq), leader = -(poly_d - separant * leader) / separant]:
     end do:
   end do:
+  print(X[1]);
   
   # (d,e) ---------------
   Y := []:
@@ -96,7 +98,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     Y := [op(Y), []]:
     poly := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
     for j from 0 to s do
-      poly_d := Differentiate(poly, all_vars, s, j):
+      poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(y_vars[i], j):
       separant := diff(poly_d, leader):
       Y[i] := [op(Y[i]), poly_d]:
@@ -139,6 +141,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   alpha := [seq(1, i = 1..n)]:
   beta := [seq(0, i = 1..m)]:
   Et := [];
+  # TODO: improve for arbitrary derivatives
   x_theta_vars := all_params:
   prolongation_possible := [seq(1, i = 1..m)]:
 
@@ -151,10 +154,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
           Et := [op(Et), Y[i][beta[i] + 1]]:
           beta[i] := beta[i] + 1:
-          for j from 1 to s + 1 do
+          # adding necessary X-equations
+          polys_to_process := [op(Et), seq(Y[k][beta[k] + 1], k=1..m)]:
+          while nops(polys_to_process) <> 0 do
+            new_to_process := []:
             vars := {};
-            for poly in [op(Et), seq(Y[k][beta[k] + 1], k=1..m)] do
-              vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
+            for poly in polys_to_process do
+              vars := vars union { op(GetVars(poly, x_vars, s + 2)) }:
             end do:
             vars_to_add := { op(remove(v -> evalb(v in x_theta_vars), vars)) };
             for v in vars_to_add do
@@ -163,8 +169,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
               var_index := ListTools[Search](ord_var[2], x_vars):
               poly := X[ var_index ][ ord_var[1] ]:
               Et := [op(Et), poly]:
+              new_to_process := [op(new_to_process), poly]:
               alpha[ var_index ] := max(alpha[ var_index ], ord_var[1] + 1):
             end do:
+            polys_to_process := new_to_process:
           end do:
         else
           prolongation_possible[i] := 0;
@@ -458,7 +466,7 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
 #===============================================================================
   local n, m, s, all_params, all_vars, theta_hat, u_variables, 
         u_hat, x_hat, y_hat, eq, eq_num, eq_denom, 
-        v, poly, i, j, all_subs, roll;
+        v, poly, i, j, all_subs, roll, to_compute;
   n := nops(x_vars):
   m := nops(y_vars):
   s := nops(mu) + n:
@@ -473,14 +481,15 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
   end do:
   u_hat := map(p -> p = roll(), u_variables) :   
 
-  x_hat := X_eq;
-  y_hat := Y_eq;
   all_subs := [op(theta_hat), op(u_hat)]:
-  for i from 1 to s + 1 do
-    x_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), x_hat):
-    y_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), y_hat):
-    all_subs := [ op(all_subs), op(select(e -> type(rhs(e), numeric), [op(x_hat), op(y_hat)])) ]:
+  to_compute := [op(X_eq), op(Y_eq)]:
+  while nops(to_compute) <> 0 do
+    to_compute := map(e -> lhs(e) = subs(all_subs, rhs(e)), to_compute);
+    all_subs := [ op(all_subs), op(select(e -> type(rhs(e), numeric), to_compute)) ]:
+    to_compute := remove(e -> type(rhs(e), numeric), to_compute):
   end do:
+  y_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), Y_eq):
+  x_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), X_eq):
 
   [y_hat, u_hat, theta_hat, all_subs];
 end proc:
