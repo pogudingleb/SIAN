@@ -12,7 +12,8 @@ IdentifiabilityODE := proc(
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process:
+        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process,
+        known_iv:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -45,7 +46,6 @@ IdentifiabilityODE := proc(
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
 
   known_iv := subs([seq(subs({t = 0}, x_functions[i]) = MakeDerivative(x_vars[i], 0), i = 1 .. nops(x_vars))], known_initial_values):
-  print(known_iv);
 
   # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error 
   # at most 10^(-18) (for Maple 2017)
@@ -263,9 +263,7 @@ IdentifiabilityODE := proc(
 
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
-  print(map(v -> numer(subs(sample[4], v)), known_iv)):
   Et_hat := [op(Et_hat), op(map(v -> numer(v - subs(sample[4], v)), known_iv))]:
-  print(Et_hat):
   vars := { op(mu) }:
   for poly in Et_hat do
     vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
