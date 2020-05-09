@@ -1,5 +1,9 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 1, num_nodes := 6}) 
+IdentifiabilityODE := proc(
+      system_ODEs, 
+      params_to_assess, 
+      {p := 0.99, infolevel := 1, method := 1, num_nodes := 6, known_initial_values := []}
+)
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -39,6 +43,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   }:
   x_eqs := subs(subst_zero_order, subs(subst_first_order, select(e -> type(int(lhs(e), t), function(name)), system_ODEs))):
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
+
+  known_iv := subs([seq(subs({t = 0}, x_functions[i]) = MakeDerivative(x_vars[i], 0), i = 1 .. nops(x_vars))], known_initial_values):
+  print(known_iv);
 
   # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error 
   # at most 10^(-18) (for Maple 2017)
@@ -221,6 +228,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       theta_l := [op(theta_l), param]:
     end if:
   end do:
+  theta_l := theta;
  
   if infolevel > 1 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
@@ -255,6 +263,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
 
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
+  print(map(v -> numer(subs(sample[4], v)), known_iv)):
+  Et_hat := [op(Et_hat), op(map(v -> numer(v - subs(sample[4], v)), known_iv))]:
+  print(Et_hat):
   vars := { op(mu) }:
   for poly in Et_hat do
     vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
