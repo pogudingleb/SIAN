@@ -88,7 +88,9 @@ IdentifiabilityODE := proc(
   for i from 1 to n do
     X := [op(X), []]:
     poly := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
-    for j from 0 to s do
+    # Caveat: this + 1 is tricky, should be the same in the sampling function
+    # TODO: rewrite this in a safer manner
+    for j from 0 to s + 1 do
       poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(x_vars[i], j + 1):
       separant := diff(poly_d, leader):
@@ -104,7 +106,7 @@ IdentifiabilityODE := proc(
   for i from 1 to m do
     Y := [op(Y), []]:
     poly := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
-    for j from 0 to s do
+    for j from 0 to s + 1 do
       poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(y_vars[i], j):
       separant := diff(poly_d, leader):
@@ -129,6 +131,7 @@ IdentifiabilityODE := proc(
   # extra factor nops(theta) + 1 compared to the formula in the paper is to
   # provide probability gaurantee to the local identifiability test
   D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p_local) ):
+  D1 := 20:
   # prime := nextprime(D1):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1 for testing the rank of the Jacobian probabilistically: `, D1);
@@ -143,7 +146,7 @@ IdentifiabilityODE := proc(
   end do:
   u_hat := sample[2]:
   y_hat := sample[1]:
- 
+
   # (e) ------------------
   alpha := [seq(1, i = 1..n)]:
   beta := [seq(0, i = 1..m)]:
@@ -156,6 +159,8 @@ IdentifiabilityODE := proc(
   while add(prolongation_possible) > 0 do
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
+        print(alpha);
+        print(beta);
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
         JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)):
         if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
@@ -486,7 +491,7 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
   theta_hat := map(p -> p = roll(), all_params): 
   u_variables := [];
   for i from 1 to nops(u_vars) do
-    u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s) ]:
+    u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
   end do:
   u_hat := map(p -> p = roll(), u_variables) :   
 
