@@ -131,7 +131,6 @@ IdentifiabilityODE := proc(
   # extra factor nops(theta) + 1 compared to the formula in the paper is to
   # provide probability gaurantee to the local identifiability test
   D1 := floor( (nops(theta) + 1) * 2 * d0 * s * (n + 1) * (1 + 2 * d0 * s) / (1 - p_local) ):
-  D1 := 20:
   # prime := nextprime(D1):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_1 for testing the rank of the Jacobian probabilistically: `, D1);
@@ -199,8 +198,8 @@ IdentifiabilityODE := proc(
   for i from 1 to m do
     for j from beta[i] + 1 to nops(Y[i]) do
       to_add := true:
-      for v in GetVars(Y[i][j], x_vars, s + 1) do
-        if not (v in vars) then
+      for v in GetVars(Y[i][j], x_vars, s + 2) do
+        if not (v in x_theta_vars) then
           to_add := false:
         end if:
       end do:
@@ -271,7 +270,7 @@ IdentifiabilityODE := proc(
   Et_hat := [op(Et_hat), op(map(v -> numer(v - subs(sample[4], v)), known_iv))]:
   vars := { op(mu) }:
   for poly in Et_hat do
-    vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
+    vars := vars union { op(GetVars(poly, x_vars, s + 2)) }:
   end do:
   if infolevel > 1 then
     printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
