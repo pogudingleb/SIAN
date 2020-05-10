@@ -81,7 +81,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   for i from 1 to n do
     X := [op(X), []]:
     poly := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
-    for j from 0 to s do
+    for j from 0 to s + 1 do
       poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(x_vars[i], j + 1):
       separant := diff(poly_d, leader):
@@ -97,7 +97,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   for i from 1 to m do
     Y := [op(Y), []]:
     poly := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
-    for j from 0 to s do
+    for j from 0 to s + 1 do
       poly_d := Differentiate(poly, all_vars, s + 1, j):
       leader := MakeDerivative(y_vars[i], j):
       separant := diff(poly_d, leader):
@@ -477,7 +477,7 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
   theta_hat := map(p -> p = roll(), all_params): 
   u_variables := [];
   for i from 1 to nops(u_vars) do
-    u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s) ]:
+    u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
   end do:
   u_hat := map(p -> p = roll(), u_variables) :   
 
