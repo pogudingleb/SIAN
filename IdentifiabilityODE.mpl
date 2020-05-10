@@ -188,7 +188,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     for j from beta[i] + 1 to nops(Y[i]) do
       to_add := true:
       for v in GetVars(Y[i][j], x_vars, s + 1) do
-        if not (v in vars) then
+        if not (v in x_theta_vars) then
           to_add := false:
         end if:
       end do:
