@@ -1,4 +1,4 @@
-# Example 10 in the paper "Global Identifiability of Differential Models", taken from
+# Example 6.2 in the paper "Global Identifiability of Differential Models", taken from
 # Lee, E. C., Kelly, M. R., Ochocki, B. M., Akinwumi, S. M., Hamre, K. E., Tien, J. H., Eisenberg, M. C.,
 # Model distinguishability and inference robustness in mechanisms of cholera transmission and loss of immunity
 # Eq. (3)

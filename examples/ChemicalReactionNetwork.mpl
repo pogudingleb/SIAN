@@ -1,4 +1,4 @@
-# Example 9 in the paper "Global Identifiability of Differential Models"
+# Example 6.1 in the paper "Global Identifiability of Differential Models"
 # Taken from 
 # Conradi, C., Shiu, A.,
 # Dynamics of post-translational modification systems: recent progress and future directions
