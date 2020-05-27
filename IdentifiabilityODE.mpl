@@ -160,17 +160,17 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
             new_to_process := []:
             vars := {};
             for poly in polys_to_process do
-              vars := vars union { op(GetVars(poly, x_vars, s + 2)) }:
+              vars := vars union { op(GetVars(poly, x_vars)) }:
             end do:
             vars_to_add := { op(remove(v -> evalb(v in x_theta_vars), vars)) };
             for v in vars_to_add do
               x_theta_vars := [op(x_theta_vars), v];
-              ord_var := GetOrderVar(v, all_vars, s + 1);
-              var_index := ListTools[Search](ord_var[2], x_vars):
-              poly := X[ var_index ][ ord_var[1] ]:
+              ord_var := GetOrderVar(v);
+              var_index := ListTools[Search](ord_var[1], x_vars):
+              poly := X[ var_index ][ ord_var[2] ]:
               Et := [op(Et), poly]:
               new_to_process := [op(new_to_process), poly]:
-              alpha[ var_index ] := max(alpha[ var_index ], ord_var[1] + 1):
+              alpha[ var_index ] := max(alpha[ var_index ], ord_var[2] + 1):
             end do:
             polys_to_process := new_to_process:
           end do:
@@ -187,7 +187,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   for i from 1 to m do
     for j from beta[i] + 1 to nops(Y[i]) do
       to_add := true:
-      for v in GetVars(Y[i][j], x_vars, s + 1) do
+      for v in GetVars(Y[i][j], x_vars) do
         if not (v in x_theta_vars) then
           to_add := false:
         end if:
@@ -257,7 +257,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
   vars := { op(mu) }:
   for poly in Et_hat do
-    vars := vars union { op(GetVars(poly, x_vars, s + 1)) }:
+    vars := vars union { op(GetVars(poly, x_vars)) }:
   end do:
   if infolevel > 1 then
     printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
@@ -436,28 +436,22 @@ end proc:
 
 
 #===============================================================================
-GetVars := proc(diff_poly, var_list, max_ord) 
+GetVars := proc(diff_poly, var_list)
 #===============================================================================
-  local all_vars, result;
-  all_vars := map( v -> op(map( i -> MakeDerivative(v, i), [`$`(0..max_ord)] )), var_list):
-  result := select(v -> evalb(diff(diff_poly, v) <> 0), all_vars):
-  result:
+  local result;
+  result := select(v -> evalb(GetOrderVar(v)[1] in var_list), indets(diff_poly)):
+  return result:
 end proc:
 
 
 #===============================================================================
-GetOrderVar := proc(diff_var, var_list, max_ord)
+GetOrderVar := proc(diff_var)
 #===============================================================================
-  local result, v, h;
-  result := -1:
-  for v in var_list do
-    for h from 0 to max_ord do
-      if diff(diff_var, MakeDerivative(v, h)) <> 0 then
-        result := [h, v];
-      end if;
-    end do:
-  end do:
-  result;
+  local s, v, h;
+  if not StringTools[RegMatch]("^(.*_)([0-9]+)$", diff_var, s, v, h) then
+    return ["", ""]:
+  end if:
+  return [parse(v), parse(h)]:
 end proc:
 
 
