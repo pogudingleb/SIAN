@@ -1,7 +1,7 @@
 # SIAN (Structural Identifiability ANalyser)
 
 Maple code for assessing identifiability/observability (local and global) for models defined by systems of ODEs presented. Mostly based on the paper [Global Identifiability of Differential Models](https://cs.nyu.edu/~pogudin/global.pdf). Supplementary Maple code for the paper is available at https://github.com/pogudingleb/Global_Identifiability
-Tested with Maple 2018, Maple 2017, and Maple 2016.
+Tested with Maple 2016-2019.
 
 ## How to download
 * Usign *git checkout*
