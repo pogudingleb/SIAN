@@ -487,3 +487,22 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
 
   [y_hat, u_hat, theta_hat, all_subs];
 end proc:
+
+#===============================================================================
+GenerateReplica := proc(equations, r)
+#===============================================================================
+  # generates a system of equations corresponding to r independent trajectories of
+  # the original system. Time-dependent variabes are replicated, parameters are not
+  local all_functions, zero_order, first_order, funcs, without_t, result, i, subst:
+  all_functions := select(f -> type(f, function), foldl(`union`, op( map(indets, equations) ))):
+  zero_order := select(f -> not type(int(f, t), function(name)), all_functions):
+  first_order := map(f -> int(f, t), select(f -> type(int(f, t), function(name)), all_functions)):
+  funcs := {op(zero_order), op(first_order)}:
+  without_t := map(f -> convert(convert(f, string)[1..-4], symbol), funcs):
+  result := []:
+  for i from 1 to r do
+    subst := map(f -> f = convert(cat(convert(f, string), "_r", i), symbol), without_t):
+    result := [op(result), op(map(e -> subs(subst, e), equations))]:
+  end do: 
+  return result:
+end proc:
