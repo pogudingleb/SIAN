@@ -82,7 +82,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     X := [op(X), []]:
     poly := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
     for j from 0 to s + 1 do
-      poly_d := Differentiate(poly, all_vars, s + 1, j):
+      poly_d := Differentiate(poly, all_vars, j):
       leader := MakeDerivative(x_vars[i], j + 1):
       separant := diff(poly_d, leader):
       X[i] := [op(X[i]), poly_d]:
@@ -97,7 +97,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     Y := [op(Y), []]:
     poly := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
     for j from 0 to s + 1 do
-      poly_d := Differentiate(poly, all_vars, s + 1, j):
+      poly_d := Differentiate(poly, all_vars, j):
       leader := MakeDerivative(y_vars[i], j):
       separant := diff(poly_d, leader):
       Y[i] := [op(Y[i]), poly_d]:
@@ -402,26 +402,30 @@ end proc:
 
 
 #===============================================================================
-DifferentiateOnce := proc(diff_poly, var_list, max_ord) 
+DifferentiateOnce := proc(diff_poly, var_list) 
 #===============================================================================
-  local result, i, j:
+  local result, aux, v, h, diff_v:
   result := 0:
-  for i from 1 to nops(var_list) do
-    for j from 0 to max_ord do
-      result := result + diff(diff_poly, MakeDerivative(var_list[i], j)) * MakeDerivative(var_list[i], j + 1):
-    end do:
+  for diff_v in indets(diff_poly) do
+    aux := GetOrderVar(diff_v):
+    # seems that Maple does not have unpacking
+    v := aux[1]:
+    h := aux[2]:
+    if v in var_list then
+      result := result + diff(diff_poly, MakeDerivative(v, h)) * MakeDerivative(v, h + 1):
+    end if:
   end do:
   simplify(result):
 end proc:
 
 
 #===============================================================================
-Differentiate := proc(diff_poly, var_list, max_ords, ord := 1) 
+Differentiate := proc(diff_poly, var_list, ord := 1) 
 #===============================================================================
   local result, i;
   result := diff_poly:
   for i from 1 to ord do
-    result := DifferentiateOnce(result, var_list, max_ords):
+    result := DifferentiateOnce(result, var_list):
   end do:
   result:
 end proc:
