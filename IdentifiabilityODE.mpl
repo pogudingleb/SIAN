@@ -127,12 +127,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   end if:
 
   # (c, d) ---------------
-  sample := SamplePoint(D1, x_vars, y_vars, u_vars, mu, X_eq, Y_eq):
+  sample := SamplePoint(D1, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
   all_subs := sample[4]:
-  while subs(all_subs, Q) = 0 do
-    sample := SamplePoint(D1, x_vars, y_vars, u_vars, mu, X_eq, Y_eq):
-    all_subs := sample[4]:
-  end do:
   u_hat := sample[2]:
   y_hat := sample[1]:
  
@@ -241,10 +237,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   end if:
 
   # (b, c) ---------
-  sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq):
-  while subs(sample[4], Q) = 0 do
-    sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq):
-  end do:    
+  sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
   y_hat := sample[1]:
   u_hat := sample[2]:
   theta_hat := sample[3]:
@@ -455,7 +448,7 @@ end proc:
 
 
 #===============================================================================
-SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
+SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q)
 #===============================================================================
   local n, m, s, all_params, all_vars, theta_hat, u_variables, 
         u_hat, x_hat, y_hat, eq, eq_num, eq_denom, 
@@ -467,24 +460,30 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq)
   all_vars := [ op(x_vars), op(y_vars), op(u_vars) ]:
 
   roll := rand(0 .. bound):
-  theta_hat := map(p -> p = roll(), all_params): 
-  u_variables := [];
-  for i from 1 to nops(u_vars) do
-    u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
+  while true do
+    theta_hat := map(p -> p = roll(), all_params): 
+    u_variables := [];
+    for i from 1 to nops(u_vars) do
+      u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
+    end do:
+    u_hat := map(p -> p = roll(), u_variables) :   
+  
+    all_subs := [op(theta_hat), op(u_hat)]:
+    if subs(all_subs, Q) = 0 then
+      next
+    end if:
+    to_compute := [op(X_eq), op(Y_eq)]:
+    while nops(to_compute) <> 0 do
+      to_compute := map(e -> lhs(e) = subs(all_subs, rhs(e)), to_compute);
+      all_subs := [ op(all_subs), op(select(e -> type(rhs(e), numeric), to_compute)) ]:
+      to_compute := remove(e -> type(rhs(e), numeric), to_compute):
+    end do:
+    y_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), Y_eq):
+    x_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), X_eq):
+    break:
   end do:
-  u_hat := map(p -> p = roll(), u_variables) :   
 
-  all_subs := [op(theta_hat), op(u_hat)]:
-  to_compute := [op(X_eq), op(Y_eq)]:
-  while nops(to_compute) <> 0 do
-    to_compute := map(e -> lhs(e) = subs(all_subs, rhs(e)), to_compute);
-    all_subs := [ op(all_subs), op(select(e -> type(rhs(e), numeric), to_compute)) ]:
-    to_compute := remove(e -> type(rhs(e), numeric), to_compute):
-  end do:
-  y_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), Y_eq):
-  x_hat := map(e -> lhs(e) = subs(all_subs, rhs(e)), X_eq):
-
-  [y_hat, u_hat, theta_hat, all_subs];
+  return [y_hat, u_hat, theta_hat, all_subs];
 end proc:
 
 #===============================================================================
