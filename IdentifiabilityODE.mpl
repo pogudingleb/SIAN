@@ -219,6 +219,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
  
   if infolevel > 1 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
+    printf("%s %a\n", `Nonidentifiable parameter: `, map(ParamToOuter, [op({op(theta)} minus {op(theta_l)})]));
   end if:
   
   #----------------------------------------------
