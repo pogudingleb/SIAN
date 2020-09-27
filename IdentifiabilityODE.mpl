@@ -89,7 +89,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       X_eq := [op(X_eq), leader = -(poly_d - separant * leader) / separant]:
     end do:
   end do:
-  print(X[1]);
   
   # (d,e) ---------------
   Y := []:
@@ -351,9 +350,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   end if:
 
   table([
-    globally = map(ParamToOuter, theta_g),
-    locally_not_globally = map(ParamToOuter, select(p -> not p in theta_g, theta_l)),
-    non_identifiable = map(ParamToOuter, select(p -> not p in theta_l, theta))
+    globally = {op(map(ParamToOuter, theta_g))},
+    locally_not_globally = {op(map(ParamToOuter, select(p -> not p in theta_g, theta_l)))},
+    non_identifiable = {op(map(ParamToOuter, select(p -> not p in theta_l, theta)))}
   ]):
 end proc:
 
