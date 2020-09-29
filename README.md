@@ -18,13 +18,14 @@ The main function is **IdentifiabilityODE(system, parameters, p, infolevel, meth
    * **0** - nothing is printed
    * **1** - information about the original system, main steps of the algorithm, and the summary of the results are printed
    * **2** - debugging mode, a lot of information is printed
- * **method** (optional) - the method of checking the consistency in Step 4 of Algorithm 1 from the paper. Possible options are (the default value is **1**)
+ * **method** (optional) - the method of checking the consistency in Step 4 of Algorithm 1 from the paper. Possible options are (the default value is **2**)
    * **1** - using saturation and Groebner bases, see item (1) in Remark 7 from the paper, this is usually faster
    * **2** - without saturation, with checking memebership using Groebner bases, see item (2) in Remark 7 from the paper
  * **num_nodes** (optional) - the maximal number of processes created by the algorithm, the default value is 6.
 
 *Example* **IdentifiabilityODE(s, [a, b], infolevel = 2, num_nodes = 5)**. For more details on positional and keyword arguments in Maple, see [here](https://www.maplesoft.com/support/help/maple/view.aspx?path=parameter_classes).
 
+*Multiple experiments* One can use SIAN to assess identifiability of parameters from several independent experiments. This can be done using function **GenerateReplica(sigma, N)** which construct a system consisting of **N** copies of **sigma** sharing parameters appearing in ODEs but having different initial conditions and inputs. For an example of such assessment, see the [SlowFast example](https://github.com/pogudingleb/SIAN/blob/master/examples/SlowFast.mpl).
 
 Examples of usage can be found in the **examples** folder. One can run an example by
   * either opening it *as a Maple worksheet* and executing it
