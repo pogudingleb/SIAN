@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 1, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -248,15 +248,24 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
 
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
-  vars := { op(mu) }:
+  Et_x_vars := {}:
   for poly in Et_hat do
-    vars := vars union { op(GetVars(poly, x_vars)) }:
+    Et_x_vars := Et_x_vars union { op(GetVars(poly, x_vars)) }:
   end do:
   if infolevel > 1 then
-    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(vars), ` variables`);
+    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(Et_x_vars) + nops(mu), ` variables`);
   end if:
   Q_hat := subs(u_hat, Q):
 
+  vars := [
+    op(sort([op(Et_x_vars)], (a, b) -> CompareDiffVar(a, b, x_vars))),
+    z_aux, w_aux,
+    op(sort(mu))
+  ]:
+  if infolevel > 1 then
+    printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
+  end if:
+ 
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
@@ -275,7 +284,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
           [
             "with(Groebner):",
             cat("polys := ", convert(args_node[1], string), ":"),
-            cat("ordering := tdeg(op(", convert(convert(args_node[2], list), string), ")):"),
+            cat("ordering := tdeg(op(", convert(args_node[2], string), ")):"),
             "Basis(polys, ordering);"
           ], 
           string):
@@ -289,8 +298,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       Grid[Set](at_node):
       gb := Grid[Seq](
         at_node(theta_l[i], [
-          [op(Et_hat), z * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w - 1],
-          tdeg(op(vars), z, w)
+          [op(Et_hat), z_aux * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w_aux - 1],
+          tdeg(vars)
         ]),
         i = 1..nops(theta_l)
       ):
@@ -301,7 +310,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
           op(gb), 
           at_node(
             theta_l[i], 
-            [[op(Et_hat), z * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w - 1], tdeg(op(vars), z, w)]
+            [[op(Et_hat), z_aux * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w_aux - 1], tdeg(op(vars))]
            ) 
         ]:
       end do:
@@ -317,14 +326,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       end if:
     end do:    
   elif method = 2 then
-    gb := Groebner[Basis]([op(Et_hat), z * Q_hat - 1], tdeg(op(vars), z));
+    gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
     for i from 1 to nops(theta_l) do
-      if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars), z)) = subs(theta_hat, theta_l[i]) then
+      if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
   elif method = 3 then
-    R := RegularChains[PolynomialRing](convert(vars, list)):
+    R := RegularChains[PolynomialRing](vars):
     for i from 1 to nops(theta_l) do
       tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
       for e in tr do
@@ -509,3 +518,20 @@ GenerateReplica := proc(equations, r)
   end do: 
   return result:
 end proc:
+
+#===============================================================================
+CompareDiffVar := proc(dvl, dvr, var_list)
+#===============================================================================
+  local vl, vr, hl, hr;
+  vl, hl := op(GetOrderVar(dvl, var_list)):
+  vr, hr := op(GetOrderVar(dvr, var_list)):
+  if evalb(hl <> hr) then
+    return evalb(hl > hr):
+  end if:
+  if evalb(length(vl) <> length(vr)) then
+    return evalb(length(vl) > length(vr)):
+  end if:
+  return StringTools[Compare](vr, vl):
+end proc:
+
+
