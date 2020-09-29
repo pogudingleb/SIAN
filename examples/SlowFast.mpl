@@ -17,3 +17,9 @@ sigma := [
 ];
 
 IdentifiabilityODE(sigma, GetParameters(sigma));
+
+# The following computation shows that one can identify more from two experiments
+# GenerateReplica(sigma, 2) generates a system consiting of two copies of sigma
+# with the same parameters in ODEs but different inputs and initial conditions
+
+IdentifiabilityODE(GenerateReplica(sigma, 2), GetParameters(sigma, initial_conditions=false));
