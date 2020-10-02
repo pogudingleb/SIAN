@@ -218,8 +218,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   end do:
  
   if infolevel > 1 then
-    printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
-    printf("%s %a\n", `Nonidentifiable parameter: `, map(ParamToOuter, [op({op(theta)} minus {op(theta_l)})]));
+    printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
+    printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
   
   #----------------------------------------------
@@ -346,16 +346,16 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
 
   if infolevel > 0 then
     printf("\n=== Summary ===\n"):
-    printf("%s %a\n", `Globally identifiable parameters:                 `, map(ParamToOuter, theta_g)):
-    printf("%s %a\n", `Locally but not globally identifiable parameters: `, map(ParamToOuter, select(p -> not p in theta_g, theta_l))):
-    printf("%s %a\n", `Not identifiable parameters:                      `, map(ParamToOuter, select(p -> not p in theta_l, theta))):
+    printf("%s %a\n", `Globally identifiable parameters:                 `, map(x -> ParamToOuter(x, all_vars), theta_g)):
+    printf("%s %a\n", `Locally but not globally identifiable parameters: `, map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l))):
+    printf("%s %a\n", `Not identifiable parameters:                      `, map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta))):
     printf("===============\n\n"):
   end if:
 
   table([
-    globally = {op(map(ParamToOuter, theta_g))},
-    locally_not_globally = {op(map(ParamToOuter, select(p -> not p in theta_g, theta_l)))},
-    non_identifiable = {op(map(ParamToOuter, select(p -> not p in theta_l, theta)))}
+    globally = {op(map(x -> ParamToOuter(x, all_vars), theta_g))},
+    locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
+    non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
   ]):
 end proc:
 
@@ -398,10 +398,10 @@ ParamToInner := proc(p) local s:
 end proc:
 
 #===============================================================================
-ParamToOuter := proc(p) local s:
+ParamToOuter := proc(p, varnames) local s:
 #===============================================================================
   s := convert(p, string):
-  if length(s) > 2 and s[-2..-1] = "_0" then
+  if length(s) > 2 and s[-2..-1] = "_0" and s[1..-3] in varnames then
     parse(cat(s[1..-3], "(0)")):
   else
     p:
