@@ -401,7 +401,7 @@ end proc:
 ParamToOuter := proc(p, varnames) local s:
 #===============================================================================
   s := convert(p, string):
-  if length(s) > 2 and s[-2..-1] = "_0" and s[1..-3] in varnames then
+  if length(s) > 2 and s[-2..-1] = "_0" and parse(s[1..-2] )in varnames then
     parse(cat(s[1..-3], "(0)")):
   else
     p:
