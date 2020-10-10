@@ -80,13 +80,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   X_eq := []:
   for i from 1 to n do
     X := [op(X), []]:
-    poly := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
+    poly_d := numer(lhs(x_eqs[i]) - rhs(x_eqs[i])):
     for j from 0 to s + 1 do
-      poly_d := Differentiate(poly, all_vars, j):
       leader := MakeDerivative(x_vars[i], j + 1):
       separant := diff(poly_d, leader):
       X[i] := [op(X[i]), poly_d]:
       X_eq := [op(X_eq), leader = -(poly_d - separant * leader) / separant]:
+      poly_d := Differentiate(poly_d, all_vars):
     end do:
   end do:
   
@@ -95,13 +95,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   Y_eq := []:
   for i from 1 to m do
     Y := [op(Y), []]:
-    poly := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
+    poly_d := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
     for j from 0 to s + 1 do
-      poly_d := Differentiate(poly, all_vars, j):
       leader := MakeDerivative(y_vars[i], j):
       separant := diff(poly_d, leader):
       Y[i] := [op(Y[i]), poly_d]:
       Y_eq := [op(Y_eq), leader = -(poly_d - separant * leader) / separant]:
+      poly_d := Differentiate(poly_d, all_vars):
     end do:
   end do:
 
@@ -416,7 +416,7 @@ end proc:
 
 
 #===============================================================================
-DifferentiateOnce := proc(diff_poly, var_list) 
+Differentiate := proc(diff_poly, var_list) 
 #===============================================================================
   local result, aux, v, h, diff_v:
   result := 0:
@@ -431,19 +431,6 @@ DifferentiateOnce := proc(diff_poly, var_list)
   end do:
   simplify(result):
 end proc:
-
-
-#===============================================================================
-Differentiate := proc(diff_poly, var_list, ord := 1) 
-#===============================================================================
-  local result, i;
-  result := diff_poly:
-  for i from 1 to ord do
-    result := DifferentiateOnce(result, var_list):
-  end do:
-  result:
-end proc:
-
 
 #===============================================================================
 GetVars := proc(diff_poly, var_list)
