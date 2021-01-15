@@ -299,7 +299,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
       gb := Grid[Seq](
         at_node(theta_l[i], [
           [op(Et_hat), z_aux * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w_aux - 1],
-          tdeg(vars)
+          tdeg(op(vars))
         ]),
         i = 1..nops(theta_l)
       ):
@@ -327,6 +327,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     end do:    
   elif method = 2 then
     gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
+    print(gb);
     for i from 1 to nops(theta_l) do
       if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
         theta_g := [ op(theta_g), theta_l[i] ]:
