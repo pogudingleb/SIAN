@@ -18,8 +18,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     PrintHeader("WARNING: It looks like your system involves floating-point numbers. This may result into a non-meaninful result, please convert them to rationals (e.g., 0.2 -> 1/5)"):
   end if:
 
-  if not verify(indets(sigma, name), indets(sigma), `subset`) then
-    PrintHeader(cat("ERROR: you are using reserved maple symbols:", convert(indets(sigma, name) minus indets(sigma), string))):
+  if not verify(indets(system_ODEs, name), indets(system_ODEs), `subset`) then
+    PrintHeader(cat("ERROR: you are using reserved maple symbols:", convert(indets(system_ODEs, name) minus indets(system_ODEs), string))):
     return;
   end if:
 
