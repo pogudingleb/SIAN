@@ -351,12 +351,21 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     printf("%s %a\n", `Not identifiable parameters:                      `, map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta))):
     printf("===============\n\n"):
   end if:
-
-  table([
+  output := table([
     globally = {op(map(x -> ParamToOuter(x, all_vars), theta_g))},
     locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
     non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
   ]):
+  for var in map(ParamToInner, output[globally]) do
+ 	  printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
+  end do:
+	
+  for var in map(ParamToInner, output[locally_not_globally]) do
+	  G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
+	  P := select(x->evalb(indets(x)={var}), G):
+    printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+  end do:
+  return output;
 end proc:
 
 #===============================================================================
@@ -524,5 +533,3 @@ CompareDiffVar := proc(dvl, dvr, var_list)
   end if:
   return StringTools[Compare](vr, vl):
 end proc:
-
-
