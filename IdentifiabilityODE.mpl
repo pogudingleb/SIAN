@@ -336,19 +336,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     end do:    
   elif method = 2 then
     gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
-    print(gb);
     for i from 1 to nops(theta_l) do
       if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
-    end do:
-  elif method = 3 then
-    R := RegularChains[PolynomialRing](vars):
-    for i from 1 to nops(theta_l) do
-      tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
-      for e in tr do
-        print(RegularChains[Equations](e, R)):
-      end do:
     end do:
   else
     print(`No such method`):
