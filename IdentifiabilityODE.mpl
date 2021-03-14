@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -332,23 +332,24 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
-    
-    solutions_table := table([]):
-    for var in theta_g do
-      if infolevel > 1 then
-        printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
-      end if:
-      solutions_table[var]:=1:
-    end do:
+    if count_solutions then 
+      solutions_table := table([]):
+      for var in theta_g do
+        if infolevel > 1 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
+        end if:
+        solutions_table[var]:=1:
+      end do:
 	
-    for var in select(p -> not p in theta_g, theta_l) do
-	    G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
-	    P := select(x->evalb(indets(x)={var}), G):
-      solutions_table[var]:=degree(P[1], [op(indets(P))]: 
-      if infolevel > 1 then
-        printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
-      end if:
-    end do:
+      for var in select(p -> not p in theta_g, theta_l) do
+        G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
+	P := select(x->evalb(indets(x)={var}), G):
+	solutions_table[var]:=degree(P[1], [op(indets(P))]): 
+        if infolevel > 1 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+        end if:
+      end do:
+    end if:  
   elif method = 3 then
     R := RegularChains[PolynomialRing](vars):
     for i from 1 to nops(theta_l) do
@@ -371,9 +372,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   output := table([
     globally = {op(map(x -> ParamToOuter(x, all_vars), theta_g))},
     locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
-    non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))},
-    num_solutions = solutions_table
+    non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
   ]):
+
+  if count_solutions then 
+    output[num_solutions] := solutions_table:
+  end if:
+
   return output;
 end proc:
 
