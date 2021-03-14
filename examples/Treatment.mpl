@@ -1,5 +1,5 @@
 # Taken from
-# N. Tunker, T. Le
+# N. Tucker, T. Le
 # "Structural and practical identifiability analysis of outbreak models"
 # https://doi.org/10.1016/j.mbs.2018.02.004
 # Equation (2.3) with observed treatment

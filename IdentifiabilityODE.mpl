@@ -14,6 +14,15 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   # 0. Extract inputs, outputs, states, and parameters from the system
   #----------------------------------------------
 
+  if SearchText(".", convert(system_ODEs, string)) <> 0 then
+    PrintHeader("WARNING: It looks like your system involves floating-point numbers. This may result into a non-meaninful result, please convert them to rationals (e.g., 0.2 -> 1/5)"):
+  end if:
+
+  if not verify(indets(system_ODEs, name), indets(system_ODEs), `subset`) then
+    PrintHeader(cat("ERROR: you are using reserved maple symbols:", convert(indets(system_ODEs, name) minus indets(system_ODEs), string))):
+    return;
+  end if:
+
   randomize():
 
   if infolevel > 0 then
@@ -299,7 +308,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       gb := Grid[Seq](
         at_node(theta_l[i], [
           [op(Et_hat), z_aux * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w_aux - 1],
-          tdeg(vars)
+          tdeg(op(vars))
         ]),
         i = 1..nops(theta_l)
       ):
@@ -332,6 +341,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
+
     if count_solutions then 
       solutions_table := table([]):
       for var in theta_g do
