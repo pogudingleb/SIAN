@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process:
+        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -332,6 +332,23 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
+    
+    solutions_table := table([]):
+    for var in theta_g do
+      if infolevel > 1 then
+        printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
+      end if:
+      solutions_table[var]:=1:
+    end do:
+	
+    for var in select(p -> not p in theta_g, theta_l) do
+	    G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
+	    P := select(x->evalb(indets(x)={var}), G):
+      solutions_table[var]:=degree(P[1], [op(indets(P))]: 
+      if infolevel > 1 then
+        printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+      end if:
+    end do:
   elif method = 3 then
     R := RegularChains[PolynomialRing](vars):
     for i from 1 to nops(theta_l) do
@@ -354,17 +371,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   output := table([
     globally = {op(map(x -> ParamToOuter(x, all_vars), theta_g))},
     locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
-    non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
+    non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))},
+    num_solutions = solutions_table
   ]):
-  for var in map(ParamToInner, output[globally]) do
- 	  printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
-  end do:
-	
-  for var in map(ParamToInner, output[locally_not_globally]) do
-	  G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
-	  P := select(x->evalb(indets(x)={var}), G):
-    printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
-  end do:
   return output;
 end proc:
 
