@@ -386,6 +386,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   ]):
 
   if count_solutions then 
+     PrintHeader("WARNING: The result of solution counting is guaranteed with high probability, however it NOT the same probability 'p' as provided in the input."):
     output[num_solutions] := solutions_table:
   end if:
 
