@@ -360,14 +360,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         end if:
       end do:
     end if:  
-  elif method = 3 then
-    R := RegularChains[PolynomialRing](vars):
-    for i from 1 to nops(theta_l) do
-      tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
-      for e in tr do
-        print(RegularChains[Equations](e, R)):
-      end do:
-    end do:
   else
     print(`No such method`):
   end if:
