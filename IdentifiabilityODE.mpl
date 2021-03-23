@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -8,7 +8,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, Et_x_vars:
+        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -336,20 +336,30 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     end do:    
   elif method = 2 then
     gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
-    print(gb);
     for i from 1 to nops(theta_l) do
       if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
-  elif method = 3 then
-    R := RegularChains[PolynomialRing](vars):
-    for i from 1 to nops(theta_l) do
-      tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
-      for e in tr do
-        print(RegularChains[Equations](e, R)):
+
+    if count_solutions then 
+      solutions_table := table([]):
+      for var in theta_g do
+        if infolevel > 1 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
+        end if:
+        solutions_table[var]:=1:
       end do:
-    end do:
+	
+      for var in select(p -> not p in theta_g, theta_l) do
+        G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
+	P := select(x->evalb(indets(x)={var}), G):
+	solutions_table[var]:=degree(P[1], [op(indets(P))]): 
+        if infolevel > 1 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+        end if:
+      end do:
+    end if:  
   else
     print(`No such method`):
   end if:
@@ -366,15 +376,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
     non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
   ]):
-  for var in map(ParamToInner, output[globally]) do
- 	  printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
-  end do:
-	
-  for var in map(ParamToInner, output[locally_not_globally]) do
-	  G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
-	  P := select(x->evalb(indets(x)={var}), G):
-    printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
-  end do:
+
+  if count_solutions then 
+     PrintHeader("WARNING: The result of solution counting is guaranteed with high probability, however it NOT the same probability 'p' as provided in the input."):
+    output[num_solutions] := solutions_table:
+  end if:
+
   return output;
 end proc:
 
