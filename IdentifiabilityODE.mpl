@@ -150,7 +150,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   prolongation_possible := [seq(1, i = 1..m)]:
 
   # (f) ------------------
-  while add(prolongation_possible) > 0 do
+  while foldl(`+`, op(prolongation_possible)) > 0 do
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
