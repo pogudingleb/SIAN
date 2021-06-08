@@ -4,19 +4,24 @@ jobs:
   copy:
     runs-on: ubuntu-latest
     steps:
-      - name: "Download latest gh-cli"
-        env: 
-          VERSION: ${{curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-}}
+      - name: "Download and Install Latest gh-cli"
         run: |
-          wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz
-      - name: "Install gh-cli" 
-        run: |
+          curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-
+          wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz 
           tar xvf gh_${VERSION}_linux_amd64.tar.gz
-          # cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
-          # gh version
-      - name: "print git status"
+          cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
+          gh version
+      - name: "Initialize empty git repo and submit PR"
         run: |
+          BRANCH="commit-$(date +"%Y-%m-%d-%H-%M-%S")"
+          git init .
+          git remote add app-origin git@github.com:iliailmer/sian-web-app.git
+          git checkout -b BRANCH
+          git add IdentifiabilityODE.mpl
           git status -s
+          git commit -m "submitting changes"
+          git push app-origin BRANCH'
+          gh pr create --title github.event.commits[0].message --body github.event.commits[0].message
         # chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
 
         # ${GITHUB_WORKSPACE}/.github/script.sh
