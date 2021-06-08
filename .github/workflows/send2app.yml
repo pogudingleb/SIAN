@@ -9,7 +9,7 @@ jobs:
           VERSION=`curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-`
           wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz 
           tar xvf gh_${VERSION}_linux_amd64.tar.gz
-          gh_${VERSION}_linux_amd64/bin/gh gh version
+          gh_${VERSION}_linux_amd64/bin/gh version
           cp gh_${VERSION}_linux_amd64/bin/gh ./gh
       - name: "Initialize empty git repo and submit PR"
         run: |
