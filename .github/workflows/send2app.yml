@@ -10,9 +10,10 @@ jobs:
           wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz
       - name: "Install gh-cli" 
         run: |
-          tar xvf gh_${VERSION}_linux_amd64.tar.gz
-          cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
-          gh version
+          ls -la
+          # tar xvf gh_${VERSION}_linux_amd64.tar.gz
+          # cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
+          # gh version
       - name: "print git status"
         run: |
           git status -s
