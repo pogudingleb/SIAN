@@ -24,7 +24,7 @@ jobs:
           git checkout -b ${BRANCH}
           git add IdentifiabilityODE.mpl
           git commit -m "submitting changes"
-          git push app-origin
+          git push --set-upstream app-origin
           ./gh pr create --title github.event.commits[0].message --body github.event.commits[0].message
         # chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
 
