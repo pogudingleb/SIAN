@@ -19,7 +19,6 @@ jobs:
           git init .
           git remote add app-origin git@github.com:iliailmer/sian-web-app.git
           git checkout -b ${BRANCH}
-          cp ../SIAN/IdentifiabilityODE.mpl ./
           git add IdentifiabilityODE.mpl
           git status -s
           git commit -m "submitting changes"
