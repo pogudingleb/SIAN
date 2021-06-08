@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: "Download latest gh-cli"
         env: 
-          VERSION: `curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-` 
+          VERSION: ${{curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-}}
         run: |
           wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz
       - name: "Install gh-cli" 
