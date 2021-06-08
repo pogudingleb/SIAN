@@ -16,7 +16,6 @@ jobs:
       - name: "Initialize empty git repo and submit PR"
         run: |
           BRANCH="commit-$(date +"%Y-%m-%d-%H-%M-%S")"
-          ls -la ../
           git init .
           git remote add app-origin git@github.com:iliailmer/sian-web-app.git
           git checkout -b ${BRANCH}
