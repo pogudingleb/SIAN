@@ -58,6 +58,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     p_local := 0.99:
   end if:
 
+  if nops(y_functions) = 0 then
+    PrintHeader("ERROR: no outputs in the model");
+    return;
+  end:
+
   if infolevel > 0 then
     printf("\n=== Input info ===\n"):
     printf("%s %a\n", `State variables:         `, x_functions):
