@@ -250,6 +250,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
   y_hat := sample[1]:
   u_hat := sample[2]:
+  # all_subs := sample[4]:
   theta_hat := sample[3]:
   if infolevel > 1 then
     printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
@@ -274,7 +275,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
   end if:
- 
+
+  writeto("example_system.out");
+  printf("Et_hat=%a; #with Q_hat\n", [op(Et_hat), z_aux * Q_hat - 1]);
+  printf("vars=%a;\n", vars);
+  printf("all_subs%a;\n", all_subs);
+  writeto(terminal);
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
