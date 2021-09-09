@@ -1,0 +1,31 @@
+name: Action that sends the SIAN code to webapp's repo
+on: [push]
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download and Install Latest gh-cli"
+        run: |
+          VERSION=`curl  "https://api.github.com/repos/cli/cli/releases/latest" | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-`
+          wget https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_amd64.tar.gz 
+          tar xvf gh_${VERSION}_linux_amd64.tar.gz
+          gh_${VERSION}_linux_amd64/bin/gh version
+          cp gh_${VERSION}_linux_amd64/bin/gh ./gh
+      - name: "Initialize empty git repo and submit PR"
+        run: |
+          BRANCH="commit-$(date +"%Y-%m-%d-%H-%M-%S")"
+          ls -la ../
+          git init .
+          git remote add app-origin git@github.com:iliailmer/sian-web-app.git
+          git checkout -b ${BRANCH}
+          cp ../SIAN/IdentifiabilityODE.mpl ./
+          git add IdentifiabilityODE.mpl
+          git status -s
+          git commit -m "submitting changes"
+          git push app-origin 
+          ./gh pr create --title github.event.commits[0].message --body github.event.commits[0].message
+        # chmod +x "${GITHUB_WORKSPACE}/.github/script.sh"
+
+        # ${GITHUB_WORKSPACE}/.github/script.sh
+
+
