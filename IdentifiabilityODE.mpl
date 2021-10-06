@@ -84,6 +84,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   n := nops(x_vars):
   m := nops(y_vars):
   s := nops(mu) + n:
+  printf("\n\nNumber S = %a\n\n", s):
   all_params := [op(mu), op(map(x -> MakeDerivative(x, 0), x_vars ))]:
   all_vars := [ op(x_vars), op(y_vars), op(u_vars) ]:
   eqs := [op(x_eqs), op(y_eqs)]:
@@ -236,7 +237,32 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
-  
+  non_id := map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]):
+  if nops(non_id)>0 then
+    lie_derivatives := []:
+    zero_order_y_eq := select(yeq->GetOrderVar(lhs(yeq))[2]=0, Y_eq):
+    states := [seq(MakeDerivative(st, 0), st in x_vars)]:
+    inputs := [seq(MakeDerivative(uu, 0), uu in u_vars)]:
+    printf("Computing Lie Derivatives\n");
+    for each in zero_order_y_eq do
+        gg := rhs(each):
+        lie_derivatives := [op(lie_derivatives), gg]:
+        print(each, lie_derivatives);
+        for i from 1 to s-1 do
+            gg := simplify(LieDer(gg, states, X_eq, inputs)):
+            lie_derivatives := [op(lie_derivatives), gg]:
+        end do:
+    end do:
+    rref := LinearAlgebra[ReducedRowEchelonForm](subs(all_subs, VectorCalculus[Jacobian](lie_derivatives, theta))):
+    alg_indep := []:
+    for i from 1 to nops(theta) do
+        if add(rref[.., i])<>1 and theta[i] in non_id then 
+            alg_indep := [op(alg_indep), theta[i]]:
+        end if:
+    end do:
+  end if:
+
+  printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, alg_indep):
   #----------------------------------------------
   # 3. Randomize.
   #----------------------------------------------
@@ -556,4 +582,31 @@ CompareDiffVar := proc(dvl, dvr, var_list)
     return evalb(length(vl) > length(vr)):
   end if:
   return StringTools[Compare](vr, vl):
+end proc:
+
+LieDer := proc(g_in, states, X_eq, inputs:=[])
+    local res, x, varord, var, ord, u, i, g;
+    res := 0:
+    for x in states do
+        varord:=GetOrderVar(x);
+        var := varord[1]:
+        ord := varord[2]:
+        res := res + diff(g_in, x)*MakeDerivative(var, ord+1);
+    end do:
+    res := subs(X_eq, res):
+    g := res:
+    if nops(inputs)>0 then
+        for i from 1 to nops(inputs) do
+            u := inputs[i]:
+            varord:=GetOrderVar(u);
+            var := varord[1]:
+            ord := varord[2]:
+            while (diff(g, u)*MakeDerivative(var, ord+1)<>0) do
+                res := res + diff(g, u)*MakeDerivative(var, ord+1):
+                u := MakeDerivative(var, ord+1):
+                ord:=ord+1:
+            end do:
+        end do:
+    end if:
+    return res:
 end proc:
