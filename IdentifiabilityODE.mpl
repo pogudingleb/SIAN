@@ -276,8 +276,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   sample := SamplePoint(D2, x_vars, [op(y_vars), op(y_faux)], u_vars, mu, X_eq, Y_eq, Q):
   y_hat := sample[1]:
   u_hat := sample[2]:
-  theta_hat := sample[3]:
-  
+  theta_hat := sample[3]:  
   if infolevel > 1 then
     printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
   end if:
@@ -578,4 +577,3 @@ CompareDiffVar := proc(dvl, dvr, var_list)
   end if:
   return StringTools[Compare](vr, vl):
 end proc:
-
