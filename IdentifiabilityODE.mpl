@@ -190,7 +190,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
             end do:
             polys_to_process := new_to_process:
           end do:
-        else             
+        else
           prolongation_possible[i] := 0;
         end if:
       end if: 
@@ -579,29 +579,3 @@ CompareDiffVar := proc(dvl, dvr, var_list)
   return StringTools[Compare](vr, vl):
 end proc:
 
-LieDer := proc(g_in, states, X_eq, inputs:=[])
-    local res, x, varord, var, ord, u, i, g;
-    res := 0:
-    for x in states do
-        varord:=GetOrderVar(x);
-        var := varord[1]:
-        ord := varord[2]:
-        res := res + diff(g_in, x)*MakeDerivative(var, ord+1);
-    end do:
-    res := subs(X_eq, res):
-    g := res:
-    if nops(inputs)>0 then
-        for i from 1 to nops(inputs) do
-            u := inputs[i]:
-            varord:=GetOrderVar(u);
-            var := varord[1]:
-            ord := varord[2]:
-            while (diff(g, u)*MakeDerivative(var, ord+1)<>0) do
-                res := res + diff(g, u)*MakeDerivative(var, ord+1):
-                u := MakeDerivative(var, ord+1):
-                ord:=ord+1:
-            end do:
-        end do:
-    end if:
-    return res:
-end proc:

@@ -10,3 +10,5 @@ diff(II(t), t) = -alpha*II(t) + E(t)*k*r - g1*II(t),
 y2(t) = Ninv,
 y(t) = C(t)
 ];
+
+output = IdentifiabilityODE(sys, GetParameters(sys)):
