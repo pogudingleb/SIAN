@@ -22,4 +22,4 @@ IdentifiabilityODE(sigma, GetParameters(sigma));
 # GenerateReplica(sigma, 2) generates a system consiting of two copies of sigma
 # with the same parameters in ODEs but different inputs and initial conditions
 
-IdentifiabilityODE(GenerateReplica(sigma, 2), GetParameters(sigma, initial_conditions=false));
+# IdentifiabilityODE(GenerateReplica(sigma, 2), GetParameters(sigma, initial_conditions=false));

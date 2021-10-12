@@ -1,5 +1,5 @@
-#===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+#==============================================================================
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -161,12 +161,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
         JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)):
-        rrefJacX := LinearAlgebra[ReducedRowEchelonForm](subs(all_subs, JacX)):
-        for k_ from 1 to nops(theta) do
-            if add(rrefJacX[.., k_])<>1 then 
-                alg_indep := {op(alg_indep), theta[k_]}:
-            end if:
-        end do:
+        if sub_non_id then
+          rrefJacX := LinearAlgebra[ReducedRowEchelonForm](subs(all_subs, JacX)):
+        end if:
         if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
           Et := [op(Et), Y[i][beta[i] + 1]]:
           beta[i] := beta[i] + 1:
@@ -191,6 +188,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
             polys_to_process := new_to_process:
           end do:
         else
+          if sub_non_id then 
+            for k_ from 1 to nops(theta) do
+                if add(rrefJacX[.., k_])<>1 then 
+                    alg_indep := {op(alg_indep), theta[k_]}:
+                end if:
+            end do:
+          end:
           prolongation_possible[i] := 0;
         end if:
       end if: 
@@ -243,21 +247,18 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
 
-  printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
-
-  non_id := [op({op(theta)} minus {op(theta_l)})]:
-  alg_indep := select(x-> x in non_id, alg_indep): 
-  printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
-  
-  faux_equations := [seq(parse(cat("y_faux", i, "_0"))=alg_indep[i], i=1..numelems(alg_indep))]:
-  y_faux := [seq(parse(cat("y_faux", i, "_")), i=1..numelems(alg_indep))]:
-
-  printf("%s %a\n", `Adding equations:`, faux_equations):
-
-  printf("%s %a\n", `New y-functions:`, y_faux):
-  Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
-  Y_eq := [op(Y_eq), op(faux_equations)]:
-   
+  if sub_non_id then
+    printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+    non_id := [op({op(theta)} minus {op(theta_l)})]:
+    alg_indep := select(x-> x in non_id, alg_indep): 
+    printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+    faux_equations := [seq(parse(cat("y_faux", i, "_0"))=alg_indep[i], i=1..numelems(alg_indep))]:
+    y_faux := [seq(parse(cat("y_faux", i, "_")), i=1..numelems(alg_indep))]:
+    printf("%s %a\n", `Adding equations:`, faux_equations):
+    printf("%s %a\n", `New y-functions:`, y_faux):
+    Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
+    Y_eq := [op(Y_eq), op(faux_equations)]:
+  end if:
   #----------------------------------------------
   # 3. Randomize.
   #----------------------------------------------
