@@ -189,11 +189,18 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
           end do:
         else
           if sub_non_id then 
-            for k_ from 1 to nops(theta) do
-                if add(rrefJacX[.., k_])<>1 then 
-                    alg_indep := {op(alg_indep), theta[k_]}:
+            pivots := {}:
+            for row_idx from 1 to nops(eqs_i) do #nops(theta) do
+                row := rrefJacX[row_idx]:
+                pivot_idx := 1:
+                while row[pivot_idx]=0 and add(row)<>0 do
+                  pivot_idx := pivot_idx + 1:
+                end do:
+                if pivot_idx < numelems(row) then
+                  pivots := {op(pivots), x_theta_vars[pivot_idx]}:
                 end if:
             end do:
+            alg_indep := {op(x_theta_vars)} minus pivots:
           end:
           prolongation_possible[i] := 0;
         end if:
@@ -248,10 +255,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
   end if:
 
   if sub_non_id then
-    printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+    alg_indep := select(x-> x in non_id or x in x_theta_vars, alg_indep):
     non_id := [op({op(theta)} minus {op(theta_l)})]:
-    alg_indep := select(x-> x in non_id, alg_indep): 
-    printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+    printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+    
+    # printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
     faux_equations := [seq(parse(cat("y_faux", i, "_0"))=alg_indep[i], i=1..numelems(alg_indep))]:
     y_faux := [seq(parse(cat("y_faux", i, "_")), i=1..numelems(alg_indep))]:
     printf("%s %a\n", `Adding equations:`, faux_equations):
@@ -298,6 +306,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
     z_aux, w_aux,
     op(sort(mu))
   ]:
+
+  writeto("no_transcendence.mpl"):
+  printf("Et_hat := %a;\nvars:=%a;\n", Et_hat, vars);
+  printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)));\n");
+  writeto(terminal);
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
   end if:
