@@ -17,5 +17,5 @@ sigma := [
   y3(t) = x4(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=false):
 

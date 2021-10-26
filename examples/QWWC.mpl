@@ -7,4 +7,4 @@ diff(z(t), t) = -c*z(t) - w(t)*d + x(t)*y(t),
 diff(y(t), t) = b*x(t) + b*y(t) - x(t)*z(t),
 g(t) = x(t)
 ];
-output := IdentifiabilityODE(sys, GetParameters(sys)):
+IdentifiabilityODE(sys, GetParameters(sys), sub_transc=false):

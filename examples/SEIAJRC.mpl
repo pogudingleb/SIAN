@@ -11,4 +11,5 @@ y2(t) = Ninv,
 y(t) = C(t)
 ];
 
-output = IdentifiabilityODE(sys, GetParameters(sys)):
+IdentifiabilityODE(sys, GetParameters(sys), sub_transc=true):
+

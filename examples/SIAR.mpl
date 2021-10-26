@@ -15,4 +15,4 @@ y3(t) = Rd(t),
 y5(t) = Ninv,
 y1(t) = H(t)
 ];
-output := IdentifiabilityODE(sys, GetParameters(sys)):
+IdentifiabilityODE(sys, GetParameters(sys), sub_transc=true):

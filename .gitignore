@@ -1,1 +1,4 @@
 trdeg-subs-condition
+*.sh
+*.out
+outputs

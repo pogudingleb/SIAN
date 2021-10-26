@@ -15,4 +15,4 @@ sigma := [
   y2(t) = r(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=false):

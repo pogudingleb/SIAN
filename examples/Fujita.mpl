@@ -16,4 +16,4 @@ y2(t) = a2*pAkt(t) + a2*pAkt_S6(t),
 y3(t) = pS6(t)*a3
 ];
 
-output := IdentifiabilityODE(sys, GetParameters(sys)):
+output := IdentifiabilityODE(sys, GetParameters(sys), sub_transc=false):

@@ -15,4 +15,4 @@ sigma := [
   y2(t) = z(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), sub_non_id=false):
+IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=true, infolevel=1):
