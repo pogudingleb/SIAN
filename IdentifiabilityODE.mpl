@@ -1,5 +1,5 @@
 #==============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -9,7 +9,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
         prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table,
-        Et_x_vars, var, G, P, output:
+        Et_x_vars, var, G, P, output, alg_indep, rrefJacX, pivots, row_idx, row, pivot_idx, non_id, faux_equations,
+        y_faux:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -155,13 +156,16 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
   x_theta_vars := all_params:
   prolongation_possible := [seq(1, i = 1..m)]:
   alg_indep := {}:
+  print(x_theta_vars);
+  x_theta_vars_rev := ListTools[Reverse](x_theta_vars):
+  print(x_theta_vars);
   # (f) ------------------
   while foldl(`+`, op(prolongation_possible)) > 0 do
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
-        JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)):
-        if sub_non_id then
+        JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars_rev)):
+        if sub_transc then
           rrefJacX := LinearAlgebra[ReducedRowEchelonForm](subs(all_subs, JacX)):
         end if:
         if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
@@ -177,7 +181,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
             end do:
             vars_to_add := { op(remove(v -> evalb(v in x_theta_vars), vars)) };
             for v in vars_to_add do
-              x_theta_vars := [op(x_theta_vars), v];
+              x_theta_vars := [v, op(x_theta_vars)];
               ord_var := GetOrderVar(v);
               var_index := ListTools[Search](ord_var[1], x_vars):
               poly := X[ var_index ][ ord_var[2] ]:
@@ -188,7 +192,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
             polys_to_process := new_to_process:
           end do:
         else
-          if sub_non_id then 
+          if sub_transc then 
             pivots := {}:
             for row_idx from 1 to nops(eqs_i) do #nops(theta) do
                 row := rrefJacX[row_idx]:
@@ -254,9 +258,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
 
-  if sub_non_id then
-    alg_indep := select(x-> x in non_id or x in x_theta_vars, alg_indep):
+  if sub_transc then
     non_id := [op({op(theta)} minus {op(theta_l)})]:
+    alg_indep := select(x-> x in non_id and x in x_theta_vars, alg_indep):
     printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
     
     # printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
@@ -306,15 +310,29 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_non_id:=true, p :
     z_aux, w_aux,
     op(sort(mu))
   ]:
-
-  writeto("no_transcendence.mpl"):
-  printf("Et_hat := %a;\nvars:=%a;\n", Et_hat, vars);
-  printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)));\n");
+  
+  if sub_transc then
+    writeto("transcendence.mpl"):
+    printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
+    printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
+    writeto("transcendence.m"):
+    printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
+    printf("time GroebnerBasis(G);\n");
+  else
+    writeto("no_transcendence.mpl"):
+    printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
+    printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
+    writeto("no_transcendence.m"):
+    printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%a>:= PolynomialRing(Q, %d, \"grevlex\");\nG := %s;\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
+    printf("time GroebnerBasis(G);\n");
+  end if:
   writeto(terminal);
+  return;
+
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
   end if:
- 
+   
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
