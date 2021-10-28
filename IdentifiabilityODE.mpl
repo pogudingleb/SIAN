@@ -1,5 +1,7 @@
+# TODO: what if we know what is locally identifiable and sort x_theta_varaibles so that loc_id goes first.
+# then compute jacobian of Et w.r.t. x_theta_vars.
 #==============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p := 0.99, count_solutions:=true, infolevel := 2, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -155,7 +157,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   x_theta_vars := all_params:
   prolongation_possible := [seq(1, i = 1..m)]:
   alg_indep := {}:
-  x_theta_vars := ListTools[Reverse](x_theta_vars):
+  # x_theta_vars := ListTools[Reverse](x_theta_vars):
   # (f) ------------------
   while foldl(`+`, op(prolongation_possible)) > 0 do
     for i from 1 to m do
@@ -189,20 +191,20 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
             polys_to_process := new_to_process:
           end do:
         else
-          if sub_transc then 
-            pivots := {}:
-            for row_idx from 1 to nops(eqs_i) do #nops(theta) do
-                row := rrefJacX[row_idx]:
-                pivot_idx := 1:
-                while row[pivot_idx]=0 and add(row)<>0 do
-                  pivot_idx := pivot_idx + 1:
-                end do:
-                if pivot_idx < numelems(row) then
-                  pivots := {op(pivots), x_theta_vars[pivot_idx]}:
-                end if:
-            end do:
-            alg_indep := {op(x_theta_vars)} minus pivots:
-          end:
+          # if sub_transc then 
+          #   pivots := {}:
+          #   for row_idx from 1 to nops(eqs_i) do #nops(theta) do
+          #       row := rrefJacX[row_idx]:
+          #       pivot_idx := 1:
+          #       while row[pivot_idx]=0 and add(row)<>0 do
+          #         pivot_idx := pivot_idx + 1:
+          #       end do:
+          #       if pivot_idx < numelems(row) then
+          #         pivots := {op(pivots), x_theta_vars[pivot_idx]}:
+          #       end if:
+          #   end do:
+          #   alg_indep := {op(x_theta_vars)} minus pivots:
+          # end if:
           prolongation_possible[i] := 0;
         end if:
       end if: 
@@ -250,14 +252,36 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       theta_l := [op(theta_l), param]:
     end if:
   end do:
- 
+  
+  x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
+  x_theta_vars := [op(theta_l), op(x_theta_vars_)];
+  if sub_transc then 
+    JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars));
+    rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
+    pivots := {}:
+    for row_idx from 1 to nops(eqs_i) do #nops(theta) do
+        row := rrefJacX[row_idx]:
+        pivot_idx := 1:
+        while row[pivot_idx]=0 and add(row)<>0 do
+          pivot_idx := pivot_idx + 1:
+        end do:
+        if pivot_idx < numelems(row) then
+          pivots := {op(pivots), x_theta_vars[pivot_idx]}:
+        end if:
+    end do:
+    alg_indep := {op(x_theta_vars)} minus pivots:
+    print(alg_indep);
+  end if:
+
+
+
   if infolevel > 0 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
   if sub_transc then
     non_id := [op({op(theta)} minus {op(theta_l)})]:
-    alg_indep := select(x-> x in non_id or x in {op(x_theta_vars)} minus {op(theta)}, alg_indep):
+    # alg_indep := select(x-> x in non_id or x in {op(x_theta_vars)} minus {op(theta)}, alg_indep):
     printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
 
     if sub_transc then 
@@ -285,11 +309,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
     if infolevel>0 then
       printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep_params)):
       printf("%s %a\n", `Algebraically independent parameters among derivatives:`, map(x-> ParamToOuter(x, all_vars), alg_indep_derivs)):
+    end if:
+    
+    if infolevel>1 then
       printf("\t%s %a\n", `Adding ODEs:`, faux_odes):
       printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
       printf("\t%s %a\n", `New system:`, sigma_new):
     end if:
-    
+
     X_eq, Y_eq, Et, theta_l, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
     
     if numelems(alg_indep_derivs)>0 then
@@ -297,7 +324,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
       Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
       Y_eq := [op(Y_eq), op(faux_equations)]:
+      if infolevel>1 then
+        printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
+        printf("\t%s %a\n", `New system:`, Et):
+        printf("\t%s %a\n", `New system:`, Y_eq):
+      end if:
     end if;
+    
 
   end if:
   #----------------------------------------------
