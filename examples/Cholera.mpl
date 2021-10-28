@@ -13,4 +13,5 @@ sigma := [
   y2(t) = i(t) + r(t) + s(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=false):
+
+IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=true):
