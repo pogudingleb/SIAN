@@ -286,9 +286,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       PrintHeader("Substituting transcendence basis."):
     end if:
 
-    alg_indep_params := map(each->GetStateName(each, x_vars, mu), {op(alg_indep)} intersect {op(non_id)}):
+    alg_indep_params := map(each->GetStateName(each, x_vars, mu), alg_indep):
     alg_indep_params := select(x-> not x in x_vars, alg_indep_params);
-    alg_indep_derivs := {op(alg_indep)} minus {op(non_id)} intersect {op(x_vars)}: 
+    alg_indep_derivs := ({op(alg_indep)} minus {op(alg_indep_params)}) intersect {op(x_vars)}:
     faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
     faux_odes := []:
     idx := 1:
