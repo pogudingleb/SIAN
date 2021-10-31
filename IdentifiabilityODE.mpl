@@ -265,7 +265,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
         while row[pivot_idx]=0 and add(row)<>0 do
           pivot_idx := pivot_idx + 1:
         end do:
-        if pivot_idx < numelems(row) then
+        if pivot_idx <= numelems(row) then
           pivots := {op(pivots), x_theta_vars[pivot_idx]}:
         end if:
     end do:
@@ -273,13 +273,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
     print(alg_indep);
   end if:
 
-
-
   if infolevel > 0 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
-  if sub_transc then
+  if sub_transc and numelems(alg_indep)<>0 then
     non_id := [op({op(theta)} minus {op(theta_l)})]:
     # alg_indep := select(x-> x in non_id or x in {op(x_theta_vars)} minus {op(theta)}, alg_indep):
     printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
@@ -287,10 +285,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
     if sub_transc then 
       PrintHeader("Substituting transcendence basis."):
     end if:
+
     alg_indep_params := map(each->GetStateName(each, x_vars, mu), {op(alg_indep)} intersect {op(non_id)}):
-    alg_indep_derivs := {op(alg_indep)} minus {op(non_id)}: 
+    alg_indep_params := select(x-> not x in x_vars, alg_indep_params);
+    alg_indep_derivs := {op(alg_indep)} minus {op(non_id)} intersect {op(x_vars)}: 
     faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
-    faux_odes := []: 
+    faux_odes := []:
     idx := 1:
     sigma_new := system_ODEs:
     for each in alg_indep_params do
@@ -316,9 +316,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
       printf("\t%s %a\n", `New system:`, sigma_new):
     end if:
-
+    # non_id := [op({op(theta)} minus {op(theta_l)})]: 
     X_eq, Y_eq, Et, theta_l, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
-    
     if numelems(alg_indep_derivs)>0 then
       faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
       y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
@@ -331,7 +330,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       end if:
     end if;
     
-
+  else
+    printf("%s\n", `No algebraically independent parameters found.`);
   end if:
   #----------------------------------------------
   # 3. Randomize.
@@ -374,12 +374,19 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   ]:
   
   if sub_transc then
-    writeto("transcendence.mpl"):
-    printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
-    printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
-    writeto("transcendence.m"):
-    printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
-    printf("time GroebnerBasis(G);\nquit;");
+    if numelems(alg_indep) = 0 then
+      writeto("transcendence.mpl"):
+      printf("%s\n", `No Algebraically independent parameters`):
+      writeto("transcendence.m"):
+      printf("%s\n", `quit;`):
+    else
+      writeto("transcendence.mpl"):
+      printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
+      printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
+      writeto("transcendence.m"):
+      printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
+      printf("time GroebnerBasis(G);\nquit;");
+    end if:
   else
     writeto("no_transcendence.mpl"):
     printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);

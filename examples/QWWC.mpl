@@ -8,3 +8,4 @@ diff(y(t), t) = b*x(t) + b*y(t) - x(t)*z(t),
 g(t) = x(t)
 ];
 IdentifiabilityODE(sys, GetParameters(sys), sub_transc=false):
+quit;

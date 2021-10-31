@@ -12,4 +12,4 @@ y(t) = C(t)
 ];
 
 IdentifiabilityODE(sys, GetParameters(sys), sub_transc=true):
-
+quit;
