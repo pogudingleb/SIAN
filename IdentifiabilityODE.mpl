@@ -191,20 +191,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
             polys_to_process := new_to_process:
           end do:
         else
-          # if sub_transc then 
-          #   pivots := {}:
-          #   for row_idx from 1 to nops(eqs_i) do #nops(theta) do
-          #       row := rrefJacX[row_idx]:
-          #       pivot_idx := 1:
-          #       while row[pivot_idx]=0 and add(row)<>0 do
-          #         pivot_idx := pivot_idx + 1:
-          #       end do:
-          #       if pivot_idx < numelems(row) then
-          #         pivots := {op(pivots), x_theta_vars[pivot_idx]}:
-          #       end if:
-          #   end do:
-          #   alg_indep := {op(x_theta_vars)} minus pivots:
-          # end if:
           prolongation_possible[i] := 0;
         end if:
       end if: 
@@ -254,7 +240,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   end do:
   
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
-  x_theta_vars := [op(theta_l), op(x_theta_vars_)];
+  x_theta_vars := [op(theta_l), op(x_theta_vars_)]; #TODO: permute randomly, permute manually
   if sub_transc then 
     JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars));
     rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
@@ -273,13 +259,15 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
     print(alg_indep);
   end if:
   derivs:={op(x_theta_vars)} minus {op(mu)};
+  sigma_new := system_ODEs:
+  non_id := [op({op(theta)} minus {op(theta_l)})]:
+
   if infolevel > 0 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
+  
   if sub_transc and numelems(alg_indep)<>0 then
-    non_id := [op({op(theta)} minus {op(theta_l)})]:
-    # alg_indep := select(x-> x in non_id or x in {op(x_theta_vars)} minus {op(theta)}, alg_indep):
     printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
 
     if sub_transc then 
@@ -348,7 +336,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   end if:
   # (b, c) ---------
   sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
-  y_hat := sample[1]:
+  y_hat := sample[1]: # {y_2 = 984103984750918790, y_3=29857203189475109}
   u_hat := sample[2]:
   theta_hat := sample[3]:  
   if infolevel > 1 then
