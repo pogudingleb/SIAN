@@ -6,6 +6,6 @@ sigma := [
   diff(x3(t), t) = -k13 * x3(t) + k31 * x1(t),
   diff(x4(t), t) = -k14 * x4(t) + k41 * x1(t),
   y(t) = x1(t)
-];
+]; 
 
 IdentifiabilityODE(sigma, GetParameters(sigma), sub_transc=false):

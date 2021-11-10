@@ -267,7 +267,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
   
   choices := combinat[choose](x_theta_vars_, numelems(alg_indep));
   choice_idx := 1;
-  # for alg_indep in choices do
+  for alg_indep in choices do
     if sub_transc and numelems(alg_indep)<>0 then
       printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
       if sub_transc then 
@@ -285,18 +285,22 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
 
       # test column space membership:
       in_span_count := 0:
-      for col_idx from 1 to numelems(alg_indep) do
-        solution := LinearAlgebra[LinearSolve](A, rhs_cols[.., col_idx]):
-        if add(solution)<>0 then
-          in_span_count := in_span_count +1;
-          printf("%s %a %s\n", "Parameter", alg_indep[col_idx], "is in the span of columns" ):
-        end if;
-      end do:
-      if in_span_count<>numelems(alg_indep) then
-        printf("%s %a %s\n", "Pair", choices, "is not transcendence basis" ):
-        next # proceed to the next alg_indep pair
-      end if;
-      alg_indep_params := {op(alg_indep)} intersect {op(mu)}:
+      #for col_idx from 1 to numelems(alg_indep) do
+      try
+        solution := LinearAlgebra[LinearSolve](A, rhs_cols):  # Ax = b, b=rhs_cols
+      catch :
+        appendto("bad_pairs.out"):
+        printf("%s %a %s\n", "Pair", alg_indep, "is not transcendence basis" ):
+        writeto(terminal):
+        choice_idx:=choice_idx+1:
+        next
+      end try;
+      # if add(solution)<>0 then
+      #   in_span_count := in_span_count +1;
+      #   printf("%s %a %s\n", "Parameter", alg_indep, "is in the span of columns" ):
+      # end if;
+      #end do:
+      alg_indep_params := {op(alg_indep)} intersect {op(non_id)}:
       alg_indep_derivs := {op(alg_indep)} intersect derivs:
       faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
       faux_odes := []:
@@ -408,7 +412,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
     writeto(terminal);
     choice_idx := choice_idx+1;
 
-  # end do;
+  end do;
   return;
 
   if infolevel > 1 then
