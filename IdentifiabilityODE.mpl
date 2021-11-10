@@ -1,7 +1,7 @@
 # TODO: what if we know what is locally identifiable and sort x_theta_varaibles so that loc_id goes first.
 # then compute jacobian of Et w.r.t. x_theta_vars.
 #==============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p := 0.99, count_solutions:=true, infolevel := 2, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_transc:=true, p := 0.99, count_solutions:=true, infolevel := 2, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -164,9 +164,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
         JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, eqs_i), x_theta_vars = subs(all_subs, x_theta_vars)):
-        if sub_transc then
-          rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
-        end if:
         if LinearAlgebra[Rank](JacX) = nops(eqs_i) then
           Et := [op(Et), Y[i][beta[i] + 1]]:
           beta[i] := beta[i] + 1:
@@ -240,12 +237,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   end do:
   
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
+
   x_theta_vars := [op(theta_l), op(x_theta_vars_)]; #TODO: permute randomly, permute manually
-  if sub_transc then 
-    JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars));
+  # x_theta_vars := [a, b, d, h, u, w_0, z_0, z_6, z_5, z_4, z_3, z_2, z_1, y_6, y_5, y_4, y_3, y_2, y_1, y_0, x_6, x_5, x_4, x_3, x_2, x_1, x_0, w_7, w_6, w_5, w_4, w_3, w_2, w_1, v_5, v_4, v_3, v_2, v_1, v_0, k, c, lm, q, beta_];
+  if sub_transc then
+    JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars)); 
     rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
     pivots := {}:
-    for row_idx from 1 to nops(eqs_i) do #nops(theta) do
+    for row_idx from 1 to nops(Et) do #nops(theta) do
         row := rrefJacX[row_idx]:
         pivot_idx := 1:
         while row[pivot_idx]=0 and add(row)<>0 do
@@ -261,128 +260,155 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {sub_transc:=true, p :
   derivs:={op(x_theta_vars)} minus {op(mu)};
   sigma_new := system_ODEs:
   non_id := [op({op(theta)} minus {op(theta_l)})]:
-
   if infolevel > 0 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
   
-  if sub_transc and numelems(alg_indep)<>0 then
-    printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
-
-    if sub_transc then 
-      PrintHeader("Substituting transcendence basis."):
-    end if:
-
-    alg_indep_params := {op(alg_indep)} intersect {op(mu)}:
-    alg_indep_derivs := {op(alg_indep)} intersect derivs:
-    faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
-    faux_odes := []:
-    idx := 1:
-    sigma_new := system_ODEs:
-    for each in alg_indep_params do
-      if not (each in x_vars) then
-        sigma_new := subs({each=each(t)}, sigma_new):
-        faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=each(t)]:
-        faux_odes := [op(faux_odes), diff(each(t), t)=0]:
-      else
-        faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=parse(convert(each, string)[..-2])(t)]:
+  choices := combinat[choose](x_theta_vars_, numelems(alg_indep));
+  choice_idx := 1;
+  # for alg_indep in choices do
+    if sub_transc and numelems(alg_indep)<>0 then
+      printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+      if sub_transc then 
+        PrintHeader("Substituting transcendence basis."):
       end if:
-      idx := idx+1:
-    end do:
+      rhs_cols := []:
+      idxs := []:
+      for parameter in alg_indep do
+        idx := ListTools[Search](parameter, x_theta_vars):
+        idxs := [op(idxs), idx]:
+        rhs_cols := [op(rhs_cols), JacX[..,idx]]:
+      end do:
+      rhs_cols := Matrix(rhs_cols):
+      A := LinearAlgebra[DeleteColumn](JacX, idxs):
 
-    sigma_new := [op(faux_odes), op(sigma_new), op(faux_outputs)]:
-    
-    if infolevel>0 then
-      printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep_params)):
-      printf("%s %a\n", `Algebraically independent parameters among derivatives:`, map(x-> ParamToOuter(x, all_vars), alg_indep_derivs)):
-    end if:
-    
-    if infolevel>1 then
-      printf("\t%s %a\n", `Adding ODEs:`, faux_odes):
-      printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
-      printf("\t%s %a\n", `New system:`, sigma_new):
-    end if:
-    # non_id := [op({op(theta)} minus {op(theta_l)})]: 
-    X_eq, Y_eq, Et, theta_l, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
-    if numelems(alg_indep_derivs)>0 then
-      faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
-      y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
-      Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
-      Y_eq := [op(Y_eq), op(faux_equations)]:
+      # test column space membership:
+      in_span_count := 0:
+      for col_idx from 1 to numelems(alg_indep) do
+        solution := LinearAlgebra[LinearSolve](A, rhs_cols[.., col_idx]):
+        if add(solution)<>0 then
+          in_span_count := in_span_count +1;
+          printf("%s %a %s\n", "Parameter", alg_indep[col_idx], "is in the span of columns" ):
+        end if;
+      end do:
+      if in_span_count<>numelems(alg_indep) then
+        printf("%s %a %s\n", "Pair", choices, "is not transcendence basis" ):
+        next # proceed to the next alg_indep pair
+      end if;
+      alg_indep_params := {op(alg_indep)} intersect {op(mu)}:
+      alg_indep_derivs := {op(alg_indep)} intersect derivs:
+      faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
+      faux_odes := []:
+      idx := 1:
+      sigma_new := system_ODEs:
+      for each in alg_indep_params do
+        if not (each in x_vars) then
+          sigma_new := subs({each=each(t)}, sigma_new):
+          faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=each(t)]:
+          faux_odes := [op(faux_odes), diff(each(t), t)=0]:
+        else
+          faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=parse(convert(each, string)[..-2])(t)]:
+        end if:
+        idx := idx+1:
+      end do:
+
+      sigma_new := [op(faux_odes), op(sigma_new), op(faux_outputs)]:
+      
+      if infolevel>0 then
+        printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep_params)):
+        printf("%s %a\n", `Algebraically independent parameters among derivatives:`, map(x-> ParamToOuter(x, all_vars), alg_indep_derivs)):
+      end if:
+      
       if infolevel>1 then
-        printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
-        printf("\t%s %a\n", `New system:`, Et):
-        printf("\t%s %a\n", `New system:`, Y_eq):
+        printf("\t%s %a\n", `Adding ODEs:`, faux_odes):
+        printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
+        printf("\t%s %a\n", `New system:`, sigma_new):
       end if:
-    end if;
-    
-  else
-    printf("%s\n", `No algebraically independent parameters found.`);
-  end if:
-  #----------------------------------------------
-  # 3. Randomize.
-  #----------------------------------------------
-
-  if infolevel > 0 then
-    PrintHeader("4. Randomizing the truncated system"):
-  end if:
-
-  # (a) ------------
-  deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
-  D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
-  if infolevel > 1 then
-    printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
-  end if:
-  # (b, c) ---------
-  sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
-  y_hat := sample[1]: # {y_2 = 984103984750918790, y_3=29857203189475109}
-  u_hat := sample[2]:
-  theta_hat := sample[3]:  
-  if infolevel > 1 then
-    printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
-  end if:
-  # (d) ------------
-  Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
-
-  Et_x_vars := {}:
-  for poly in Et_hat do
-    Et_x_vars := Et_x_vars union { op(GetVars(poly, x_vars)) }:
-  end do:
-  if infolevel > 1 then
-    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(Et_x_vars) + nops(mu), ` variables`);
-  end if:
-  Q_hat := subs(u_hat, Q):
-
-  vars := [
-    op(sort([op(Et_x_vars)], (a, b) -> CompareDiffVar(a, b, x_vars))),
-    z_aux, w_aux,
-    op(sort(mu))
-  ]:
-  
-  if sub_transc then
-    if numelems(alg_indep) = 0 then
-      writeto("transcendence.mpl"):
-      printf("%s\n", `No Algebraically independent parameters`):
-      writeto("transcendence.m"):
-      printf("%s\n", `quit;`):
+      # non_id := [op({op(theta)} minus {op(theta_l)})]: 
+      X_eq, Y_eq, Et, theta_l, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
+      if numelems(alg_indep_derivs)>0 then
+        faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
+        y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
+        Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
+        Y_eq := [op(Y_eq), op(faux_equations)]:
+        if infolevel>1 then
+          printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
+          printf("\t%s %a\n", `New system:`, Et):
+          printf("\t%s %a\n", `New system:`, Y_eq):
+        end if:
+      end if; 
     else
-      writeto("transcendence.mpl"):
+      printf("%s\n", `No algebraically independent parameters found.`);
+    end if:
+    #----------------------------------------------
+    # 3. Randomize.
+    #----------------------------------------------
+
+    if infolevel > 0 then
+      PrintHeader("4. Randomizing the truncated system"):
+    end if:
+
+    # (a) ------------
+    deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
+    D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
+    if infolevel > 1 then
+      printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
+    end if:
+    # (b, c) ---------
+    sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
+    y_hat := sample[1]:
+    u_hat := sample[2]:
+    theta_hat := sample[3]:  
+    if infolevel > 1 then
+      printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
+    end if:
+    # (d) ------------
+    Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
+
+    Et_x_vars := {}:
+    for poly in Et_hat do
+      Et_x_vars := Et_x_vars union { op(GetVars(poly, x_vars)) }:
+    end do:
+    if infolevel > 1 then
+      printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(Et_x_vars) + nops(mu), ` variables`);
+    end if:
+    Q_hat := subs(u_hat, Q):
+
+    vars := [
+      op(sort([op(Et_x_vars)], (a, b) -> CompareDiffVar(a, b, x_vars))),
+      z_aux, w_aux,
+      op(sort(mu))
+    ]:
+    if sub_transc then
+      system(cat("mkdir -p ", system_name));
+      print(cat(system_name, "/", "transcendence_", convert(choice_idx, string), ".mpl"));
+      if numelems(alg_indep) = 0 then
+        writeto(cat(system_name, "/", "transcendence_", convert(choice_idx, string), ".mpl")):
+        printf("%s\n", `No Algebraically independent parameters`):
+        writeto(cat(system_name, "/", "transcendence.mpl")):
+        printf("%s\n", `quit;`):
+      else
+        writeto(cat(system_name, "/", "transcendence_", convert(choice_idx, string), ".mpl")):
+        printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
+        printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
+        printf("# %a\n", alg_indep);
+        # writeto(cat(system_name, "/", "transcendence_", convert(choice_idx, string), ".m")):
+        # printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
+        # printf("time GroebnerBasis(G);\nquit;");
+      end if:
+    else
+      writeto(cat(system_name, "/", "no_transcendence.mpl")):
       printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
       printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
-      writeto("transcendence.m"):
-      printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
-      printf("time GroebnerBasis(G);\nquit;");
+      # writeto(cat(system_name, "/", "no_transcendence.m")):
+      # printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
+      # printf("time GroebnerBasis(G);\nquit;");
     end if:
-  else
-    writeto("no_transcendence.mpl"):
-    printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
-    printf("gb:=Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279);\n");
-    writeto("no_transcendence.m"):
-    printf("SetNthreads(64);\nQ:= GF(11863279);\nSetVerbose(\"Faugere\", 2);\nP<%s>:= PolynomialRing(Q, %d, \"grevlex\");\nG := [%s];\n", convert(vars, string)[2..-2], nops(vars), convert([op(Et_hat), z_aux * Q_hat - 1], string)[2..-2]);
-    printf("time GroebnerBasis(G);\nquit;");
-  end if:
-  writeto(terminal);
+    writeto(terminal);
+    choice_idx := choice_idx+1;
+
+  # end do;
   return;
 
   if infolevel > 1 then
