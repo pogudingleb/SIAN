@@ -239,6 +239,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
 
   x_theta_vars := [op(theta_l), op(x_theta_vars_)]; #TODO: permute randomly, permute manually
+  # return Et, x_theta_vars, u_hat, y_hat, all_subs:
   # x_theta_vars := [a, b, d, h, u, w_0, z_0, z_6, z_5, z_4, z_3, z_2, z_1, y_6, y_5, y_4, y_3, y_2, y_1, y_0, x_6, x_5, x_4, x_3, x_2, x_1, x_0, w_7, w_6, w_5, w_4, w_3, w_2, w_1, v_5, v_4, v_3, v_2, v_1, v_0, k, c, lm, q, beta_];
   if sub_transc then
     JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars)); 
@@ -269,7 +270,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
   choice_idx := 1;
   for alg_indep in choices do
     if sub_transc and numelems(alg_indep)<>0 then
-      printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
+      printf("%s %a\n", `Algebraically independent parameters (candidates)`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
       if sub_transc then 
         PrintHeader("Substituting transcendence basis."):
       end if:
@@ -300,8 +301,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
       #   printf("%s %a %s\n", "Parameter", alg_indep, "is in the span of columns" ):
       # end if;
       #end do:
-      alg_indep_params := {op(alg_indep)} intersect {op(non_id)}:
       alg_indep_derivs := {op(alg_indep)} intersect derivs:
+      alg_indep_params := ({op(alg_indep)} intersect {op(non_id)}) minus {op(alg_indep_derivs)}:
+      
       faux_outputs := []: # seq(parse(cat("y_faux", idx, "(t)"))=alg_indep_params[idx](t), idx in 1..numelems(alg_indep_params))
       faux_odes := []:
       idx := 1:
