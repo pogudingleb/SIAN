@@ -4,7 +4,7 @@ Maple code for assessing identifiability/observability (local and global) for mo
 Tested with Maple 2016-2019.
 
 ## How to download
-* Usign *git checkout*
+* Using *git checkout*
 * On https://github.com/pogudingleb/SIAN, press green button "Clone of download", and then "Dowload ZIP"
 
 ## Usage

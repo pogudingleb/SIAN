@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -58,6 +58,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     printf("The probability of success cannot exceed 1 - #params_to_assess 10^{-18}. We reset it to 0.99");
     p_local := 0.99:
   end if:
+
+  if nops(y_functions) = 0 then
+    PrintHeader("ERROR: no outputs in the model");
+    return;
+  end:
 
   if infolevel > 0 then
     printf("\n=== Input info ===\n"):
@@ -152,7 +157,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
   prolongation_possible := [seq(1, i = 1..m)]:
 
   # (f) ------------------
-  while add(prolongation_possible) > 0 do
+  while foldl(`+`, op(prolongation_possible)) > 0 do
     for i from 1 to m do
       if prolongation_possible[i] = 1 then
         eqs_i := [op(Et), Y[i][beta[i] + 1]]:
@@ -489,20 +494,30 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     end do:    
   elif method = 2 then
     gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
-    print(gb);
     for i from 1 to nops(theta_l) do
       if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
         theta_g := [ op(theta_g), theta_l[i] ]:
       end if:
     end do:
-  elif method = 3 then
-    R := RegularChains[PolynomialRing](vars):
-    for i from 1 to nops(theta_l) do
-      tr := [RegularChains[Triangularize](Et_hat, [Q_hat, theta_l[i] - subs(theta_hat,theta_l[i])], R)]:
-      for e in tr do
-        print(RegularChains[Equations](e, R)):
+
+    if count_solutions then 
+      solutions_table := table([]):
+      for var in theta_g do
+        if infolevel > 0 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, 1):
+        end if:
+        solutions_table[var] := 1:
       end do:
-    end do:
+	
+      for var in select(p -> not p in theta_g, theta_l) do
+        G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
+	P := select(x->evalb(indets(x)={var}), G):
+	solutions_table[var]:=degree(P[1], [op(indets(P))]): 
+        if infolevel > 1 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+        end if:
+      end do:
+    end if:  
   else
     print(`No such method`):
   end if:
@@ -515,7 +530,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel 
     printf("===============\n\n"):
   end if:
 
-  table([
+  output := table([
     globally = {op(map(x -> ParamToOuter(x, all_vars), theta_g))},
     locally_not_globally = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_g, theta_l)))},
     non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
@@ -953,8 +968,3 @@ CompareDiffVar := proc(dvl, dvr, var_list)
   end if:
   return StringTools[Compare](vr, vl):
 end proc:
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e0bb48 (updates)

@@ -66,7 +66,7 @@ for i from 1 to nops(cases) do
     sigma := cases[i][1]:
     correct_result := cases[i][2]:
     for method from 1 to 2 do
-        result := IdentifiabilityODE(sigma, GetParameters(sigma), method = method, infolevel = 0):
+        result := IdentifiabilityODE(sigma, GetParameters(sigma), method = method, infolevel = 0, count_solutions = false):
         if verify(correct_result, result, table) then
             print("PASSED");
             num_passed := num_passed + 1:
