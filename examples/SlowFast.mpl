@@ -16,8 +16,7 @@ sigma := [
   y4(t) = eC(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma));
-
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
 # The following computation shows that one can identify more from two experiments
 # GenerateReplica(sigma, 2) generates a system consiting of two copies of sigma
 # with the same parameters in ODEs but different inputs and initial conditions

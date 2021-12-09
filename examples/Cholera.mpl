@@ -13,4 +13,5 @@ sigma := [
   y2(t) = i(t) + r(t) + s(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

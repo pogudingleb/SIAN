@@ -9,4 +9,4 @@ sigma := [
   y2(t) = b / g + aux(t)
 ];
 
-IdentifiabilityODE(sigma, [aux(0)], infolevel = 3):
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

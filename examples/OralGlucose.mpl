@@ -12,4 +12,4 @@ sigma := [
   y3(t) = Gb
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma));
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

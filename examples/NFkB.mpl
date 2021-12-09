@@ -48,4 +48,4 @@ sigma := subs(known_data, [
   y5(t) = x7(t)
 ]);
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

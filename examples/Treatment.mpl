@@ -9,8 +9,7 @@ sigma := [
   diff(S(t), t) = -b * S(t) * In(t) / N - d * b * S(t) * Tr(t) / N,
   diff(In(t), t) = b * S(t) * In(t) / N + d * b * S(t) * Tr(t) / N - (a + g) * In(t),
   diff(Tr(t), t) = g * In(t) - nu * Tr(t),
-  y1(t) = Tr(t),
-  y2(t) = N
+  y1(t) = Tr(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

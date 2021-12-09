@@ -12,4 +12,4 @@ sigma := [
   y2(t) = x4(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma));
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):

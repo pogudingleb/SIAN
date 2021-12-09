@@ -9,10 +9,10 @@ sigma := [
   diff(x3(t), t) = a * k5 * x2(t) - k6 * x3(t) - k5 * x2(t) * x3(t),
   diff(x4(t), t) = b * d * k5 * x2(t) - k6 * x4(t) - k5 * x2(t) * x4(t),
   diff(x5(t), t) = k7 * x1(t),
-  y1(t) = x5(t),
-  y2(t) = a,
-  y3(t) = b,
-  y4(t) = d
+  y1(t) = x5(t)
+  # y2(t) = a,
+  # y3(t) = b,
+  # y4(t) = d
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma));
+IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
