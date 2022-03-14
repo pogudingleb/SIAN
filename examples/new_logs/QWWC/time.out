@@ -1,0 +1,61 @@
+entropies.mpl
+elapsed,user+system,memory
+0.14,=0.09+0.04,18876000
+
+transcendence_10_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+49646.50,=1.52+4.39,6528000
+
+transcendence_11_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+828.07,=0.06+0.11,6540000
+
+transcendence_12_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+4959.29,=0.19+0.48,6536000
+
+transcendence_1_entropy_heuristic.mpl
+elapsed,user+system,memory
+258.89,=3135.99+43.70,13455308000
+
+transcendence_2_entropy_heuristic.mpl
+elapsed,user+system,memory
+322.66,=0.05+0.06,6564000
+
+transcendence_3_entropy_heuristic.mpl
+elapsed,user+system,memory
+421.53,=0.04+0.08,6560000
+
+transcendence_4_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+727.52,=0.08+0.09,6548000
+
+transcendence_5_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+1576.21,=0.09+0.20,6540000
+
+transcendence_6_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+611.26,=0.07+0.09,6532000
+
+transcendence_7_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+1187.40,=0.08+0.16,6540000
+
+transcendence_8_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+2702.76,=0.12+0.26,6536000
+
+transcendence_9_entropy_heuristic.mpl
+maple: fatal error, lost connection to kernel
+elapsed,user+system,memory
+796.55,=0.09+0.10,6540000
+

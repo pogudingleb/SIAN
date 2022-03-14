@@ -1,0 +1,211 @@
+    |\^/|     Maple 2021 (X86 64 LINUX)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2021
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+# read "../IdentifiabilityODE.mpl";
+> read "../generate_tr_bases_with_dc.mpl":
+Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
+|../generate_tr_bases.mpl:321|
+Warning, (in IdentifiabilityODE) `degree_table` is implicitly declared local
+|../generate_tr_bases.mpl:451|
+Warning, (in IdentifiabilityODE) `occurrence_table` is implicitly declared local
+|../generate_tr_bases.mpl:452|
+
+> sigma := [
+> diff(x(t), t) = -x(t)*a + z(t)*y(t) + a*y(t),
+> diff(w(t), t) = e*z(t) - w(t)*f + x(t)*y(t),
+> diff(z(t), t) = -c*z(t) - w(t)*d + x(t)*y(t),
+> diff(y(t), t) = b*x(t) + b*y(t) - x(t)*z(t),
+> g(t) = x(t)
+> ];
+          d
+sigma := [-- x(t) = -x(t) a + z(t) y(t) + a y(t),
+          dt
+
+    d
+    -- w(t) = e z(t) - w(t) f + x(t) y(t),
+    dt
+
+    d
+    -- z(t) = -c z(t) - w(t) d + x(t) y(t),
+    dt
+
+    d
+    -- y(t) = b x(t) + b y(t) - x(t) z(t), g(t) = x(t)]
+    dt
+
+# IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+> IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/QWWC", sub_transc=true):
+
+=======================================================
+0. Extracting states, inputs, outputs, and parameters from the system
+=======================================================
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+
+=======================================================
+1. Constructing the maximal polynomial system
+=======================================================
+memory used=32.7MB, alloc=108.3MB, time=0.51
+
+=======================================================
+2. Truncating the polynomial system based on the Jacobian condition
+=======================================================
+Bound D_1 for testing the rank of the Jacobian probabilistically:  9020000
+Orders of prolongations of the outputs (beta) =  [10]
+Orders of prolongations of the state variables (alpha) =  [10, 8, 9, 9]
+
+=======================================================
+3. Assessing local identifiability
+=======================================================
+memory used=106.7MB, alloc=122.1MB, time=1.17
+Locally identifiable paramters:  [a, b, x(0), z(0), y(0)]
+Nonidentifiable parameter:  [c, d, e, f, w(0)]
+Number of transcendence basis choices before "filtering": 37
+Number of transcendence basis choices after "filtering": 12
+
+=======================================================
+Creating Truncated system (old)
+=======================================================
+Bound D_2 for assessing global identifiability:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 164695631505914, b = 396516986248193, c = 251509716143755, d = 363065729763141, e = 116993552466651, f = 39716254060274, x_0 = 133731732901983, w_0 = 76768982419750, z_0 = 528005572265378, y_0 = 430408054360783]
+The polynomial system widehat{E^t} contains  42 equations in  42  variables
+Algebraically independent parameters (candidates) [c]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {c}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(c(t),t) = 0]
+	Adding output functions: [y_faux1(t) = c(t)]
+	New system: [diff(c(t),t) = 0, diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c(t)*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t), y_faux1(t) = c(t)]
+
+=== Input info ===
+State variables:          [c(t), x(t), w(t), z(t), y(t)]
+Output variables:         [g(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [a, b, d, e, f]
+===================
+
+memory used=168.7MB, alloc=122.1MB, time=1.90
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  1056561955000000
+Random sample for the outputs and inputs is generated from  [a = 841181315279851, b = 1027336275490897, d = 935041480866583, e = 748240363907508, f = 622974286821772, c_0 = 688446341373529, x_0 = 513953086681488, w_0 = 780081719563639, z_0 = 958627219084972, y_0 = 879558411249238]
+The polynomial system widehat{E^t} contains  57 equations in  49  variables
+             "new_logs/QWWC/transcendence_1_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [d]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {d}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(d(t),t) = 0]
+	Adding output functions: [y_faux1(t) = d(t)]
+	New system: [diff(d(t),t) = 0, diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d(t)+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t), y_faux1(t) = d(t)]
+
+=== Input info ===
+State variables:          [d(t), x(t), w(t), z(t), y(t)]
+Output variables:         [g(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, e, f]
+===================
+
+memory used=240.8MB, alloc=127.8MB, time=2.59
+memory used=337.3MB, alloc=143.8MB, time=3.39
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  1056561955000000
+Random sample for the outputs and inputs is generated from  [a = 87219177201735, b = 68344352456911, c = 809279730770319, e = 477075628722919, f = 938774615883677, d_0 = 564326261654924, x_0 = 205090310442042, w_0 = 601176914565403, z_0 = 763310134924302, y_0 = 504903969762394]
+The polynomial system widehat{E^t} contains  57 equations in  49  variables
+             "new_logs/QWWC/transcendence_2_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [e]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {e}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(e(t),t) = 0]
+	Adding output functions: [y_faux1(t) = e(t)]
+	New system: [diff(e(t),t) = 0, diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e(t)*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t), y_faux1(t) = e(t)]
+
+=== Input info ===
+State variables:          [e(t), x(t), w(t), z(t), y(t)]
+Output variables:         [g(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, f]
+===================
+
+memory used=417.6MB, alloc=135.8MB, time=4.29
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  1056561955000000
+Random sample for the outputs and inputs is generated from  [a = 356453397512512, b = 542466035968568, c = 40216820613739, d = 985478994616717, f = 623432743127804, e_0 = 885422745158205, x_0 = 954887806871883, w_0 = 283652661633559, z_0 = 301248115489866, y_0 = 245667012610004]
+The polynomial system widehat{E^t} contains  55 equations in  48  variables
+             "new_logs/QWWC/transcendence_3_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [f]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {f}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(f(t),t) = 0]
+	Adding output functions: [y_faux1(t) = f(t)]
+	New system: [diff(f(t),t) = 0, diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f(t)+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t), y_faux1(t) = f(t)]
+
+=== Input info ===
+State variables:          [f(t), x(t), w(t), z(t), y(t)]
+Output variables:         [g(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e]
+===================
+
+memory used=497.1MB, alloc=135.8MB, time=5.15
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  1056561955000000
+Random sample for the outputs and inputs is generated from  [a = 1029794637962747, b = 873790419564407, c = 141999606259171, d = 981690006672160, e = 751197236272788, f_0 = 52401338089184, x_0 = 371634068276425, w_0 = 765277671685194, z_0 = 292264682231241, y_0 = 316077204701891]
+The polynomial system widehat{E^t} contains  55 equations in  48  variables
+             "new_logs/QWWC/transcendence_4_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w(0)]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w(0)}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+memory used=580.3MB, alloc=136.4MB, time=5.97

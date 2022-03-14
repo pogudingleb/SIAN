@@ -3,7 +3,8 @@
 # Specific therapy regimes could lead to long-term immunological control of HIV
 # https://doi.org/10.1073/pnas.96.25.14464
 # Page 1
-read "../IdentifiabilityODE.mpl":
+# read "../IdentifiabilityODE.mpl":
+read "../generate_tr_bases_with_dc.mpl":
 
 sigma := [
   diff(x(t), t) = lm - d * x(t) - beta * x(t) * v(t),
@@ -15,4 +16,4 @@ sigma := [
   y2(t) = z(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true, optimize_tr_basis=true):
+IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/HIV2", sub_transc=true):
