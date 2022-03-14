@@ -1,7 +1,9 @@
 # Example (with initial conditions assumed being unknown) from Section 3 of "Examples of testing global identifiability of biological and biomedical models with the DAISY software"
 # by M.P. Saccomani, S. Audoly, G. Bellu, L. D'Angio
 
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl";
+
 
 sigma := [
   diff(x1(t), t) = -(k3 + k7) * x1(t) + k4 * x2(t),
@@ -15,4 +17,6 @@ sigma := [
   # y4(t) = d
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
+# IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
+IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/Tumor", sub_transc=true):
+quit;

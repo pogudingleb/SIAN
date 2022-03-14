@@ -1,4 +1,25 @@
-#===============================================================================
+# #===============================================================================
+# sigma:=[diff(x1(t), t) = c * x1(t) + b * x2(t),
+# diff(x2(t),t) = d0 * x2(t),
+# y(t) = x1(t)
+# ];
+# Et, x_theta_vars, all_subs, y_hat, u_hat, theta_l, X_eq, Y_eq := IdentifiabilityODE(sigma, GetParameters(sigma));  
+# JacX := VectorCalculus[Jacobian]( subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), x_theta_vars);
+# JacX_sub := subs(X_eq, subs(X_eq, subs(X_eq, JacX)));
+# JacX_gaus_elim := LinearAlgebra:-GaussianElimination(JacX_sub);
+# all_functions := [];
+
+# for i from 1 to nops(Et) do
+#   for j from 1 to nops(Et) do
+#     if not type(JacX_sub[i][j],numeric) then
+#       all_functions := {op(all_functions), JacX_sub[i][j]};
+#     end if
+#   end do;
+# end do;
+
+
+
+
 IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
@@ -233,6 +254,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     end if:
   end do:
 
+  # TODO: REMOVE DERIVATIVES OF LOCALLY IDENTIFIABLE THINGS FROM TR. BASIS CONSIDERATION
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
   x_theta_vars := [op(theta_l), op(x_theta_vars_)];
   alg_indep := [];
@@ -255,7 +277,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       identifiable_states := map(each->GetOrderVar(each)[1], {op(select(each->GetOrderVar(each)[1] <>"", theta_l))}); # pick names of states whose IC is identifiable
       x_theta_vars_to_be_removed := select(each-> GetOrderVar(each)[1] in identifiable_states, x_theta_vars_);
       x_theta_vars_filtered := [op({op(x_theta_vars_)} minus {op(x_theta_vars_to_be_removed)})];
-      number_of_choices:= binomial(numelems(x_theta_vars_filtered), numelems(alg_indep));
+      number_of_choices := binomial(numelems(x_theta_vars_filtered), numelems(alg_indep));
       if number_of_choices < max_comb then
         choices := combinat[choose](x_theta_vars_filtered, numelems(alg_indep));
       else
@@ -378,6 +400,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
       Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
       Y_eq := [op(Y_eq), op(faux_equations)]:
+      
       if infolevel>1 then
         printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
         printf("\t%s %a\n", `New system:`, Et):
