@@ -4,7 +4,8 @@
  <____ ____>  Waterloo Maple Inc.
       |       Type ? for help.
 # read "../IdentifiabilityODE.mpl";
-> read "../generate_tr_bases_with_dc.mpl":
+> #read "../generate_tr_bases_with_dc.mpl":
+read "../generate_tr_bases.mpl":
 Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
 |../generate_tr_bases.mpl:321|
 Warning, (in IdentifiabilityODE) `degree_table` is implicitly declared local

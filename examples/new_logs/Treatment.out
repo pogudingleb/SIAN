@@ -1,0 +1,96 @@
+    |\^/|     Maple 2021 (X86 64 LINUX)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2021
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+# Taken from
+# N. Tucker, T. Le
+# "Structural and practical identifiability analysis of outbreak models"
+# https://doi.org/10.1016/j.mbs.2018.02.004
+# Equation (2.3) with observed treatment
+> read "../IdentifiabilityODE.mpl":
+
+> sigma := [
+>   diff(S(t), t) = -b * S(t) * In(t) / N - d * b * S(t) * Tr(t) / N,
+>   diff(In(t), t) = b * S(t) * In(t) / N + d * b * S(t) * Tr(t) / N - (a + g) * In(t),
+>   diff(Tr(t), t) = g * In(t) - nu * Tr(t),
+>   y1(t) = Tr(t)
+> ];
+          d           b S(t) In(t)   d b S(t) Tr(t)
+sigma := [-- S(t) = - ------------ - --------------,
+          dt               N               N
+
+    d          b S(t) In(t)   d b S(t) Tr(t)
+    -- In(t) = ------------ + -------------- - (a + g) In(t),
+    dt              N               N
+
+    d
+    -- Tr(t) = g In(t) - nu Tr(t), y1(t) = Tr(t)]
+    dt
+
+
+> IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
+
+=======================================================
+0. Extracting states, inputs, outputs, and parameters from the system
+=======================================================
+
+=== Input info ===
+State variables:          [S(t), In(t), Tr(t)]
+Output variables:         [y1(t)]
+Input variables:          []
+Parameters in equations:  [N, a, b, d, g, nu]
+===================
+
+
+=======================================================
+1. Constructing the maximal polynomial system
+=======================================================
+memory used=33.7MB, alloc=108.3MB, time=0.50
+
+=======================================================
+2. Truncating the polynomial system based on the Jacobian condition
+=======================================================
+
+=======================================================
+3. Assessing local identifiability
+=======================================================
+Locally identifiable paramters:  [nu, Tr(0)]
+Nonidentifiable parameter:  [In(0), N, S(0), a, b, d, g]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Heuristic turned off. Picking default transcendence basis {In_0, N}
+
+=== Input info ===
+State variables:          [N(t), S(t), In(t), Tr(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [a, b, d, g, nu]
+===================
+
+memory used=125.7MB, alloc=116.3MB, time=1.19
+memory used=205.8MB, alloc=116.3MB, time=1.96
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+
+=======================================================
+5. Assessing global identifiability
+=======================================================
+The number of solutions for Tr_0 is 1
+
+=== Summary ===
+Globally identifiable parameters:                  [Tr(0)]
+Locally but not globally identifiable parameters:  [nu]
+Not identifiable parameters:                       [N, a, b, d, g, S(0), In(0)]
+===============
+
+
+=======================================================
+WARNING: The result of solution counting is guaranteed with high probability, however it NOT the same probability 'p' as provided in the input.
+=======================================================
+> quit
+memory used=270.3MB, alloc=116.3MB, time=5.29

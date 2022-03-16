@@ -9,7 +9,8 @@
 # https://doi.org/10.1073/pnas.96.25.14464
 # Page 1
 # read "../IdentifiabilityODE.mpl":
-> read "../generate_tr_bases_with_dc.mpl":
+> #read "../generate_tr_bases_with_dc.mpl":
+read "../generate_tr_bases.mpl":
 Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
 |../generate_tr_bases_with_dc.mpl:321|
 Warning, (in IdentifiabilityODE) `seen` is implicitly declared local

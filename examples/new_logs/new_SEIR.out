@@ -3,7 +3,8 @@
  \  MAPLE  /  All rights reserved. Maple is a trademark of
  <____ ____>  Waterloo Maple Inc.
       |       Type ? for help.
-> read "../generate_tr_bases_with_dc.mpl":
+> #read "../generate_tr_bases_with_dc.mpl":
+read "../generate_tr_bases.mpl":
 Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
 |../generate_tr_bases_with_dc.mpl:321|
 Warning, (in IdentifiabilityODE) `seen` is implicitly declared local
@@ -347,3 +348,940 @@ memory used=642.8MB, alloc=112.3MB, time=5.23
 memory used=730.1MB, alloc=112.3MB, time=5.90
 memory used=816.0MB, alloc=112.3MB, time=6.59
 memory used=902.9MB, alloc=112.3MB, time=7.29
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  15064643320000000000
+Random sample for the outputs and inputs is generated from  [eps = 64617707902599189, g = 3428218686170563747, mu = 14988963959768170682, n = 7412928553985374708, r0 = 14505992626338116999, Lam_0 = 7427743998201918805, b_0 = 4304303894709303140, s_0 = 3982699327881518609, e_0 = 8955684814775585431, i_0 = 8250514873359015222, r_0 = 5822318779005350159]
+The polynomial system widehat{E^t} contains  71 equations in  57  variables
+           "new_logs/new_SEIR/transcendence_1_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [Lam, n]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {Lam, n}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(Lam(t),t) = 0, diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = Lam(t), y_faux2(t) = n(t)]
+	New system: [diff(Lam(t),t) = 0, diff(n(t),t) = 0, diff(s(t),t) = Lam(t)-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = Lam(t), y_faux2(t) = n(t)]
+
+=== Input info ===
+State variables:          [Lam(t), n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t), y_faux2(t)]
+Input variables:          []
+Parameters in equations:  [b, eps, g, mu, r0]
+===================
+
+memory used=991.0MB, alloc=112.3MB, time=8.06
+memory used=1075.5MB, alloc=112.3MB, time=8.83
+memory used=1166.3MB, alloc=112.3MB, time=9.49
+memory used=1252.6MB, alloc=112.3MB, time=10.17
+memory used=1338.9MB, alloc=112.3MB, time=10.84
+memory used=1425.7MB, alloc=112.3MB, time=11.52
+memory used=1514.2MB, alloc=112.3MB, time=12.19
+memory used=1602.6MB, alloc=112.3MB, time=12.85
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  15064643320000000000
+Random sample for the outputs and inputs is generated from  [b = 7423976447263671164, eps = 7462157842765454969, g = 8784230126647783242, mu = 4483069567856255389, r0 = 951356647503780753, Lam_0 = 1481887080137670826, n_0 = 5820156722337012407, s_0 = 9123595692102898721, e_0 = 3556732966230481596, i_0 = 12707193549913393128, r_0 = 12424919866529200215]
+The polynomial system widehat{E^t} contains  71 equations in  57  variables
+           "new_logs/new_SEIR/transcendence_2_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [Lam, r0]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s(0)]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=1697.4MB, alloc=112.3MB, time=13.75
+Algebraically independent parameters (candidates) [Lam, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [Lam, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [b, n]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b, n}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(b(t),t) = 0, diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t), y_faux2(t) = n(t)]
+	New system: [diff(b(t),t) = 0, diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t), y_faux2(t) = n(t)]
+
+=== Input info ===
+State variables:          [b(t), n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t), y_faux2(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, r0]
+===================
+
+memory used=1780.3MB, alloc=112.3MB, time=14.66
+memory used=1864.6MB, alloc=112.3MB, time=15.40
+memory used=1955.8MB, alloc=112.3MB, time=16.06
+memory used=2041.5MB, alloc=112.3MB, time=16.73
+memory used=2128.8MB, alloc=112.3MB, time=17.41
+memory used=2216.9MB, alloc=112.3MB, time=18.09
+memory used=2305.3MB, alloc=112.3MB, time=18.76
+memory used=2394.4MB, alloc=112.3MB, time=19.45
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  15064643320000000000
+Random sample for the outputs and inputs is generated from  [Lam = 8675265601480784230, eps = 11499205094800839800, g = 2182911220706752219, mu = 918750141807704451, r0 = 12088183712626296011, b_0 = 2766074919707417331, n_0 = 918750751839110554, s_0 = 3618040785029604691, e_0 = 11451749779881132831, i_0 = 3158786476967510727, r_0 = 14846035921202183341]
+The polynomial system widehat{E^t} contains  73 equations in  58  variables
+           "new_logs/new_SEIR/transcendence_12_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, r0]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b, r0}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(b(t),t) = 0, diff(r0(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t), y_faux2(t) = r0(t)]
+	New system: [diff(b(t),t) = 0, diff(r0(t),t) = 0, diff(s(t),t) = Lam-r0(t)*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t), y_faux2(t) = r0(t)]
+
+=== Input info ===
+State variables:          [b(t), r0(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t), y_faux2(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n]
+===================
+
+memory used=2478.9MB, alloc=112.3MB, time=20.28
+memory used=2544.2MB, alloc=112.3MB, time=21.01
+memory used=2633.2MB, alloc=112.3MB, time=21.76
+memory used=2723.2MB, alloc=112.3MB, time=22.44
+memory used=2812.3MB, alloc=112.3MB, time=23.10
+memory used=2900.3MB, alloc=112.3MB, time=23.79
+memory used=2988.3MB, alloc=112.3MB, time=24.47
+memory used=3077.2MB, alloc=112.3MB, time=25.14
+memory used=3167.0MB, alloc=112.3MB, time=25.82
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  15064643320000000000
+Random sample for the outputs and inputs is generated from  [Lam = 12780983393640742721, eps = 13106525283871170042, g = 13975482212708441102, mu = 9014716793377882805, n = 2759920907153069493, b_0 = 9074007999234850937, r0_0 = 5408789384253878978, s_0 = 4131278883537179771, e_0 = 12725438793173352392, i_0 = 10858530021696818055, r_0 = 5942771082304057111]
+The polynomial system widehat{E^t} contains  71 equations in  57  variables
+           "new_logs/new_SEIR/transcendence_13_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s(0)]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s(0)}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=3249.9MB, alloc=112.3MB, time=26.58
+memory used=3343.0MB, alloc=112.3MB, time=27.32
+memory used=3436.2MB, alloc=112.3MB, time=28.01
+memory used=3529.4MB, alloc=112.3MB, time=28.70
+memory used=3623.2MB, alloc=112.3MB, time=29.40
+	Adding new y-equations: [y_faux2_0 = s_0]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_0]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_0]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 2653332499017116939, eps = 855244311574358069, g = 3720001918475638037, mu = 9397611445240865889, n = 3533514374314222751, r0 = 6795881634750527837, b_0 = 4470276394479025483, s_0 = 610364092836093256, e_0 = 5097188668160904808, i_0 = 5741783700595820265, r_0 = 5150307704128938209]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_14_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_1}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=3711.8MB, alloc=112.3MB, time=30.20
+memory used=3801.4MB, alloc=112.3MB, time=30.96
+memory used=3895.9MB, alloc=112.3MB, time=31.63
+memory used=3989.9MB, alloc=112.3MB, time=32.32
+memory used=4084.1MB, alloc=112.3MB, time=33.00
+	Adding new y-equations: [y_faux2_0 = s_1]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_1]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_1]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 2545974337586195367, eps = 3358629061350128716, g = 7259052084483202207, mu = 6592843376734488361, n = 8353533491390751346, r0 = 1515451580001110085, b_0 = 3494487426180314951, s_0 = 7576467251015556422, e_0 = 5076278785474708051, i_0 = 6571504516278213897, r_0 = 8165340103046383758]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_15_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_2}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=4175.4MB, alloc=112.3MB, time=33.81
+memory used=4263.8MB, alloc=112.3MB, time=34.61
+memory used=4359.0MB, alloc=112.3MB, time=35.32
+memory used=4453.4MB, alloc=112.3MB, time=36.02
+memory used=4548.5MB, alloc=112.3MB, time=36.73
+	Adding new y-equations: [y_faux2_0 = s_2]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_2]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_2]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 4569243827390462699, eps = 7083595705248635797, g = 1911659653484249407, mu = 7253362323020569720, n = 77732573341809728, r0 = 2701367883455024353, b_0 = 6641300355658929403, s_0 = 893333791655897515, e_0 = 5039660045344062506, i_0 = 2073122587277920861, r_0 = 8994132437822589251]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_16_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_3}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=4642.4MB, alloc=112.3MB, time=37.53
+memory used=4730.8MB, alloc=112.3MB, time=38.31
+memory used=4826.4MB, alloc=112.3MB, time=38.99
+memory used=4921.4MB, alloc=112.3MB, time=39.67
+memory used=5017.1MB, alloc=112.3MB, time=40.37
+	Adding new y-equations: [y_faux2_0 = s_3]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_3]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_3]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 6927661944739439700, eps = 2948612515430224693, g = 1622368174047083635, mu = 7363122548227089953, n = 8694503248620531886, r0 = 325638722231990603, b_0 = 555594278853934859, s_0 = 8024729071500322962, e_0 = 319141182423370487, i_0 = 4445951625535918194, r_0 = 3711751347788666755]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_17_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_4}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=5113.5MB, alloc=112.3MB, time=41.18
+memory used=5199.0MB, alloc=112.3MB, time=41.99
+memory used=5296.5MB, alloc=112.3MB, time=42.70
+memory used=5391.2MB, alloc=112.3MB, time=43.41
+memory used=5486.3MB, alloc=112.3MB, time=44.11
+	Adding new y-equations: [y_faux2_0 = s_4]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_4]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_4]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 8090527265783681542, eps = 4057704409082973246, g = 8905744511973074447, mu = 6462084659230721985, n = 7768473401082527001, r0 = 400980147939392794, b_0 = 1274164507566247480, s_0 = 9189790777925203190, e_0 = 2634103869860427269, i_0 = 1998489304913328152, r_0 = 366632602497795528]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_18_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_5}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=5584.2MB, alloc=112.3MB, time=44.94
+memory used=5670.2MB, alloc=112.3MB, time=45.74
+memory used=5767.5MB, alloc=112.3MB, time=46.45
+memory used=5862.6MB, alloc=112.3MB, time=47.16
+memory used=5957.7MB, alloc=112.3MB, time=47.86
+	Adding new y-equations: [y_faux2_0 = s_5]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_5]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_5]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 1532988129688980773, eps = 6698887488778442018, g = 9039991995739044015, mu = 5181394235105989929, n = 7952471689235404476, r0 = 8047987256686788904, b_0 = 6514653416890830463, s_0 = 3474219259822464291, e_0 = 2217240123801058630, i_0 = 3604696870948142690, r_0 = 530027969902168065]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_19_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_6}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=6054.0MB, alloc=112.3MB, time=48.68
+memory used=6143.7MB, alloc=112.3MB, time=49.49
+memory used=6240.0MB, alloc=112.3MB, time=50.20
+memory used=6336.3MB, alloc=112.3MB, time=50.90
+memory used=6432.8MB, alloc=112.3MB, time=51.59
+	Adding new y-equations: [y_faux2_0 = s_6]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_6]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_6]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 6954443496475969927, eps = 3257613853872633040, g = 9194102820568134945, mu = 4357064831353275925, n = 1074841301677131912, r0 = 2269132557063983354, b_0 = 6942340893854781687, s_0 = 4234777565646597526, e_0 = 2471954757356214136, i_0 = 7039858150471973785, r_0 = 6035585031714669633]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_20_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [b, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {b}
+Algebraically independent parameters among derivatives: {s_7}
+	Adding ODEs: [diff(b(t),t) = 0]
+	Adding output functions: [y_faux1(t) = b(t)]
+	New system: [diff(b(t),t) = 0, diff(s(t),t) = Lam-r0*b(t)*s(t)*i(t)/n-mu*s(t), diff(e(t),t) = b(t)*s(t)*i(t)/n-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = b(t)]
+
+=== Input info ===
+State variables:          [b(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, eps, g, mu, n, r0]
+===================
+
+memory used=6528.8MB, alloc=112.3MB, time=52.39
+memory used=6619.7MB, alloc=112.3MB, time=53.21
+memory used=6717.0MB, alloc=112.3MB, time=53.92
+memory used=6814.5MB, alloc=112.3MB, time=54.63
+memory used=6913.6MB, alloc=112.3MB, time=55.37
+	Adding new y-equations: [y_faux2_0 = s_7]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-b_0, b_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b_0*i_0*s_0+e_0*eps*n+e_0*mu*n+e_1*n, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*e_1+e_2)*n+(-i_0*s_1-i_1*s_0)*b_0-i_0*s_0*b_1, b_0*i_0*r0*s_0+mu*n*s_0-Lam*n+n*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (-i_0*s_2-2*i_1*s_1-i_2*s_0)*b_0+(-2*b_1*s_1-b_2*s_0)*i_0-2*b_1*i_1*s_0+((mu+eps)*e_2+e_3)*n, b_2, ((i_0*s_1+i_1*s_0)*b_0+i_0*s_0*b_1)*r0+n*(mu*s_1+s_2), -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b_0+(-3*b_1*s_2-3*b_2*s_1-b_3*s_0)*i_0+(-3*b_1*i_2-3*b_2*i_1)*s_0-6*b_1*i_1*s_1+((mu+eps)*e_3+e_4)*n, b_3, ((i_0*s_2+2*i_1*s_1+i_2*s_0)*b_0+(2*b_1*s_1+b_2*s_0)*i_0+2*b_1*i_1*s_0)*r0+n*(mu*s_2+s_3), -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b_0+(-4*b_1*s_3-6*b_2*s_2-4*b_3*s_1-b_4*s_0)*i_0+(-4*b_1*i_3-6*b_2*i_2-4*b_3*i_1)*s_0+(-12*i_1*s_2-12*i_2*s_1)*b_1-12*b_2*i_1*s_1+((mu+eps)*e_4+e_5)*n, b_4, ((i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*b_0+(3*b_1*s_2+3*b_2*s_1+b_3*s_0)*i_0+(3*b_1*i_2+3*b_2*i_1)*s_0+6*b_1*i_1*s_1)*r0+n*(mu*s_3+s_4), -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b_0+(-5*b_1*s_4-10*b_2*s_3-10*b_3*s_2-5*b_4*s_1-b_5*s_0)*i_0+(-5*b_1*i_4-10*b_2*i_3-10*b_3*i_2-5*b_4*i_1)*s_0+(-20*i_1*s_3-30*i_2*s_2-20*i_3*s_1)*b_1+(-30*b_2*s_2-20*b_3*s_1)*i_1-30*b_2*i_2*s_1+((mu+eps)*e_5+e_6)*n, b_5, ((i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*b_0+(4*b_1*s_3+6*b_2*s_2+4*b_3*s_1+b_4*s_0)*i_0+(4*b_1*i_3+6*b_2*i_2+4*b_3*i_1)*s_0+(12*i_1*s_2+12*i_2*s_1)*b_1+12*b_2*i_1*s_1)*r0+n*(mu*s_4+s_5), -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b_0+(-6*b_1*s_5-15*b_2*s_4-20*b_3*s_3-15*b_4*s_2-6*b_5*s_1-b_6*s_0)*i_0+(-6*b_1*i_5-15*b_2*i_4-20*b_3*i_3-15*b_4*i_2-6*b_5*i_1)*s_0+(-30*i_1*s_4-60*i_2*s_3-60*i_3*s_2-30*i_4*s_1)*b_1+(-60*b_2*s_3-60*b_3*s_2-30*b_4*s_1)*i_1+(-60*b_2*i_3-60*b_3*i_2)*s_1-90*b_2*i_2*s_2+((mu+eps)*e_6+e_7)*n, b_6, ((i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*b_0+(5*b_1*s_4+10*b_2*s_3+10*b_3*s_2+5*b_4*s_1+b_5*s_0)*i_0+(5*b_1*i_4+10*b_2*i_3+10*b_3*i_2+5*b_4*i_1)*s_0+(20*i_1*s_3+30*i_2*s_2+20*i_3*s_1)*b_1+(30*b_2*s_2+20*b_3*s_1)*i_1+30*b_2*i_2*s_1)*r0+n*(mu*s_5+s_6), -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b_0+(-7*b_1*s_6-21*b_2*s_5-35*b_3*s_4-35*b_4*s_3-21*b_5*s_2-7*b_6*s_1-b_7*s_0)*i_0+(-7*b_1*i_6-21*b_2*i_5-35*b_3*i_4-35*b_4*i_3-21*b_5*i_2-7*b_6*i_1)*s_0+(-42*i_1*s_5-105*i_2*s_4-140*i_3*s_3-105*i_4*s_2-42*i_5*s_1)*b_1+(-105*b_2*s_4-140*b_3*s_3-105*b_4*s_2-42*b_5*s_1)*i_1+(-105*b_2*i_4-140*b_3*i_3-105*b_4*i_2)*s_1+(-210*i_2*s_3-210*i_3*s_2)*b_2-210*b_3*i_2*s_2+((mu+eps)*e_7+e_8)*n, b_7, ((i_0*s_6+6*i_1*s_5+15*i_2*s_4+20*i_3*s_3+15*i_4*s_2+6*i_5*s_1+i_6*s_0)*b_0+(6*b_1*s_5+15*b_2*s_4+20*b_3*s_3+15*b_4*s_2+6*b_5*s_1+b_6*s_0)*i_0+(6*b_1*i_5+15*b_2*i_4+20*b_3*i_3+15*b_4*i_2+6*b_5*i_1)*s_0+(30*i_1*s_4+60*i_2*s_3+60*i_3*s_2+30*i_4*s_1)*b_1+(60*b_2*s_3+60*b_3*s_2+30*b_4*s_1)*i_1+(60*b_2*i_3+60*b_3*i_2)*s_1+90*b_2*i_2*s_2)*r0+n*(mu*s_6+s_7), -i_9-r_9+y1_9, -b_1+y_faux1_1, -b_2+y_faux1_2, -b_3+y_faux1_3, -b_4+y_faux1_4, -b_5+y_faux1_5, -b_6+y_faux1_6, -b_7+y_faux1_7, y_faux2_0-s_7]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = b_0, y_faux1_1 = b_1, y_faux1_2 = b_2, y_faux1_3 = b_3, y_faux1_4 = b_4, y_faux1_5 = b_5, y_faux1_6 = b_6, y_faux1_7 = b_7, y_faux1_8 = b_8, y_faux1_9 = b_9, y_faux1_10 = b_10, y_faux1_11 = b_11, y_faux1_12 = b_12, y_faux2_0 = s_7]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 1622544172782996666, eps = 8459162214545073591, g = 8378955190354679665, mu = 7126924853911647196, n = 4823578429492860089, r0 = 2018984559841718198, b_0 = 6762821012560099223, s_0 = 4727787432281991157, e_0 = 6277034770974247351, i_0 = 2232981508723200854, r_0 = 1300164808705524267]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_21_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, r0]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n, r0}
+Algebraically independent parameters among derivatives: {}
+	Adding ODEs: [diff(n(t),t) = 0, diff(r0(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t), y_faux2(t) = r0(t)]
+	New system: [diff(n(t),t) = 0, diff(r0(t),t) = 0, diff(s(t),t) = Lam-r0(t)*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t), y_faux2(t) = r0(t)]
+
+=== Input info ===
+State variables:          [n(t), r0(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t), y_faux2(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu]
+===================
+
+memory used=7008.6MB, alloc=112.3MB, time=56.21
+memory used=7097.7MB, alloc=112.3MB, time=57.02
+memory used=7195.8MB, alloc=112.3MB, time=57.73
+memory used=7290.4MB, alloc=112.3MB, time=58.43
+memory used=7384.1MB, alloc=112.3MB, time=59.13
+memory used=7478.4MB, alloc=112.3MB, time=59.84
+memory used=7573.1MB, alloc=112.3MB, time=60.55
+memory used=7667.1MB, alloc=112.3MB, time=61.25
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  15064643320000000000
+Random sample for the outputs and inputs is generated from  [Lam = 14562026206888601278, b = 1118061812997635189, eps = 9325583237704689143, g = 13462324576141693734, mu = 7122441763189151764, n_0 = 3402565562370995525, r0_0 = 3402379394738649771, s_0 = 13048818349541374118, e_0 = 14258108845111683675, i_0 = 13858074139667184758, r_0 = 11218978176267971278]
+The polynomial system widehat{E^t} contains  71 equations in  57  variables
+           "new_logs/new_SEIR/transcendence_22_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s(0)]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s(0)}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=7761.8MB, alloc=112.3MB, time=62.14
+memory used=7863.4MB, alloc=112.3MB, time=62.88
+memory used=7960.9MB, alloc=112.3MB, time=63.60
+memory used=8058.7MB, alloc=112.3MB, time=64.31
+	Adding new y-equations: [y_faux2_0 = s_0]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_0]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_0]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 1140070015150785380, b = 7592381224476561879, eps = 7207465528205088839, g = 5707206603718812598, mu = 7283466267241894423, r0 = 6165249433921312271, n_0 = 3325514578718697259, s_0 = 8596939214578857700, e_0 = 5983889429943207718, i_0 = 9411504875828608093, r_0 = 608080996289352495]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_23_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_1}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=8158.6MB, alloc=112.3MB, time=65.12
+memory used=8257.4MB, alloc=112.3MB, time=65.92
+memory used=8355.9MB, alloc=112.3MB, time=66.64
+memory used=8455.2MB, alloc=112.3MB, time=67.36
+memory used=8556.3MB, alloc=112.3MB, time=68.08
+	Adding new y-equations: [y_faux2_0 = s_1]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_1]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_1]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 4467406652921758860, b = 6827961825631532267, eps = 7516055902122199398, g = 8144471895615283722, mu = 4700515407733931042, r0 = 1715275069818967003, n_0 = 7560850625697369944, s_0 = 5425936392550089724, e_0 = 3471587680028422680, i_0 = 7544649532185208513, r_0 = 8591025530941249491]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_24_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_2}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=8651.8MB, alloc=112.3MB, time=68.95
+memory used=8753.0MB, alloc=112.3MB, time=69.68
+memory used=8853.1MB, alloc=112.3MB, time=70.41
+memory used=8954.9MB, alloc=112.3MB, time=71.13
+	Adding new y-equations: [y_faux2_0 = s_2]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_2]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_2]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 406424767658311279, b = 421745529821917372, eps = 2555833525400816743, g = 3554798777729629354, mu = 530362671525242128, r0 = 2511713934392629751, n_0 = 5296815063782928111, s_0 = 3973012899702975621, e_0 = 1926253667687178110, i_0 = 90223104766717179, r_0 = 7508446671993026288]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_25_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=9057.4MB, alloc=112.3MB, time=71.92
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_3}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=9153.9MB, alloc=112.3MB, time=72.76
+memory used=9256.7MB, alloc=112.3MB, time=73.48
+memory used=9356.5MB, alloc=112.3MB, time=74.21
+memory used=9458.0MB, alloc=112.3MB, time=74.94
+	Adding new y-equations: [y_faux2_0 = s_3]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_3]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_3]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 5046828892387393011, b = 7299352209799751341, eps = 6324104681940555151, g = 2032926979678678018, mu = 4004966586476253439, r0 = 1827244576450758668, n_0 = 3541745587935366189, s_0 = 7167636813951284429, e_0 = 2568504947785548932, i_0 = 7017196791405512683, r_0 = 5619667010017939621]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_26_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_4}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=9556.5MB, alloc=112.3MB, time=75.81
+memory used=9659.2MB, alloc=112.3MB, time=76.58
+memory used=9760.1MB, alloc=112.3MB, time=77.31
+memory used=9862.2MB, alloc=112.3MB, time=78.06
+	Adding new y-equations: [y_faux2_0 = s_4]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_4]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_4]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 7325555215857582251, b = 1799304610381728691, eps = 984438572736106755, g = 6649211408036739539, mu = 3767251814159999264, r0 = 7633638428679068114, n_0 = 1198356471116274539, s_0 = 5906762740299885984, e_0 = 5427849269482255673, i_0 = 6173446619011387372, r_0 = 3362308323843610533]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_27_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=9965.2MB, alloc=112.3MB, time=78.87
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_5}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=10062.6MB, alloc=112.3MB, time=79.71
+memory used=10167.6MB, alloc=112.3MB, time=80.44
+memory used=10269.9MB, alloc=112.3MB, time=81.19
+memory used=10374.4MB, alloc=112.3MB, time=81.92
+	Adding new y-equations: [y_faux2_0 = s_5]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_5]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_5]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 5985009172667404832, b = 8439259847445615478, eps = 7751058290058435920, g = 287190387192729887, mu = 9185718261324403821, r0 = 8841028055911243, n_0 = 984889386340807367, s_0 = 1141782446536856444, e_0 = 241868335715527926, i_0 = 7449085426102924539, r_0 = 5807432651941221589]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_28_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_6}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=10471.7MB, alloc=112.3MB, time=82.81
+memory used=10575.4MB, alloc=112.3MB, time=83.56
+memory used=10680.0MB, alloc=112.3MB, time=84.31
+memory used=10782.2MB, alloc=112.3MB, time=85.05
+	Adding new y-equations: [y_faux2_0 = s_6]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_6]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_6]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 2971352634019287707, b = 341639520285840867, eps = 6794324777458830557, g = 3838795746812958653, mu = 4918010055728917424, r0 = 9067087737796012599, n_0 = 5364586367797224048, s_0 = 7481232747326942996, e_0 = 4750580782238014901, i_0 = 9249455728686611823, r_0 = 1147888594507922643]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_29_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [n, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {n}
+Algebraically independent parameters among derivatives: {s_7}
+	Adding ODEs: [diff(n(t),t) = 0]
+	Adding output functions: [y_faux1(t) = n(t)]
+	New system: [diff(n(t),t) = 0, diff(s(t),t) = Lam-r0*b*s(t)*i(t)/n(t)-mu*s(t), diff(e(t),t) = b*s(t)*i(t)/n(t)-eps*e(t)-mu*e(t), diff(i(t),t) = eps*e(t)-g*i(t)-mu*i(t), diff(r(t),t) = g*i(t)-mu*r(t), y1(t) = i(t)+r(t), y_faux1(t) = n(t)]
+
+=== Input info ===
+State variables:          [n(t), s(t), e(t), i(t), r(t)]
+Output variables:         [y1(t), y_faux1(t)]
+Input variables:          []
+Parameters in equations:  [Lam, b, eps, g, mu, r0]
+===================
+
+memory used=10885.7MB, alloc=112.3MB, time=85.90
+memory used=10988.9MB, alloc=112.3MB, time=86.72
+memory used=11092.9MB, alloc=112.3MB, time=87.45
+memory used=11197.4MB, alloc=112.3MB, time=88.19
+memory used=11300.5MB, alloc=112.3MB, time=88.93
+	Adding new y-equations: [y_faux2_0 = s_7]
+	New system: [y1_0-i_0-r_0, -e_0*eps+g*i_0+i_0*mu+i_1, -g*i_0+mu*r_0+r_1, y_faux1_0-n_0, n_1, -i_1-r_1+y1_1, -e_1*eps+(g+mu)*i_1+i_2, -g*i_1+mu*r_1+r_2, -b*i_0*s_0+e_0*eps*n_0+e_0*mu*n_0+e_1*n_0, -i_2-r_2+y1_2, -e_2*eps+(g+mu)*i_2+i_3, -g*i_2+mu*r_2+r_3, ((mu+eps)*n_0+n_1)*e_1+n_0*e_2+e_0*(mu+eps)*n_1-b*(i_0*s_1+i_1*s_0), b*i_0*r0*s_0+mu*n_0*s_0-Lam*n_0+n_0*s_1, -i_3-r_3+y1_3, -e_3*eps+(g+mu)*i_3+i_4, -g*i_3+mu*r_3+r_4, (2*eps*n_1+2*mu*n_1+n_2)*e_1+(eps*n_0+mu*n_0+2*n_1)*e_2+e_0*eps*n_2+n_0*e_3+e_0*mu*n_2-b*(i_0*s_2+2*i_1*s_1+i_2*s_0), n_2, b*i_1*r0*s_0+(mu*s_0-Lam+s_1)*n_1+(b*i_0*r0+mu*n_0)*s_1+n_0*s_2, -i_4-r_4+y1_4, -e_4*eps+(g+mu)*i_4+i_5, -g*i_4+mu*r_4+r_5, (e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*eps+(e_0*n_3+3*e_1*n_2+3*e_2*n_1+e_3*n_0)*mu+(-i_0*s_3-3*i_1*s_2-3*i_2*s_1-i_3*s_0)*b+n_0*e_4+3*e_3*n_1+3*e_2*n_2+e_1*n_3, n_3, (mu*s_0-Lam+s_1)*n_2+(2*b*i_1*r0+2*mu*n_1)*s_1+(b*i_0*r0+mu*n_0+2*n_1)*s_2+b*i_2*r0*s_0+n_0*s_3, -i_5-r_5+y1_5, -e_5*eps+(g+mu)*i_5+i_6, -g*i_5+mu*r_5+r_6, (e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*eps+(e_0*n_4+4*e_1*n_3+6*e_2*n_2+4*e_3*n_1+e_4*n_0)*mu+(-i_0*s_4-4*i_1*s_3-6*i_2*s_2-4*i_3*s_1-i_4*s_0)*b+n_0*e_5+4*e_4*n_1+6*e_3*n_2+4*e_2*n_3+e_1*n_4, n_4, (n_0*s_3+3*n_1*s_2+3*n_2*s_1+n_3*s_0)*mu+b*(i_0*s_3+3*i_1*s_2+3*i_2*s_1+i_3*s_0)*r0+(s_1-Lam)*n_3+3*n_1*s_3+3*n_2*s_2+n_0*s_4, -i_6-r_6+y1_6, -e_6*eps+(g+mu)*i_6+i_7, -g*i_6+mu*r_6+r_7, (e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*eps+(e_0*n_5+5*e_1*n_4+10*e_2*n_3+10*e_3*n_2+5*e_4*n_1+e_5*n_0)*mu+(-i_0*s_5-5*i_1*s_4-10*i_2*s_3-10*i_3*s_2-5*i_4*s_1-i_5*s_0)*b+n_0*e_6+5*e_5*n_1+10*e_4*n_2+10*e_3*n_3+5*e_2*n_4+e_1*n_5, n_5, (n_0*s_4+4*n_1*s_3+6*n_2*s_2+4*n_3*s_1+n_4*s_0)*mu+b*(i_0*s_4+4*i_1*s_3+6*i_2*s_2+4*i_3*s_1+i_4*s_0)*r0+(s_1-Lam)*n_4+n_0*s_5+4*n_1*s_4+6*n_2*s_3+4*n_3*s_2, -i_7-r_7+y1_7, -e_7*eps+(g+mu)*i_7+i_8, -g*i_7+mu*r_7+r_8, (e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*eps+(e_0*n_6+6*e_1*n_5+15*e_2*n_4+20*e_3*n_3+15*e_4*n_2+6*e_5*n_1+e_6*n_0)*mu+(-i_0*s_6-6*i_1*s_5-15*i_2*s_4-20*i_3*s_3-15*i_4*s_2-6*i_5*s_1-i_6*s_0)*b+n_0*e_7+6*e_6*n_1+15*e_5*n_2+20*e_4*n_3+15*e_3*n_4+6*e_2*n_5+e_1*n_6, n_6, (n_0*s_5+5*n_1*s_4+10*n_2*s_3+10*n_3*s_2+5*n_4*s_1+n_5*s_0)*mu+b*(i_0*s_5+5*i_1*s_4+10*i_2*s_3+10*i_3*s_2+5*i_4*s_1+i_5*s_0)*r0+(s_1-Lam)*n_5+n_0*s_6+5*n_1*s_5+10*n_2*s_4+10*n_3*s_3+5*n_4*s_2, -i_8-r_8+y1_8, -e_8*eps+(g+mu)*i_8+i_9, -g*i_8+mu*r_8+r_9, (e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*eps+(e_0*n_7+7*e_1*n_6+21*e_2*n_5+35*e_3*n_4+35*e_4*n_3+21*e_5*n_2+7*e_6*n_1+e_7*n_0)*mu+(-i_0*s_7-7*i_1*s_6-21*i_2*s_5-35*i_3*s_4-35*i_4*s_3-21*i_5*s_2-7*i_6*s_1-i_7*s_0)*b+7*e_7*n_1+n_0*e_8+21*e_6*n_2+35*e_5*n_3+35*e_4*n_4+21*e_3*n_5+7*e_2*n_6+e_1*n_7, n_7, (n_0*s_6+6*n_1*s_5+15*n_2*s_4+20*n_3*s_3+15*n_4*s_2+6*n_5*s_1+n_6*s_0)*mu+6*(i_5*s_1+1/6*i_6*s_0+5/2*s_2*i_4+10/3*s_3*i_3+5/2*s_4*i_2+s_5*i_1+1/6*s_6*i_0)*b*r0+(s_1-Lam)*n_6+n_0*s_7+6*n_1*s_6+15*n_2*s_5+20*n_3*s_4+15*n_4*s_3+6*n_5*s_2, -i_9-r_9+y1_9, -n_1+y_faux1_1, -n_2+y_faux1_2, -n_3+y_faux1_3, -n_4+y_faux1_4, -n_5+y_faux1_5, -n_6+y_faux1_6, -n_7+y_faux1_7, y_faux2_0-s_7]
+	New system: [y1_0 = i_0+r_0, y1_1 = i_1+r_1, y1_2 = i_2+r_2, y1_3 = i_3+r_3, y1_4 = i_4+r_4, y1_5 = i_5+r_5, y1_6 = i_6+r_6, y1_7 = i_7+r_7, y1_8 = i_8+r_8, y1_9 = i_9+r_9, y1_10 = i_10+r_10, y1_11 = i_11+r_11, y1_12 = i_12+r_12, y_faux1_0 = n_0, y_faux1_1 = n_1, y_faux1_2 = n_2, y_faux1_3 = n_3, y_faux1_4 = n_4, y_faux1_5 = n_5, y_faux1_6 = n_6, y_faux1_7 = n_7, y_faux1_8 = n_8, y_faux1_9 = n_9, y_faux1_10 = n_10, y_faux1_11 = n_11, y_faux1_12 = n_12, y_faux2_0 = s_7]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability:  9586591200000000000
+Random sample for the outputs and inputs is generated from  [Lam = 7436306815365917110, b = 9210874144098317554, eps = 7271319043778210802, g = 2770245572729117791, mu = 2420505069077496034, r0 = 7964068086622409288, n_0 = 8691050950545312937, s_0 = 3044910786320836624, e_0 = 3007160963929188898, i_0 = 5326653815868888400, r_0 = 7838284512630814110]
+The polynomial system widehat{E^t} contains  59 equations in  51  variables
+           "new_logs/new_SEIR/transcendence_30_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [r0, s(0)]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [r0, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=11411.9MB, alloc=112.3MB, time=89.91
+Algebraically independent parameters (candidates) [s(0), s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s(0), s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_1, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_2, s_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=11523.9MB, alloc=112.3MB, time=90.86
+Algebraically independent parameters (candidates) [s_2, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_2, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_2, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_2, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_3, s_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_3, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_3, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_3, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_4, s_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_4, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_4, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=11636.3MB, alloc=112.3MB, time=91.85
+Algebraically independent parameters (candidates) [s_5, s_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_5, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters (candidates) [s_6, s_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+> quit;
+memory used=11673.0MB, alloc=112.3MB, time=92.14

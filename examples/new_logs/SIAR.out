@@ -72,3 +72,77 @@ Error, (in GetParameters) invalid input: lhs received sigma, which is not valid
 for its 1st argument, expr |../generate_tr_bases.mpl:663|
 > quit;
 memory used=19.4MB, alloc=47.3MB, time=0.22
+    |\^/|     Maple 2021 (X86 64 LINUX)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2021
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+# read "../IdentifiabilityODE.mpl";
+> read "../generate_tr_bases.mpl";
+Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
+|../generate_tr_bases.mpl:321|
+Warning, (in IdentifiabilityODE) `degree_table` is implicitly declared local
+|../generate_tr_bases.mpl:451|
+Warning, (in IdentifiabilityODE) `occurrence_table` is implicitly declared local
+|../generate_tr_bases.mpl:452|
+
+
+> sys := [
+> diff(E(t), t) = -alphaEIs*E(t) + betaIa*Ia(t)*S(t)*Ninv + Is(t)*S(t)*Ninv*betaIs + betaT*S(t)*Ninv*T(t) + S(t)*Ninv*betaH*H(t) - E(t)*alphaEIa,
+> diff(H(t), t) = -alphaHT*H(t) + Ia(t)*xi + Is(t)*alphaIsH - alphaHRd*H(t),
+> diff(Is(t), t) = alphaEIs*E(t) + Ia(t)*alphaIaIs - Is(t)*alphaIsT - Is(t)*alphaIsD - Is(t)*alphaIsH - Is(t)*alphaIsRu,
+> diff(D(t), t) = Is(t)*alphaIsD + T(t)*alphaTD,
+> diff(S(t), t) = -betaIa*Ia(t)*S(t)*Ninv - Is(t)*S(t)*Ninv*betaIs - betaT*S(t)*Ninv*T(t) - S(t)*Ninv*betaH*H(t),
+> diff(Ia(t), t) = -Ia(t)*alphaIaRu - Ia(t)*xi - Ia(t)*alphaIaIs + E(t)*alphaEIa,
+> diff(Rd(t), t) = alphaTRd*T(t) + alphaHRd*H(t),
+> diff(T(t), t) = alphaHT*H(t) + Is(t)*alphaIsT - alphaTRd*T(t) - T(t)*alphaTD,
+> y4(t) = D(t),
+> y2(t) = T(t),
+> y3(t) = Rd(t),
+> y5(t) = Ninv,
+> y1(t) = H(t)
+> ];
+        d
+sys := [-- E(t) = -alphaEIs E(t) + betaIa Ia(t) S(t) Ninv
+        dt
+
+     + Is(t) S(t) Ninv betaIs + betaT S(t) Ninv T(t) + S(t) Ninv betaH H(t)
+
+     - E(t) alphaEIa,
+
+    d
+    -- H(t) = -alphaHT H(t) + Ia(t) xi + Is(t) alphaIsH - alphaHRd H(t),
+    dt
+
+    d
+    -- Is(t) = alphaEIs E(t) + Ia(t) alphaIaIs - Is(t) alphaIsT
+    dt
+
+     - Is(t) alphaIsD - Is(t) alphaIsH - Is(t) alphaIsRu,
+
+    d                                        d
+    -- D(t) = Is(t) alphaIsD + T(t) alphaTD, -- S(t) = -betaIa Ia(t) S(t) Ninv
+    dt                                       dt
+
+     - Is(t) S(t) Ninv betaIs - betaT S(t) Ninv T(t) - S(t) Ninv betaH H(t),
+
+    d
+    -- Ia(t) = -Ia(t) alphaIaRu - Ia(t) xi - Ia(t) alphaIaIs + E(t) alphaEIa,
+    dt
+
+    d
+    -- Rd(t) = alphaTRd T(t) + alphaHRd H(t),
+    dt
+
+    d
+    -- T(t) = alphaHT H(t) + Is(t) alphaIsT - alphaTRd T(t) - T(t) alphaTD,
+    dt
+
+    y4(t) = D(t), y2(t) = T(t), y3(t) = Rd(t), y5(t) = Ninv, y1(t) = H(t)]
+
+# IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true):
+> IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/SIAR", sub_transc=true):
+Error, (in GetParameters) invalid input: lhs received sigma, which is not valid
+for its 1st argument, expr |../generate_tr_bases.mpl:663|
+> quit;
+memory used=19.4MB, alloc=47.3MB, time=0.23
