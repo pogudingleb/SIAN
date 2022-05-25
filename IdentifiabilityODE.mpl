@@ -389,8 +389,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
 	
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
-	P := select(x->evalb(indets(x)={var}), G):
-	solutions_table[var]:=degree(P[1], [op(indets(P))]): 
+	      P := select(x->evalb(indets(x)={var}), G):
+	      solutions_table[var]:=degree(P[1], [op(indets(P))]): 
         if infolevel > 1 then
           printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
         end if:
