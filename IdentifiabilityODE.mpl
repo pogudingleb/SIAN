@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, use_weights:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, use_weights:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -286,11 +286,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     		PrintHeader("Applying Weighted Ordering", output_targets[log]):
     		LogText(sprintf("\t=> Applying Weighted Ordering"), ProgressBar):
   	end if:
-	weight_subs, poly_system, poly_vars, original_et_hat := SubsByDepth(system_ODEs, [op(Et_hat), z_aux * Q_hat - 1], vars, non_id);
-	Et_hat := poly_system;
-	weights_table := table(weight_subs);
-	LogExpression(sprintf("%q\n",  weights_table), "LogAreaSIAN");
+    weight_subs, poly_system, poly_vars := SubsByDepth(system_ODEs, [op(Et_hat), z_aux * Q_hat - 1], vars, non_id);
+    Et_hat := poly_system;
+    weights_table := table(weight_subs);
+    LogExpression(sprintf("%q\n",  weights_table), "LogAreaSIAN");
   else
+    weighte_table := table([seq(p=1, p in vars)]);
   	Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
   end if;
   ###########
@@ -705,7 +706,7 @@ end proc:
 
 SubsByDepth := proc(sigma, poly_system, poly_vars, non_id, {trdegsub:=false})
   local counting_table_states, min_count, vts, rhs_terms, max_possible,
-        rhs_term, indets_, term, substitutions, each, alg_indep, original_et_hat,
+        rhs_term, indets_, term, substitutions, each, alg_indep,
         all_subs, names, selection, other, all_odes, each_ode;
 
   vts := GetMinLevelBFS(sigma):
@@ -738,7 +739,7 @@ SubsByDepth := proc(sigma, poly_system, poly_vars, non_id, {trdegsub:=false})
   end do:
   substitutions[z_aux]:=min(3, max_possible):
 
-  original_et_hat := poly_system:
+  # original_et_hat := poly_system:
   new_et_hat := poly_system:
   all_subs := {}:
   names := [indices(substitutions, `nolist`)];
@@ -749,6 +750,6 @@ SubsByDepth := proc(sigma, poly_system, poly_vars, non_id, {trdegsub:=false})
         all_subs := all_subs union {other = other^substitutions[each]}:
     end do;
   od:
-  return all_subs, new_et_hat, poly_vars, original_et_hat;
+  return all_subs, new_et_hat, poly_vars;
 end proc:
 
