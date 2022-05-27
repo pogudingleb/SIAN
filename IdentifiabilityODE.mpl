@@ -294,7 +294,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     weights_table := table(weight_subs);
     LogExpression(sprintf("%q\n",  weights_table), "LogAreaSIAN");
   else
-    weights_table := table([seq(p=1, p in vars)]);
+    weights_table := table([seq(_var_=_var_, _var_ in vars)]);
   	Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
   end if;
   ###########
@@ -368,9 +368,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       end if:
     end do:    
   elif method = 2 then
-    gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
-    
+    gb := Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=char);
     for i from 1 to nops(theta_l) do
+      if char>0 then
+        check := subs(theta_hat, theta_l[i]) mod char:
+      else
+        check := subs(theta_hat, theta_l[i]):
+      end if:
       if Groebner[NormalForm](theta_l[i]^degree(weights_table[theta_l[i]]), gb, tdeg(op(vars)), characteristic=char) = check then
         theta_g := [op(theta_g), theta_l[i]]:
       end if:
@@ -617,12 +621,12 @@ GetStateName := proc(state, x_vars, mu)
 end proc:
 
 #===============================================================================
-GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs, all_vars)
+GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
-  leader, separant, candidates, each, differentiate_, k:
-
+  leader, separant, candidates, each, differentiate_, k, y_eqs:
+  y_eqs := y_eqs_in:
   current_level := 0:
   # get functions on level 0, we consider parameters and states indistinguishable
   # i.e. parameters are states with d/dt = 0

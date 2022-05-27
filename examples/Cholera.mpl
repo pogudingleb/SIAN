@@ -13,4 +13,4 @@ sigma := [
   y2(t) = i(t) + r(t) + s(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), use_weights=true):

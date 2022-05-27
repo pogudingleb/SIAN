@@ -16,4 +16,4 @@ sigma := [
   y2(t) = x2(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), use_weights=true):
