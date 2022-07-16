@@ -286,16 +286,17 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     		PrintHeader("Applying Weighted Ordering", output_targets[log]):
     		LogText(sprintf("\t=> Applying Weighted Ordering"), ProgressBar):
   	end if:
-    input_dict := table(
-      sigma=system_ODEs,
-      poly_system = [op(Et_hat), z_aux * Q_hat - 1], poly_vars = vars, non_id = non_id, 
-      s=s, m=m, x_vars=x_vars, y_vars=y_vars,
-      mu=mu, x_eqs=x_eqs, y_eqs=y_eqs, all_vars=all_vars
-    )
-    weight_subs, poly_system := SubsByDepth(input_dict):
+    input_table := table(
+      [
+        "sigma"=system_ODEs,
+        "poly_system" = [op(Et_hat), z_aux * Q_hat - 1], "poly_vars" = vars, "non_id" = non_id, 
+        "s"=s, "m"=m, "x_vars"=x_vars, "y_vars"=y_vars,
+        "mu"=mu, "x_eqs"=x_eqs, "y_eqs"=y_eqs, "all_vars"=all_vars
+      ]
+    );
+    weight_subs, poly_system := SubsByDepth(input_table):
     Et_hat := poly_system;
     weights_table := table(weight_subs);
-    LogExpression(sprintf("%q\n",  weights_table), "LogAreaSIAN");
   else
     weights_table := table([seq(_var_=_var_, _var_ in vars)]);
   	Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
@@ -304,6 +305,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
+    printf("%s %a\n", `Weight assignment:`, [entries(weights_table, `pairs`)]);
   end if:
 
   #----------------------------------------------
@@ -598,7 +600,7 @@ get_function_name := f -> parse(convert(FunctionToVariable(f), string)[..-2]):
 
 # check if depends on (t)
 is_function:= f->StringTools[Has](convert(f, string), "(t)"):
-idtfm := x->x;
+idtfm := x->x:
 
 # check if is derivative
 is_diff := f->type(int(f, t), function(name)):
@@ -695,21 +697,30 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
         rhs_term, indets_, term, substitutions, each, alg_indep,
         all_subs, names, selection, other, all_odes, each_ode;
 
-  vts := GetMinLevelBFS(s, m, x_vars, y_vars, mu, x_eqs, y_eqs, all_vars):
+  vts := GetMinLevelBFS(
+    input_table["s"],
+    input_table["m"],
+    input_table["x_vars"],
+    input_table["y_vars"],
+    input_table["mu"],
+    input_table["x_eqs"],
+    input_table["y_eqs"],
+    input_table["all_vars"]
+  ):
   substitutions := table([]);
-  all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), sigma));
-  rhs_terms := []:
+  all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), input_table["sigma"]));
+  rhs_monoms := []:
   for each_ode in all_odes do
     if whattype(each_ode) in [`+`,`*`,`^`] then
-      rhs_terms := [op(rhs_terms), op(each_ode)];
+      rhs_monoms := [op(rhs_monoms), op(each_ode)];
     end if;
     if whattype(each_ode) in [function] then
-     rhs_terms := [op(rhs_terms), (each_ode)]; 
+     rhs_monoms := [op(rhs_monoms), (each_ode)]; 
     end if;
   end do;
   
   max_possible := max(map(rhs, [entries(vts, `pairs`)]));
-  for rhs_term in rhs_terms do
+  for rhs_term in rhs_monoms do
     indets_ := convert(indets(rhs_term) minus {t}, list):
     for term in indets_ do
       if is_function(term) then
@@ -717,7 +728,7 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
           substitutions[FunctionToVariable(term)] := vts[FunctionToVariable(term)]+1:
         end if;
       else
-        if not term in non_id and vts[term]=max_possible and assigned(vts[term]) then # 
+        if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then # 
           substitutions[term] := vts[term]+1:
         end if;
       end if:
@@ -725,11 +736,11 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
   end do:
   substitutions[z_aux]:=min(3, max_possible):
 
-  new_et_hat := poly_system:
+  new_et_hat := input_table["poly_system"]:
   all_subs := {}:
   names := [indices(substitutions, `nolist`)];
   for each in names do #system_vars[2] do
-    selection := select(sys_var->StringTools[IsPrefix](convert(each, string), sys_var), poly_vars);
+    selection := select(sys_var->StringTools[IsPrefix](convert(each, string), sys_var), input_table["poly_vars"]);
     for other in selection do
         new_et_hat := subs({other = other^substitutions[each]}, new_et_hat):
         all_subs := all_subs union {other = other^substitutions[each]}:
