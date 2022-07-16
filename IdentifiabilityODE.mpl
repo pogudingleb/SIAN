@@ -286,10 +286,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     		PrintHeader("Applying Weighted Ordering", output_targets[log]):
     		LogText(sprintf("\t=> Applying Weighted Ordering"), ProgressBar):
   	end if:
-    weight_subs, poly_system, poly_vars := SubsByDepth(
-      system_ODEs, [op(Et_hat), z_aux * Q_hat - 1], vars, non_id, 
-      s, m, x_vars, y_vars, mu, x_eqs, y_eqs, all_vars
-    );
+    input_dict := table(
+      sigma=system_ODEs,
+      poly_system = [op(Et_hat), z_aux * Q_hat - 1], poly_vars = vars, non_id = non_id, 
+      s=s, m=m, x_vars=x_vars, y_vars=y_vars,
+      mu=mu, x_eqs=x_eqs, y_eqs=y_eqs, all_vars=all_vars
+    )
+    weight_subs, poly_system := SubsByDepth(input_dict):
     Et_hat := poly_system;
     weights_table := table(weight_subs);
     LogExpression(sprintf("%q\n",  weights_table), "LogAreaSIAN");
@@ -303,11 +306,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
   end if:
 
-  writeto("example_system.out");
-  printf("Et_hat=%a; #with Q_hat\n", [op(Et_hat), z_aux * Q_hat - 1]);
-  printf("vars=%a;\n", vars);
-  printf("all_subs%a;\n", all_subs);
-  writeto(terminal);
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
@@ -622,6 +620,8 @@ end proc:
 
 #===============================================================================
 GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
+# s: number of states and parameters
+# m: number of outputs
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
@@ -676,7 +676,20 @@ GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
 end proc:
 
 #===============================================================================
-SubsByDepth := proc(sigma, poly_system, poly_vars, non_id, s, m, x_vars, y_vars, mu, x_eqs, y_eqs, all_vars, {trdegsub:=false})
+SubsByDepth := proc(input_table, {trdegsub:=false})
+# input_table is a Maple table with key value pairs:
+# sigma: input ODE system
+# poly_system: polynomial system Et_hat
+# poly_vars: variables of Et_hat in the proper order
+# non_id: non-identifiable parameters
+# s: number of parameters + number of states in sigma
+# m: number of outputs
+# x_vars: state variables
+# y_vars: output variables (y-functions)
+# mu: list of parameters from sigma
+# x_eqs: ODEs from sigma in polynomial form
+# y_eqs: output equations from sigma in polynomial form
+# all_vars: all variables in sigma
 #===============================================================================
   local counting_table_states, min_count, vts, rhs_terms, max_possible,
         rhs_term, indets_, term, substitutions, each, alg_indep,
@@ -722,6 +735,6 @@ SubsByDepth := proc(sigma, poly_system, poly_vars, non_id, s, m, x_vars, y_vars,
         all_subs := all_subs union {other = other^substitutions[each]}:
     end do;
   od:
-  return all_subs, new_et_hat, poly_vars;
+  return all_subs, new_et_hat;
 end proc:
 
