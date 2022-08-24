@@ -709,31 +709,23 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
   ):
   substitutions := table([]);
   all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), input_table["sigma"]));
-  rhs_monoms := []:
+  rhs_indets := []:
   for each_ode in all_odes do
-    if whattype(each_ode) in [`+`,`*`,`^`] then
-      rhs_monoms := [op(rhs_monoms), op(each_ode)];
-    end if;
-    if whattype(each_ode) in [function] then
-     rhs_monoms := [op(rhs_monoms), (each_ode)]; 
-    end if;
+    rhs_indets := [op(rhs_indets), op(indets(each_ode) minus {t})]; 
   end do;
-  
+
   max_possible := max(map(rhs, [entries(vts, `pairs`)]));
-  for rhs_term in rhs_monoms do
-    indets_ := convert(indets(rhs_term) minus {t}, list):
-    for term in indets_ do
-      if is_function(term) then
-        if assigned(vts[FunctionToVariable(term)]) then
-          substitutions[FunctionToVariable(term)] := vts[FunctionToVariable(term)]+1:
-        end if;
-      else
-        if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then # 
-          substitutions[term] := vts[term]+1:
-        end if;
-      end if:
-    end do;
-  end do:
+  for term in rhs_indets do
+    if is_function(term) then
+      if assigned(vts[FunctionToVariable(term)]) then
+        substitutions[FunctionToVariable(term)] := vts[FunctionToVariable(term)]+1:
+      end if;
+    else
+      if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then # 
+        substitutions[term] := vts[term]+1:
+      end if;
+    end if:
+  end do;
   substitutions[z_aux]:=min(3, max_possible):
 
   new_et_hat := input_table["poly_system"]:
