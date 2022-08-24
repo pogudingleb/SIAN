@@ -608,15 +608,14 @@ is_diff := f->type(int(f, t), function(name)):
 lhs_name := ff -> if convert(ff, string)[-1] = "_" then parse(convert(ff, string)[..-2]) else ff; end if:
 
 #===============================================================================
-GetStateName := proc(state, x_vars, mu)
+GetStateName := proc(state)
 #===============================================================================
-  local state_;
-  if state in mu then
-    return state;
-  end if;
-  state_ := parse(cat(StringTools[Join](StringTools[Split](convert(state, string), "_")[..-2], "_"), "_")):
-  if state_ in x_vars then
+  local state_, order_ ;
+  state_, order_ := op(GetOrderVar(state)):
+  if state_ <> "" then
     return state_;
+  else
+    return state;
   end if:
 end proc:
 
@@ -635,7 +634,7 @@ GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
   visible_states :=  foldl(`union`, op(map(x->indets(rhs(x)) minus {t}, y_eqs))); #select(f -> f in x_zero_vars, ); # map(x->parse(convert(x, string)[..-2]), select(f -> f in x_zero_vars, foldl(`union`, op(map(x->indets(rhs(x)), y_eqs))))):# cat(StringTools[Split](convert(x, string), "_")[1], "_")
 
   # construct a hash table of "visibility"
-  visibility_table := table([seq(GetStateName(each, x_vars, mu)=current_level, each in visible_states)]):
+  visibility_table := table([seq(GetStateName(each)=current_level, each in visible_states)]):
   # this is a flag array: if i-th position == 1 then we must differentiat i-th y(t) function 
   differentiate_ := [seq(1, i=1..nops(y_eqs))]: 
 
@@ -653,8 +652,8 @@ GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
         poly_d := simplify(leader - subs(x_eqs, -(poly_d - separant * leader) / separant)):
         y_eqs[i]:= leader = simplify(poly_d - leader);
         candidates := select(x-> not (GetOrderVar(x)[1]  in y_vars), indets(y_eqs[i])):
-        if op(map(x->not assigned(visibility_table[GetStateName(x, x_vars, mu)]), candidates)) <> NULL then
-          continue := foldl(`or`, op(map(x->not assigned(visibility_table[GetStateName(x, x_vars, mu)]), candidates))):
+        if op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates)) <> NULL then
+          continue := foldl(`or`, op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates))):
         else
           continue := false;
         fi:
@@ -664,8 +663,8 @@ GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
           differentiate_[i]:=0:
         fi:
         for each in candidates do
-          if not assigned(visibility_table[GetStateName(each, x_vars, mu)]) then 
-              visibility_table[GetStateName(each, x_vars, mu)] := current_level:
+          if not assigned(visibility_table[GetStateName(each)]) then 
+              visibility_table[GetStateName(each)] := current_level:
           fi:
         od;
       fi:
