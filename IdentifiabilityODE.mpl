@@ -299,7 +299,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     weights_table := table(weight_subs);
   else
     weights_table := table([seq(_var_=_var_, _var_ in vars)]);
-  	Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
+    Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
   end if;
   ###########
   
