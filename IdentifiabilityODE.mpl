@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, use_weights:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, weighted_ordering:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -281,7 +281,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
 
   ###########
   non_id := map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]):
-  if use_weights then
+  if weighted_ordering then
   	if infolevel > 0 then
     		PrintHeader("Applying Weighted Ordering", output_targets[log]):
     		LogText(sprintf("\t=> Applying Weighted Ordering"), ProgressBar):
@@ -289,9 +289,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     input_table := table(
       [
         "sigma"=system_ODEs,
-        "poly_system" = [op(Et_hat), z_aux * Q_hat - 1], "poly_vars" = vars, "non_id" = non_id, 
+        "poly_system"=[op(Et_hat), z_aux * Q_hat - 1], "poly_vars"=vars, "non_id"=non_id, 
         "s"=s, "m"=m, "x_vars"=x_vars, "y_vars"=y_vars,
-        "mu"=mu, "x_eqs"=x_eqs, "y_eqs"=y_eqs, "all_vars"=all_vars
+        "mu"=mu, "x_eqs"=x_eqs, "y_eqs"=y_eqs, "Y_eq"=Y_eq, "X_eq"=X_eq, "all_vars"=all_vars
       ]
     );
     weight_subs, poly_system := SubsByDepth(input_table):
@@ -595,17 +595,12 @@ end proc:
 # Weights
 #===============================================================================
 
-# get rid of unerscore, e.g. x1(t) -> x1_ -> x1
-get_function_name := f -> parse(convert(FunctionToVariable(f), string)[..-2]):
-
 # check if depends on (t)
 is_function:= f->StringTools[Has](convert(f, string), "(t)"):
-idtfm := x->x:
 
 # check if is derivative
 is_diff := f->type(int(f, t), function(name)):
 
-lhs_name := ff -> if convert(ff, string)[-1] = "_" then parse(convert(ff, string)[..-2]) else ff; end if:
 
 #===============================================================================
 GetStateName := proc(state)
@@ -620,14 +615,20 @@ GetStateName := proc(state)
 end proc:
 
 #===============================================================================
-GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
+GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
 # s: number of states and parameters
 # m: number of outputs
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
-  leader, separant, candidates, each, differentiate_, k, y_eqs:
-  y_eqs := y_eqs_in:
+   candidates, each, differentiate_, k, X_eq_dict, Y_eq_dict:
+
+  X_eq_dict := table();
+  Y_eq_dict := table();
+  for i from 0 to s+1 do
+    X_eq_dict[i] := [];
+    Y_eq_dict[i] := [];
+  end do:
   current_level := 0:
   # get functions on level 0, we consider parameters and states indistinguishable
   # i.e. parameters are states with d/dt = 0
@@ -638,39 +639,34 @@ GetMinLevelBFS := proc(s, m, x_vars, y_vars, mu, x_eqs, y_eqs_in, all_vars)
   # this is a flag array: if i-th position == 1 then we must differentiat i-th y(t) function 
   differentiate_ := [seq(1, i=1..nops(y_eqs))]: 
 
+  for each in X_eq do
+    X_eq_dict[GetOrderVar(lhs(each))[2]] := [op(X_eq_dict[GetOrderVar(lhs(each))[2]]), each]:
+  end do;
+  for each in Y_eq do
+    Y_eq_dict[GetOrderVar(lhs(each))[2]] := [op(Y_eq_dict[GetOrderVar(lhs(each))[2]]), each]:
+  end do;
+
   for j from 1 to s + 1 do
     # begin differentiation
     current_level := current_level + 1:
     continue:=true:
-
-    for i from 1 to m do
-      if differentiate_[i]=1 then 
-        poly_d := numer(lhs(y_eqs[i]) - rhs(y_eqs[i])):
-        poly_d := Differentiate(poly_d, all_vars):
-        leader := MakeDerivative(y_vars[i], j):
-        separant := diff(poly_d, leader):
-        poly_d := simplify(leader - subs(x_eqs, -(poly_d - separant * leader) / separant)):
-        y_eqs[i]:= leader = simplify(poly_d - leader);
-        candidates := select(x-> not (GetOrderVar(x)[1]  in y_vars), indets(y_eqs[i])):
-        if op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates)) <> NULL then
-          continue := foldl(`or`, op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates))):
-        else
-          continue := false;
-        fi:
-        if continue then
-          differentiate_[i]:=1:
-        else
-          differentiate_[i]:=0:
-        fi:
-        for each in candidates do
-          if not assigned(visibility_table[GetStateName(each)]) then 
-              visibility_table[GetStateName(each)] := current_level:
-          fi:
-        od;
+    poly_d := Y_eq_dict[j];
+    for k from 0 to j-1 do 
+      poly_d := subs(X_eq_dict[j-k], poly_d);
+      candidates := select(x-> not (GetOrderVar(x)[1]  in y_vars), indets(poly_d)):
+      if op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates)) <> NULL then
+        continue := foldl(`or`, op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates))):
+      else
+        continue := false;
       fi:
-    od:
-    if add(k, k in differentiate_)=0 then
-        break:
+    od;
+    for each in candidates do
+      if not assigned(visibility_table[GetStateName(each)]) then 
+          visibility_table[GetStateName(each)] := current_level:
+      fi:
+    od;
+    if not continue then
+      break;
     fi:
   od:
   return visibility_table;
@@ -699,12 +695,10 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
   vts := GetMinLevelBFS(
     input_table["s"],
     input_table["m"],
-    input_table["x_vars"],
-    input_table["y_vars"],
     input_table["mu"],
-    input_table["x_eqs"],
     input_table["y_eqs"],
-    input_table["all_vars"]
+    input_table["X_eq"],
+    input_table["Y_eq"]
   ):
   substitutions := table([]);
   all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), input_table["sigma"]));
