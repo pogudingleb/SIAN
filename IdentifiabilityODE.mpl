@@ -621,7 +621,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
-   candidates, each, differentiate_, k, X_eq_dict, Y_eq_dict:
+   candidates, each, k, X_eq_dict, Y_eq_dict:
 
   X_eq_dict := table();
   Y_eq_dict := table();
