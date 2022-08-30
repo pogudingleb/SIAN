@@ -636,8 +636,6 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
 
   # construct a hash table of "visibility"
   visibility_table := table([seq(GetStateName(each)=current_level, each in visible_states)]):
-  # this is a flag array: if i-th position == 1 then we must differentiat i-th y(t) function 
-  differentiate_ := [seq(1, i=1..nops(y_eqs))]: 
 
   for each in X_eq do
     X_eq_dict[GetOrderVar(lhs(each))[2]] := [op(X_eq_dict[GetOrderVar(lhs(each))[2]]), each]:
