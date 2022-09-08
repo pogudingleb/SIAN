@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, weighted_ordering:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, weighted_ordering:=true, known_states:=[], infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -9,7 +9,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
         prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table,
-        Et_x_vars, var, G, P, output:
+        Et_x_vars, var, G, P, output, known_states_local:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -38,6 +38,14 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   mu := convert(all_symbols_rhs minus {op(xy_ders), op(u_functions)}, list):
 
   x_vars := map(FunctionToVariable, x_functions):
+
+  known_states_local := known_states:
+  for i from 1 to numelems(known_states_local) do
+    if known_states_local[i] in x_functions then
+      known_states_local[i] := MakeDerivative(FunctionToVariable(known_states_local[i]), 0):
+    end if:
+  end do:
+  
   y_vars := map(FunctionToVariable, y_functions):
   u_vars := map(FunctionToVariable, u_functions):
   theta := map(ParamToInner, params_to_assess):
@@ -221,22 +229,27 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   end if:
  
   theta_l := []:
+  theta := select(x->not x in known_states_local, theta):
+  known_values := select(x->lhs(x) in known_states_local, all_subs):
+  Et_with_known_values := subs(known_values, Et):
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
     JacX := VectorCalculus[Jacobian]( 
-        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), 
+        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et_with_known_values), 
         other_params = subs(all_subs, other_params)
     ):
     if LinearAlgebra[Rank](JacX) <> max_rank then
       theta_l := [op(theta_l), param]:
     end if:
   end do:
- 
+
   if infolevel > 0 then
+    if numelems(known_states_local) > 0 then
+      printf("%s %a\n", `Known parameters: `, map(x -> ParamToOuter(x, all_vars), known_states_local)):
+    end if:
     printf("%s %a\n", `Locally identifiable paramters: `, map(x -> ParamToOuter(x, all_vars), theta_l));
     printf("%s %a\n", `Nonidentifiable parameter: `, map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]));
   end if:
-  
   #----------------------------------------------
   # 3. Randomize.
   #----------------------------------------------
@@ -253,7 +266,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   end if:
 
   # (b, c) ---------
-  sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
+  sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q, known_vals=known_values, known_st=known_states_local):
   y_hat := sample[1]:
   u_hat := sample[2]:
   # all_subs := sample[4]:
@@ -518,7 +531,7 @@ end proc:
 
 
 #===============================================================================
-SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q)
+SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q, {known_vals := [], known_st := []})
 #===============================================================================
   local n, m, s, all_params, all_vars, theta_hat, u_variables, 
         u_hat, x_hat, y_hat, eq, eq_num, eq_denom, 
@@ -528,10 +541,10 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q)
   s := nops(mu) + n:
   all_params := [op(mu), op(map(x -> MakeDerivative(x, 0), x_vars ))]:
   all_vars := [ op(x_vars), op(y_vars), op(u_vars) ]:
-
+  known_theta_hat := table(known_vals):
   roll := rand(0 .. bound):
   while true do
-    theta_hat := map(p -> p = roll(), all_params): 
+    theta_hat := map(p -> if p in known_st then p=known_theta_hat[p] else p = roll() end if, all_params):    
     u_variables := [];
     for i from 1 to nops(u_vars) do
       u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
@@ -621,7 +634,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
-   candidates, each, k, X_eq_dict, Y_eq_dict:
+   candidates, each, k, X_eq_dict, Y_eq_dict, y_vars:
 
   X_eq_dict := table();
   Y_eq_dict := table();
@@ -633,7 +646,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
   # get functions on level 0, we consider parameters and states indistinguishable
   # i.e. parameters are states with d/dt = 0
   visible_states :=  foldl(`union`, op(map(x->indets(rhs(x)) minus {t}, y_eqs))); #select(f -> f in x_zero_vars, ); # map(x->parse(convert(x, string)[..-2]), select(f -> f in x_zero_vars, foldl(`union`, op(map(x->indets(rhs(x)), y_eqs))))):# cat(StringTools[Split](convert(x, string), "_")[1], "_")
-
+  y_vars := map(x->GetOrderVar(lhs(x))[1], y_eqs):
   # construct a hash table of "visibility"
   visibility_table := table([seq(GetStateName(each)=current_level, each in visible_states)]):
 
