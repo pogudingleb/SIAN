@@ -621,7 +621,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
 #===============================================================================
   # this part is copied from original SIAN code
   local current_level, visible_states, visibility_table, i, j, continue, poly_d,
-   candidates, each, k, X_eq_dict, Y_eq_dict:
+   candidates, each, k, X_eq_dict, Y_eq_dict, y_vars:
 
   X_eq_dict := table();
   Y_eq_dict := table();
@@ -633,7 +633,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
   # get functions on level 0, we consider parameters and states indistinguishable
   # i.e. parameters are states with d/dt = 0
   visible_states :=  foldl(`union`, op(map(x->indets(rhs(x)) minus {t}, y_eqs))); #select(f -> f in x_zero_vars, ); # map(x->parse(convert(x, string)[..-2]), select(f -> f in x_zero_vars, foldl(`union`, op(map(x->indets(rhs(x)), y_eqs))))):# cat(StringTools[Split](convert(x, string), "_")[1], "_")
-
+  y_vars := map(x->GetOrderVar(lhs(x))[1], y_eqs):
   # construct a hash table of "visibility"
   visibility_table := table([seq(GetStateName(each)=current_level, each in visible_states)]):
 
