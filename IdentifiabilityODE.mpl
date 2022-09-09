@@ -277,6 +277,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
 
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
+  for each in known_values do
+    Et_hat := [op(Et_hat), lhs(each) - rhs(each)]:
+  end do:
   Et_x_vars := {}:
   for poly in Et_hat do
     Et_x_vars := Et_x_vars union { op(GetVars(poly, x_vars)) }:
