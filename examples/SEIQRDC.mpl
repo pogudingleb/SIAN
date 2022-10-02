@@ -1,4 +1,5 @@
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl":
 
 sys := [
 diff(s(t), t) = mu * n - a * s(t) - b * n * s(t) * i(t) * n - mu * s(t),
@@ -11,5 +12,7 @@ diff(c(t), t) = a * s(t) - mu * c(t) - tau0 * c(t),
 y1(t) = c(t)
 ]: 
 
-IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+# IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+IdentifiabilityODE(sys, GetParameters(sys), "new_logs/SEIQRDC", sub_transc=true):
+
 

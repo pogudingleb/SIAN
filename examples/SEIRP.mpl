@@ -1,4 +1,5 @@
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl";
 
 sys := [
   diff(s(t), t) = - a_e * s(t) * e(t) - a_i * s(t) * i(t),
@@ -9,5 +10,6 @@ sys := [
   y1(t) = i(t) + s(t)
 ];
 
-IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true):
+# IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true):
+IdentifiabilityODE(sys, GetParameters(sys), "new_logs/SEIRP", sub_transc=true):
 

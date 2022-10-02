@@ -4,10 +4,12 @@
  <____ ____>  Waterloo Maple Inc.
       |       Type ? for help.
 # read "../IdentifiabilityODE.mpl";
-> #read "../generate_tr_bases_with_dc.mpl":
-read "../generate_tr_bases.mpl":
+#read "../generate_tr_bases_with_dc.mpl":
+> read "../generate_tr_bases.mpl":
 Warning, (in IdentifiabilityODE) `degrees` is implicitly declared local
 |../generate_tr_bases.mpl:321|
+Warning, (in IdentifiabilityODE) `theta_l_new` is implicitly declared local
+|../generate_tr_bases.mpl:2|
 Warning, (in IdentifiabilityODE) `degree_table` is implicitly declared local
 |../generate_tr_bases.mpl:451|
 Warning, (in IdentifiabilityODE) `occurrence_table` is implicitly declared local
@@ -54,7 +56,7 @@ Parameters in equations:  [a, b, c, d, e, f]
 =======================================================
 1. Constructing the maximal polynomial system
 =======================================================
-memory used=32.7MB, alloc=108.3MB, time=0.51
+memory used=33.6MB, alloc=108.3MB, time=0.51
 
 =======================================================
 2. Truncating the polynomial system based on the Jacobian condition
@@ -66,7 +68,7 @@ Orders of prolongations of the state variables (alpha) =  [10, 8, 9, 9]
 =======================================================
 3. Assessing local identifiability
 =======================================================
-memory used=106.7MB, alloc=122.1MB, time=1.17
+memory used=112.3MB, alloc=122.3MB, time=1.20
 Locally identifiable paramters:  [a, b, x(0), z(0), y(0)]
 Nonidentifiable parameter:  [c, d, e, f, w(0)]
 Number of transcendence basis choices before "filtering": 37
@@ -75,8 +77,8 @@ Number of transcendence basis choices after "filtering": 12
 =======================================================
 Creating Truncated system (old)
 =======================================================
-Bound D_2 for assessing global identifiability:  528280977400000
-Random sample for the outputs and inputs is generated from  [a = 164695631505914, b = 396516986248193, c = 251509716143755, d = 363065729763141, e = 116993552466651, f = 39716254060274, x_0 = 133731732901983, w_0 = 76768982419750, z_0 = 528005572265378, y_0 = 430408054360783]
+Bound D_2 for assessing global identifiability with tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 222737344766004, b = 452608319404533, c = 354013965869893, d = 342542320142395, e = 469916891701166, f = 515513046630472, x_0 = 229338444784358, w_0 = 175556068491147, z_0 = 464140881511243, y_0 = 43735762069022]
 The polynomial system widehat{E^t} contains  42 equations in  42  variables
 Algebraically independent parameters (candidates) [c]
 
@@ -96,13 +98,14 @@ Input variables:          []
 Parameters in equations:  [a, b, d, e, f]
 ===================
 
-memory used=168.7MB, alloc=122.1MB, time=1.90
+memory used=156.6MB, alloc=122.3MB, time=1.82
 
 =======================================================
 4. Randomizing the truncated system
 =======================================================
-Bound D_2 for assessing global identifiability:  1056561955000000
-Random sample for the outputs and inputs is generated from  [a = 841181315279851, b = 1027336275490897, d = 935041480866583, e = 748240363907508, f = 622974286821772, c_0 = 688446341373529, x_0 = 513953086681488, w_0 = 780081719563639, z_0 = 958627219084972, y_0 = 879558411249238]
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+memory used=229.0MB, alloc=129.9MB, time=2.46
+Random sample for the outputs and inputs is generated from  [a = 408342314114436, b = 493493382015480, d = 506443148542799, e = 88829749994091, f = 56553971400398, c_0 = 35573778441004, x_0 = 307687001483621, w_0 = 325549767196472, z_0 = 411279866839139, y_0 = 251232963471862]
 The polynomial system widehat{E^t} contains  57 equations in  49  variables
              "new_logs/QWWC/transcendence_1_entropy_heuristic.mpl"
 
@@ -124,14 +127,13 @@ Input variables:          []
 Parameters in equations:  [a, b, c, e, f]
 ===================
 
-memory used=240.8MB, alloc=127.8MB, time=2.59
-memory used=337.3MB, alloc=143.8MB, time=3.39
+memory used=324.3MB, alloc=145.9MB, time=3.36
 
 =======================================================
 4. Randomizing the truncated system
 =======================================================
-Bound D_2 for assessing global identifiability:  1056561955000000
-Random sample for the outputs and inputs is generated from  [a = 87219177201735, b = 68344352456911, c = 809279730770319, e = 477075628722919, f = 938774615883677, d_0 = 564326261654924, x_0 = 205090310442042, w_0 = 601176914565403, z_0 = 763310134924302, y_0 = 504903969762394]
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 526065158130710, b = 230976945593438, c = 9916845815482, e = 320191742077942, f = 92406833881556, d_0 = 261547023248240, x_0 = 158935799090611, w_0 = 438152598044821, z_0 = 451751556464138, y_0 = 196349465701593]
 The polynomial system widehat{E^t} contains  57 equations in  49  variables
              "new_logs/QWWC/transcendence_2_entropy_heuristic.mpl"
 
@@ -153,13 +155,13 @@ Input variables:          []
 Parameters in equations:  [a, b, c, d, f]
 ===================
 
-memory used=417.6MB, alloc=135.8MB, time=4.29
+memory used=404.8MB, alloc=137.9MB, time=4.24
 
 =======================================================
 4. Randomizing the truncated system
 =======================================================
-Bound D_2 for assessing global identifiability:  1056561955000000
-Random sample for the outputs and inputs is generated from  [a = 356453397512512, b = 542466035968568, c = 40216820613739, d = 985478994616717, f = 623432743127804, e_0 = 885422745158205, x_0 = 954887806871883, w_0 = 283652661633559, z_0 = 301248115489866, y_0 = 245667012610004]
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 124710716802871, b = 275819053394728, c = 72205897294634, d = 491102825758665, f = 464153303906903, e_0 = 228867239400099, x_0 = 367229123956537, w_0 = 498386851006148, z_0 = 472216772402974, y_0 = 402066664203917]
 The polynomial system widehat{E^t} contains  55 equations in  48  variables
              "new_logs/QWWC/transcendence_3_entropy_heuristic.mpl"
 
@@ -181,13 +183,14 @@ Input variables:          []
 Parameters in equations:  [a, b, c, d, e]
 ===================
 
-memory used=497.1MB, alloc=135.8MB, time=5.15
+memory used=486.4MB, alloc=137.9MB, time=5.08
+memory used=569.1MB, alloc=137.9MB, time=5.85
 
 =======================================================
 4. Randomizing the truncated system
 =======================================================
-Bound D_2 for assessing global identifiability:  1056561955000000
-Random sample for the outputs and inputs is generated from  [a = 1029794637962747, b = 873790419564407, c = 141999606259171, d = 981690006672160, e = 751197236272788, f_0 = 52401338089184, x_0 = 371634068276425, w_0 = 765277671685194, z_0 = 292264682231241, y_0 = 316077204701891]
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 459978394549570, b = 366441843031761, c = 173636482040479, d = 77573144850724, e = 363535210890675, f_0 = 195772212601592, x_0 = 172681728435045, w_0 = 218068856074939, z_0 = 30918386887817, y_0 = 109395618054349]
 The polynomial system widehat{E^t} contains  55 equations in  48  variables
              "new_logs/QWWC/transcendence_4_entropy_heuristic.mpl"
 
@@ -209,4 +212,234 @@ Input variables:          []
 Parameters in equations:  [a, b, c, d, e, f]
 ===================
 
-memory used=580.3MB, alloc=136.4MB, time=5.97
+	Adding new y-equations: [y_faux1_0 = w_0]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_0]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_0]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 413471214994540, b = 237682967943099, c = 470980241348824, d = 117731823675076, e = 39990690361481, f = 206053315279543, x_0 = 74088440178424, w_0 = 376010945442893, z_0 = 36708483909894, y_0 = 408428186066995]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+memory used=647.8MB, alloc=137.9MB, time=6.78
+             "new_logs/QWWC/transcendence_5_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_1]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_1}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+	Adding new y-equations: [y_faux1_0 = w_1]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_1]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_1]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 218682325143321, b = 243778409800308, c = 420020881294704, d = 226579657232027, e = 29039006184775, f = 441238816308836, x_0 = 468818380813731, w_0 = 506758999609565, z_0 = 161727288332600, y_0 = 77332187048524]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_6_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_2]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=726.8MB, alloc=137.9MB, time=7.65
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_2}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+	Adding new y-equations: [y_faux1_0 = w_2]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_2]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_2]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 237027469061656, b = 332383964863790, c = 318233000167542, d = 382782950607894, e = 133696294506137, f = 395053341696353, x_0 = 51089488796194, w_0 = 54077986916428, z_0 = 413344661803720, y_0 = 472700815525422]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_7_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_3]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=806.2MB, alloc=137.9MB, time=8.56
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_3}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+	Adding new y-equations: [y_faux1_0 = w_3]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_3]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_3]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 337188322228811, b = 267681540960332, c = 487602668717773, d = 331225020272998, e = 310155274880012, f = 342481263560792, x_0 = 347166443118925, w_0 = 336484885139058, z_0 = 63784622674841, y_0 = 527695501615113]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_8_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_4]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+memory used=885.5MB, alloc=137.9MB, time=9.43
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_4}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+	Adding new y-equations: [y_faux1_0 = w_4]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_4]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_4]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 204355800235297, b = 524125093669731, c = 509065675818353, d = 283140643018967, e = 81307065994638, f = 337085551915533, x_0 = 320134276753578, w_0 = 309615830427946, z_0 = 289715668126506, y_0 = 398267365225005]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_9_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_5]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_5}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+memory used=964.7MB, alloc=137.9MB, time=10.32
+	Adding new y-equations: [y_faux1_0 = w_5]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_5]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_5]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 212051237066630, b = 120625521055192, c = 116179341533641, d = 318233067855422, e = 267215423156424, f = 132506498000289, x_0 = 115355136052491, w_0 = 471980925469675, z_0 = 501025043860678, y_0 = 114536886865398]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_10_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_6]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_6}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+memory used=1044.6MB, alloc=137.9MB, time=11.18
+	Adding new y-equations: [y_faux1_0 = w_6]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_6]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_6]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 181153447216972, b = 91750151419220, c = 503540704377766, d = 19841152056702, e = 45318826177495, f = 263105172777747, x_0 = 462532071134759, w_0 = 476436756084742, z_0 = 182507047584452, y_0 = 306450984694794]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_11_entropy_heuristic.mpl"
+
+Algebraically independent parameters (candidates) [w_7]
+
+=======================================================
+Substituting transcendence basis.
+=======================================================
+Algebraically independent parameters among nonidentifiable: {}
+Algebraically independent parameters among derivatives: {w_7}
+	Adding ODEs: []
+	Adding output functions: []
+	New system: [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f+x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(t)-x(t)*z(t), g(t) = x(t)]
+
+=== Input info ===
+State variables:          [x(t), w(t), z(t), y(t)]
+Output variables:         [g(t)]
+Input variables:          []
+Parameters in equations:  [a, b, c, d, e, f]
+===================
+
+memory used=1124.4MB, alloc=137.9MB, time=12.05
+	Adding new y-equations: [y_faux1_0 = w_7]
+	New system: [g_0-x_0, a*x_0-a*y_0-y_0*z_0+x_1, g_1-x_1, a*x_1+x_2+(-a-z_0)*y_1-y_0*z_1, -b*x_0-b*y_0+x_0*z_0+y_1, c*z_0+d*w_0-x_0*y_0+z_1, g_2-x_2, a*x_2-2*z_1*y_1+x_3+(-a-z_0)*y_2-y_0*z_2, (-b+z_0)*x_1-b*y_1+y_2+x_0*z_1, c*z_1+d*w_1-x_0*y_1-x_1*y_0+z_2, -e*z_0+f*w_0-x_0*y_0+w_1, g_3-x_3, a*x_3-3*z_2*y_1-3*z_1*y_2+x_4+(-a-z_0)*y_3-y_0*z_3, 2*z_1*x_1+(-b+z_0)*x_2-b*y_2+y_3+x_0*z_2, c*z_2+d*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+z_3, -e*z_1+f*w_1-x_0*y_1-x_1*y_0+w_2, g_4-x_4, a*x_4-4*z_3*y_1-6*z_2*y_2-4*z_1*y_3+x_5+(-a-z_0)*y_4-y_0*z_4, 3*z_2*x_1+3*z_1*x_2+(-b+z_0)*x_3-b*y_3+y_4+x_0*z_3, c*z_3+d*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+z_4, -e*z_2+f*w_2-x_0*y_2-2*x_1*y_1-x_2*y_0+w_3, g_5-x_5, a*x_5-5*z_4*y_1-10*z_3*y_2-10*z_2*y_3-5*z_1*y_4+x_6+(-a-z_0)*y_5-y_0*z_5, 4*z_3*x_1+6*z_2*x_2+4*z_1*x_3+(-b+z_0)*x_4-b*y_4+y_5+x_0*z_4, c*z_4+d*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+z_5, -e*z_3+f*w_3-x_0*y_3-3*x_1*y_2-3*x_2*y_1-x_3*y_0+w_4, g_6-x_6, a*x_6-6*z_5*y_1-15*z_4*y_2-20*z_3*y_3-15*z_2*y_4-6*z_1*y_5+x_7+(-a-z_0)*y_6-y_0*z_6, 5*z_4*x_1+10*z_3*x_2+10*z_2*x_3+5*z_1*x_4+(-b+z_0)*x_5-b*y_5+y_6+x_0*z_5, c*z_5+d*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+z_6, -e*z_4+f*w_4-x_0*y_4-4*x_1*y_3-6*x_2*y_2-4*x_3*y_1-x_4*y_0+w_5, g_7-x_7, a*x_7-7*z_6*y_1-21*z_5*y_2-35*z_4*y_3-35*z_3*y_4-21*z_2*y_5-7*z_1*y_6+x_8+(-a-z_0)*y_7-y_0*z_7, 6*z_5*x_1+15*z_4*x_2+20*z_3*x_3+15*z_2*x_4+6*z_1*x_5+(-b+z_0)*x_6-b*y_6+y_7+x_0*z_6, c*z_6+d*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+z_7, -e*z_5+f*w_5-x_0*y_5-5*x_1*y_4-10*x_2*y_3-10*x_3*y_2-5*x_4*y_1-x_5*y_0+w_6, g_8-x_8, a*x_8-8*z_7*y_1-28*z_6*y_2-56*z_5*y_3-70*z_4*y_4-56*z_3*y_5-28*z_2*y_6-8*z_1*y_7+x_9+(-a-z_0)*y_8-y_0*z_8, 7*z_6*x_1+21*z_5*x_2+35*z_4*x_3+35*z_3*x_4+21*z_2*x_5+7*z_1*x_6+(-b+z_0)*x_7-b*y_7+y_8+x_0*z_7, c*z_7+d*w_7-x_0*y_7-7*x_1*y_6-21*x_2*y_5-35*x_3*y_4-35*x_4*y_3-21*x_5*y_2-7*x_6*y_1-x_7*y_0+z_8, -e*z_6+f*w_6-x_0*y_6-6*x_1*y_5-15*x_2*y_4-20*x_3*y_3-15*x_4*y_2-6*x_5*y_1-x_6*y_0+w_7, g_9-x_9, y_faux1_0-w_7]
+	New system: [g_0 = x_0, g_1 = x_1, g_2 = x_2, g_3 = x_3, g_4 = x_4, g_5 = x_5, g_6 = x_6, g_7 = x_7, g_8 = x_8, g_9 = x_9, g_10 = x_10, g_11 = x_11, y_faux1_0 = w_7]
+
+=======================================================
+4. Randomizing the truncated system
+=======================================================
+Bound D_2 for assessing global identifiability without tr. basis:  528280977400000
+Random sample for the outputs and inputs is generated from  [a = 526758465813560, b = 368733679208099, c = 291100761572425, d = 145698569593848, e = 313003807829926, f = 356402013597106, x_0 = 428972257488813, w_0 = 197127617166517, z_0 = 201804679978968, y_0 = 258524670503409]
+The polynomial system widehat{E^t} contains  43 equations in  42  variables
+             "new_logs/QWWC/transcendence_12_entropy_heuristic.mpl"
+
+> quit;
+memory used=1181.2MB, alloc=137.9MB, time=12.45

@@ -1,4 +1,6 @@
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl":
+
 
 sys := [
 diff(EGF_EGFR(t), t) = reaction_1_k1*EGF_EGFR(t) - reaction_9_k1*EGF_EGFR(t) - reaction_1_k2*EGF_EGFR(t),
@@ -16,4 +18,5 @@ y2(t) = a2*pAkt(t) + a2*pAkt_S6(t),
 y3(t) = pS6(t)*a3
 ];
 
-output := IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+# output := IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+IdentifiabilityODE(sys, GetParameters(sys), "new_logs/Fujita", sub_transc=true):

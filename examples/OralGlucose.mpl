@@ -1,7 +1,8 @@
 # Example (with initial conditions assumed being unknown) from Section III of "DAISY: an Efficient Tool to Test Global Identifiability. Some Case Studies"
 # by G. Bellu, M.P. Saccomani
 
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl":
 
 sigma := [
   diff(G(t), t) = -(p1 + X(t)) * G(t) + p1 * Gb + v * R(t),
@@ -12,4 +13,5 @@ sigma := [
   y3(t) = Gb
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
+# IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
+IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/OralGlucose", sub_transc=true):

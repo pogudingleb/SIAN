@@ -453,12 +453,23 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
     sum_degrees_new := 0;
     degree_table := table([seq(param = [], param in alg_indep)]);
     occurrence_table := table([seq(param = 0, param in alg_indep)]):
+    individual_degree := table([seq(param = [], param in alg_indep)]);
+
     for each in et_hat_monomials do
       for param in alg_indep do # {beta_, q}
           if param in {op(each)} then
               sum_degrees_new := sum_degrees_new+degree(each);
               occurrence_table[param] += 1;
               degree_table[param] := [op(degree_table[param]), degree(each)];
+              break
+          end if:
+      end do:
+    end do:
+
+    for each in et_hat_monomials do
+      for param in alg_indep do # {beta_, q}
+          if param in {op(each)} then
+            individual_degree[param] := [op(individual_degree[param]), degree(each, param)]:
           end if:
       end do:
     end do:
@@ -492,7 +503,8 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
           printf("infolevel[Groebner]:=10;\nEt_hat := %a;\nvars:=%a;\n", [op(Et_hat), z_aux * Q_hat - 1], vars);
           printf("gb:=CodeTools[Usage](Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=11863279), output='all');\n");
           printf("# %a %a\n# %a, %a\n# %a, %a\n# %a\n", alg_indep, sum_degrees_new, numelems(counter), counter, add(map(rhs, counter)), entr, count_greater_than_ones);
-          printf("# %a\n# %a", [entries(occurrence_table, `pairs`)], [entries(degree_table, `pairs`)]);
+          printf("# %a\n# %a\n", [entries(occurrence_table, `pairs`)], [entries(degree_table, `pairs`)]);
+          printf("# %a", [entries(individual_degree, `pairs`)]);
         end if:
     else
       writeto(cat(system_name, "/", "no_transcendence.mpl")):

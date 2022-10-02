@@ -1,5 +1,5 @@
-read "../IdentifiabilityODE.mpl";
-
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl";
 sigma := [
 diff(EGF_EGFR(t), t) = reaction_1_k1*EGF_EGFR(t) - reaction_9_k1*EGF_EGFR(t) - reaction_1_k2*EGF_EGFR(t),
 diff(EGFR(t), t) = -reaction_1_k1*EGF_EGFR(t) + reaction_1_k2*EGF_EGFR(t) - EGFR(t)*EGFR_turnover + EGFR_turnover*pro_EGFR(t),
@@ -16,4 +16,5 @@ y3(t) = pS6(t)*a3
 ];
 
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+# IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/New_AKT", sub_transc=true):

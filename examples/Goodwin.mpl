@@ -1,5 +1,6 @@
 # read "../IdentifiabilityODE.mpl";
-read "../generate_tr_bases_with_dc.mpl":
+#read "../generate_tr_bases_with_dc.mpl":
+read "../generate_tr_bases.mpl":
 
 sigma := [
 diff(x2(t), t) = alpha*x1(t) - beta*x2(t),

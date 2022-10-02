@@ -1,136 +1,136 @@
-Treatment/entropies.mpl
+entropies.mpl
 elapsed,user+system,memory
-0.18,=0.09+0.04,19108000
+0.17,=0.08+0.05,17076000
 
-Treatment/transcendence_100_entropy_heuristic.mpl
+transcendence_100_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.23,=0.20+0.18,27788000
+0.19,=0.14+0.10,23872000
 
-Treatment/transcendence_101_entropy_heuristic.mpl
+transcendence_101_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.18+0.17,25960000
+0.21,=0.20+0.17,23908000
 
-Treatment/transcendence_102_entropy_heuristic.mpl
+transcendence_102_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.19+0.15,23936000
+0.19,=0.12+0.10,23732000
 
-Treatment/transcendence_103_entropy_heuristic.mpl
+transcendence_103_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.22+0.17,25988000
+0.18,=0.13+0.10,23832000
 
-Treatment/transcendence_104_entropy_heuristic.mpl
+transcendence_104_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.15+0.11,23972000
+0.19,=0.13+0.09,23772000
 
-Treatment/transcendence_105_entropy_heuristic.mpl
+transcendence_105_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.16+0.07,23868000
+0.19,=0.14+0.10,23820000
 
-Treatment/transcendence_106_entropy_heuristic.mpl
+transcendence_106_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.16+0.08,25960000
+0.19,=0.16+0.10,23936000
 
-Treatment/transcendence_107_entropy_heuristic.mpl
+transcendence_107_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.24,=0.34+0.30,24232000
+0.19,=0.16+0.08,23900000
 
-Treatment/transcendence_108_entropy_heuristic.mpl
+transcendence_108_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.18,=0.10+0.07,25724000
+0.24,=0.12+0.10,23752000
 
-Treatment/transcendence_115_entropy_heuristic.mpl
+transcendence_115_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.14+0.08,25848000
+0.19,=0.13+0.09,23764000
 
-Treatment/transcendence_123_entropy_heuristic.mpl
+transcendence_123_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.14+0.08,23740000
+0.18,=0.14+0.08,23748000
 
-Treatment/transcendence_130_entropy_heuristic.mpl
+transcendence_130_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.13+0.06,25688000
+0.20,=0.17+0.12,23744000
 
-Treatment/transcendence_136_entropy_heuristic.mpl
+transcendence_136_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.14+0.08,23776000
+0.31,=0.20+0.17,23904000
 
-Treatment/transcendence_141_entropy_heuristic.mpl
+transcendence_141_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.22+0.11,25292000
+0.19,=0.14+0.10,23804000
 
-Treatment/transcendence_145_entropy_heuristic.mpl
+transcendence_145_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.12+0.09,25796000
+0.19,=0.13+0.11,23812000
 
-Treatment/transcendence_148_entropy_heuristic.mpl
+transcendence_148_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.15+0.09,23880000
+0.21,=0.14+0.08,23828000
 
-Treatment/transcendence_151_entropy_heuristic.mpl
+transcendence_151_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.15+0.08,25752000
+0.18,=0.13+0.11,23944000
 
-Treatment/transcendence_152_entropy_heuristic.mpl
+transcendence_152_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.12+0.08,23788000
+0.19,=0.13+0.10,23808000
 
-Treatment/transcendence_15_entropy_heuristic.mpl
+transcendence_15_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.15+0.11,25984000
+0.20,=0.20+0.16,23952000
 
-Treatment/transcendence_23_entropy_heuristic.mpl
+transcendence_23_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.16+0.14,23720000
+0.19,=0.13+0.09,23732000
 
-Treatment/transcendence_31_entropy_heuristic.mpl
+transcendence_31_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.15+0.09,25884000
+0.19,=0.13+0.08,23764000
 
-Treatment/transcendence_38_entropy_heuristic.mpl
+transcendence_38_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.19,=0.14+0.08,23804000
+0.19,=0.15+0.07,23704000
 
-Treatment/transcendence_46_entropy_heuristic.mpl
+transcendence_46_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.22+0.15,23888000
+0.19,=0.13+0.11,23788000
 
-Treatment/transcendence_52_entropy_heuristic.mpl
+transcendence_52_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.11+0.09,25708000
+0.19,=0.13+0.09,23656000
 
-Treatment/transcendence_60_entropy_heuristic.mpl
+transcendence_60_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.15+0.12,23912000
+0.19,=0.14+0.10,23820000
 
-Treatment/transcendence_65_entropy_heuristic.mpl
+transcendence_65_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.24,=0.13+0.07,25664000
+0.19,=0.14+0.08,23628000
 
-Treatment/transcendence_73_entropy_heuristic.mpl
+transcendence_73_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.16+0.11,23904000
+0.20,=0.25+0.21,24264000
 
-Treatment/transcendence_77_entropy_heuristic.mpl
+transcendence_77_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.12+0.08,25720000
+0.18,=0.12+0.08,23656000
 
-Treatment/transcendence_7_entropy_heuristic.mpl
+transcendence_7_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.13+0.07,23624000
+0.19,=0.14+0.10,23728000
 
-Treatment/transcendence_85_entropy_heuristic.mpl
+transcendence_85_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.16+0.12,25992000
+0.19,=0.15+0.10,23852000
 
-Treatment/transcendence_88_entropy_heuristic.mpl
+transcendence_88_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.22,=0.23+0.16,23880000
+0.19,=0.12+0.08,23644000
 
-Treatment/transcendence_96_entropy_heuristic.mpl
+transcendence_96_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.21,=0.20+0.11,26028000
+0.19,=0.14+0.07,23748000
 
-Treatment/transcendence_99_entropy_heuristic.mpl
+transcendence_99_entropy_heuristic.mpl
 elapsed,user+system,memory
-0.20,=0.12+0.09,25732000
+0.19,=0.17+0.13,23696000
 

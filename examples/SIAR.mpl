@@ -18,5 +18,5 @@ y5(t) = Ninv,
 y1(t) = H(t)
 ];
 # IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true):
-IdentifiabilityODE(sigma, GetParameters(sigma), "new_logs/SIAR", sub_transc=true):
+IdentifiabilityODE(sys, GetParameters(sys), "new_logs/SIAR", sub_transc=true):
 quit;

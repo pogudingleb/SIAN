@@ -4,7 +4,8 @@
 # https://doi.org/10.1073/pnas.96.25.14464
 # Page 1
 # read "../IdentifiabilityODE.mpl":
-read "../generate_tr_bases_with_dc.mpl":
+#read "../generate_tr_bases_with_dc.mpl":
+read "../generate_tr_bases.mpl":
 
 sigma := [
   diff(x(t), t) = lm - d * x(t) - beta * x(t) * v(t),

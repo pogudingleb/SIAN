@@ -1,4 +1,5 @@
-read "../IdentifiabilityODE.mpl";
+# read "../IdentifiabilityODE.mpl";
+read "../generate_tr_bases.mpl";
 
 sys := [
   diff(S(t), t) = b * N(t) - S(t) * (In(t) * lam + lam * Q(t) * eps_a * eps_q + lam * eps_a * A(t) + lam * eps_j * Jj(t) + d1),
@@ -12,5 +13,6 @@ sys := [
   y2(t) = Jj(t)
 ];
 
-IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+# IdentifiabilityODE(sys, GetParameters(sys), substitute_tr_basis=true, optimize_tr_basis=true, infolevel=2):
+IdentifiabilityODE(sys, GetParameters(sys), "new_logs/SIRAQJ", sub_transc=true):
 

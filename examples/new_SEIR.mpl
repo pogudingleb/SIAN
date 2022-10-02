@@ -1,5 +1,6 @@
+#read "../generate_tr_bases_with_dc.mpl":
 read "../generate_tr_bases.mpl":
-
+# read "../generate_tr_bases.mpl":
 sigma := [
 diff(s(t), t) = Lam - r0 * b * s(t) * i(t) / n - mu * s(t),
 diff(e(t), t) = b * s(t) * i(t) / n - eps * e(t) - mu * e(t),

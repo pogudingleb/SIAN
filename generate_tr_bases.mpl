@@ -287,7 +287,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
   deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
   D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
   if infolevel > 1 then
-    printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
+    printf("%s %a\n", `Bound D_2 for assessing global identifiability with tr. basis: `, D2):
   end if:
   # (b, c) ---------
   sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
@@ -392,7 +392,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
         printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
         printf("\t%s %a\n", `New system:`, sigma_new):
       end if:
-      X_eq, Y_eq, Et, theta_l, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
+      X_eq, Y_eq, Et, theta_l_new, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
       if numelems(alg_indep_derivs)>0 then
         faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
         y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
@@ -419,10 +419,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, system_name, {sub_tran
     deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
     D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
     if infolevel > 1 then
-      printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
+      printf("%s %a\n", `Bound D_2 for assessing global identifiability without tr. basis: `, D2):
     end if:
     # (b, c) ---------
-    sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
+    sample := SamplePoint(4/3 * D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
     y_hat := sample[1]:
     u_hat := sample[2]:
     theta_hat := sample[3]:  
