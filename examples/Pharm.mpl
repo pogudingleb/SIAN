@@ -11,10 +11,4 @@ sigma := [
   y1(t) = x1(t)
 ];
 
-<<<<<<< HEAD
 IdentifiabilityODE(sigma, GetParameters(sigma), substitute_tr_basis=true):
-||||||| e3ff1e1
-IdentifiabilityODE(sigma, GetParameters(sigma));
-=======
-IdentifiabilityODE(sigma, GetParameters(sigma), method=2, num_nodes=1);
->>>>>>> master
