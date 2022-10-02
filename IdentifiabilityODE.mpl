@@ -422,7 +422,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
 
   # (a) ------------
   deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
-  D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
+  if substitute_tr_basis then
+    D2 := floor( 8 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
+  else
+    D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
+  end if;
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
   end if:
@@ -457,11 +461,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
   end if:
 
-  writeto("example_system.out");
-  printf("Et_hat=%a; #with Q_hat\n", [op(Et_hat), z_aux * Q_hat - 1]);
-  printf("vars=%a;\n", vars);
-  printf("all_subs%a;\n", all_subs);
-  writeto(terminal);
+
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
