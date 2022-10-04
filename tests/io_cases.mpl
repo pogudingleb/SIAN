@@ -61,6 +61,8 @@ cases := [
 
 num_passed := 0:
 num_failed := 0:
+num_passed_w := 0:
+num_failed_w := 0:
 
 for i from 1 to nops(cases) do
     sigma := cases[i][1]:
@@ -76,6 +78,19 @@ for i from 1 to nops(cases) do
             num_failed := num_failed + 1:
         end if;
     end do;
+    for method from 1 to 2 do
+        result := IdentifiabilityODE(sigma, GetParameters(sigma), method = method, weighted_ordering=true, infolevel = 0, count_solutions = false):
+        if verify(correct_result, result, table) then
+            print("PASSED");
+            num_passed_w := num_passed_w + 1:
+        else
+            print("FAILED");
+            print(sigma, correct_result, result, method);
+            num_failed_w := num_failed_w + 1:
+        end if;
+    end do;
 end do:
 
 printf("Passed: %a, failed %a \n", num_passed, num_failed);
+printf("Passed with weights: %a, failed with weights %a \n", num_passed_w, num_failed_w);
+
