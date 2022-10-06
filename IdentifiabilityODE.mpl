@@ -149,7 +149,7 @@ IdentifiabilityODE := proc(
   # (e) ------------------
   alpha := [seq(1, i = 1..n)]:
   beta := [seq(0, i = 1..m)]:
-  Et := [];
+  Et := known_iv;
   # TODO: improve for arbitrary derivatives
   x_theta_vars := all_params:
   prolongation_possible := [seq(1, i = 1..m)]:
@@ -232,7 +232,6 @@ IdentifiabilityODE := proc(
       theta_l := [op(theta_l), param]:
     end if:
   end do:
-  theta_l := theta;
  
   if infolevel > 1 then
     printf("%s %a\n", `Locally identifiable paramters: `, map(ParamToOuter, theta_l));
