@@ -1,5 +1,5 @@
 #===============================================================================
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, weighted_ordering:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -9,7 +9,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
         prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table,
-        Et_x_vars, var, G, P, output:
+        Et_x_vars, var, G, P, output, non_id, input_table, weight_subs, weights_table, _var_, check:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -256,6 +256,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
   y_hat := sample[1]:
   u_hat := sample[2]:
+  # all_subs := sample[4]:
   theta_hat := sample[3]:
   if infolevel > 1 then
     printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
@@ -277,10 +278,36 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
     z_aux, w_aux,
     op(sort(mu))
   ]:
+
+  ###########
+  non_id := map(x -> ParamToOuter(x, all_vars), [op({op(theta)} minus {op(theta_l)})]):
+  if weighted_ordering then
+    if infolevel > 0 then
+        PrintHeader("Applying Weighted Ordering", output_targets[log]):
+        LogText(sprintf("\t=> Applying Weighted Ordering"), ProgressBar):
+    end if:
+    input_table := table(
+      [
+        "sigma"=system_ODEs,
+        "poly_system"=[op(Et_hat), z_aux * Q_hat - 1], "poly_vars"=vars, "non_id"=non_id, 
+        "s"=s, "m"=m, "x_vars"=x_vars, "y_vars"=y_vars,
+        "mu"=mu, "x_eqs"=x_eqs, "y_eqs"=y_eqs, "Y_eq"=Y_eq, "X_eq"=X_eq, "all_vars"=all_vars
+      ]
+    );
+    weight_subs, poly_system := SubsByDepth(input_table):
+    Et_hat := poly_system;
+    weights_table := table(weight_subs);
+  else
+    weights_table := table([seq(_var_=_var_, _var_ in vars)]);
+    Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
+  end if;
+  ###########
+  
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
+    printf("%s %a\n", `Weight assignment:`, [entries(weights_table, `pairs`)]);
   end if:
- 
+
   #----------------------------------------------
   # 4. Determine.
   #----------------------------------------------
@@ -341,10 +368,15 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       end if:
     end do:    
   elif method = 2 then
-    gb := Groebner[Basis]([op(Et_hat), z_aux * Q_hat - 1], tdeg(op(vars)));
+    gb := Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=char);
     for i from 1 to nops(theta_l) do
-      if Groebner[NormalForm](theta_l[i], gb, tdeg(op(vars))) = subs(theta_hat, theta_l[i]) then
-        theta_g := [ op(theta_g), theta_l[i] ]:
+      if char>0 then
+        check := subs(theta_hat, theta_l[i]) mod char:
+      else
+        check := subs(theta_hat, theta_l[i]):
+      end if:
+      if Groebner[NormalForm](theta_l[i]^degree(weights_table[theta_l[i]]), gb, tdeg(op(vars)), characteristic=char) = check then
+        theta_g := [op(theta_g), theta_l[i]]:
       end if:
     end do:
 
@@ -356,13 +388,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         end if:
         solutions_table[var] := 1:
       end do:
-	
+  
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
-	P := select(x->evalb(indets(x)={var}), G):
-	solutions_table[var]:=degree(P[1], [op(indets(P))]): 
-        if infolevel > 1 then
-          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, degree(P[1], [op(indets(P))])):
+        P := select(x->evalb(indets(x)={var}), G):
+        solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
+        if infolevel > 0 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
         end if:
       end do:
     end if:  
@@ -557,3 +589,145 @@ CompareDiffVar := proc(dvl, dvr, var_list)
   end if:
   return StringTools[Compare](vr, vl):
 end proc:
+
+
+#===============================================================================
+# Weights
+#===============================================================================
+
+# check if depends on (t)
+is_function:= f->StringTools[Has](convert(f, string), "(t)"):
+
+# check if is derivative
+is_diff := f->type(int(f, t), function(name)):
+
+
+#===============================================================================
+GetStateName := proc(state)
+#===============================================================================
+  local state_, order_ ;
+  state_, order_ := op(GetOrderVar(state)):
+  if state_ <> "" then
+    return state_;
+  else
+    return state;
+  end if:
+end proc:
+
+#===============================================================================
+GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
+# s: number of states and parameters
+# m: number of outputs
+#===============================================================================
+  # this part is copied from original SIAN code
+  local current_level, visible_states, visibility_table, i, j, continue, poly_d,
+   candidates, each, k, X_eq_dict, Y_eq_dict, y_vars:
+
+  X_eq_dict := table();
+  Y_eq_dict := table();
+  for i from 0 to s+1 do
+    X_eq_dict[i] := [];
+    Y_eq_dict[i] := [];
+  end do:
+  current_level := 0:
+  # get functions on level 0, we consider parameters and states indistinguishable
+  # i.e. parameters are states with d/dt = 0
+  visible_states :=  foldl(`union`, op(map(x->indets(rhs(x)) minus {t}, y_eqs))); #select(f -> f in x_zero_vars, ); # map(x->parse(convert(x, string)[..-2]), select(f -> f in x_zero_vars, foldl(`union`, op(map(x->indets(rhs(x)), y_eqs))))):# cat(StringTools[Split](convert(x, string), "_")[1], "_")
+  y_vars := map(x->GetOrderVar(lhs(x))[1], y_eqs):
+  # construct a hash table of "visibility"
+  visibility_table := table([seq(GetStateName(each)=current_level, each in visible_states)]):
+
+  for each in X_eq do
+    X_eq_dict[GetOrderVar(lhs(each))[2]] := [op(X_eq_dict[GetOrderVar(lhs(each))[2]]), each]:
+  end do;
+  for each in Y_eq do
+    Y_eq_dict[GetOrderVar(lhs(each))[2]] := [op(Y_eq_dict[GetOrderVar(lhs(each))[2]]), each]:
+  end do;
+
+  for j from 1 to s + 1 do
+    # begin differentiation
+    current_level := current_level + 1:
+    continue:=true:
+    poly_d := Y_eq_dict[j];
+    for k from 0 to j-1 do 
+      poly_d := subs(X_eq_dict[j-k], poly_d);
+      candidates := select(x-> not (GetOrderVar(x)[1]  in y_vars), indets(poly_d)):
+      if op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates)) <> NULL then
+        continue := foldl(`or`, op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates))):
+      else
+        continue := false;
+      fi:
+    od;
+    for each in candidates do
+      if not assigned(visibility_table[GetStateName(each)]) then 
+          visibility_table[GetStateName(each)] := current_level:
+      fi:
+    od;
+    if not continue then
+      break;
+    fi:
+  od:
+  return visibility_table;
+end proc:
+
+#===============================================================================
+SubsByDepth := proc(input_table, {trdegsub:=false})
+# input_table is a Maple table with key value pairs:
+# sigma: input ODE system
+# poly_system: polynomial system Et_hat
+# poly_vars: variables of Et_hat in the proper order
+# non_id: non-identifiable parameters
+# s: number of parameters + number of states in sigma
+# m: number of outputs
+# mu: list of parameters from sigma
+# y_eqs: output equations from sigma in polynomial form
+# X_eq: X equations from sigma in polynomial form
+# Y_eq: Y equations from sigma in polynomial form
+# all_vars: all variables in sigma
+#===============================================================================
+  local counting_table_states, min_count, vts, rhs_terms, max_possible,
+        rhs_term, indets_, term, substitutions, each, alg_indep,
+        all_subs, names, selection, other, all_odes, each_ode, rhs_indets, new_et_hat;
+
+  vts := GetMinLevelBFS(
+    input_table["s"],
+    input_table["m"],
+    input_table["mu"],
+    input_table["y_eqs"],
+    input_table["X_eq"],
+    input_table["Y_eq"]
+  ):
+  substitutions := table([]);
+  all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), input_table["sigma"]));
+  rhs_indets := []:
+  for each_ode in all_odes do
+    rhs_indets := [op(rhs_indets), op(indets(each_ode) minus {t})]; 
+  end do;
+
+  max_possible := max(map(rhs, [entries(vts, `pairs`)]));
+  for term in rhs_indets do
+    if is_function(term) then
+      if assigned(vts[FunctionToVariable(term)]) then
+        substitutions[FunctionToVariable(term)] := vts[FunctionToVariable(term)]+1:
+      end if;
+    else
+      if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then # 
+        substitutions[term] := vts[term]+1:
+      end if;
+    end if:
+  end do;
+  substitutions[z_aux]:=min(3, max_possible):
+
+  new_et_hat := input_table["poly_system"]:
+  all_subs := {}:
+  names := [indices(substitutions, `nolist`)];
+  for each in names do #system_vars[2] do
+    selection := select(sys_var->StringTools[IsPrefix](convert(each, string), sys_var), input_table["poly_vars"]);
+    for other in selection do
+        new_et_hat := subs({other = other^substitutions[each]}, new_et_hat):
+        all_subs := all_subs union {other = other^substitutions[each]}:
+    end do;
+  od:
+  return all_subs, new_et_hat;
+end proc:
+

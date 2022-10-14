@@ -15,4 +15,5 @@ sigma := [
   y4(t) = d
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma));
+
+IdentifiabilityODE(sigma, GetParameters(sigma), infolevel=3);
