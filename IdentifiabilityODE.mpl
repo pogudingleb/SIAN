@@ -260,7 +260,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
 
   # (a) ------------
   deg_variety := foldl(`*`, op( map(e -> degree(e), Et) )):
-  D2 := floor( 6 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
+  D2 := floor( 8 * nops(theta_l) * deg_variety * (1 + 2 * d0 * max(op(beta))) / (1 - p_local) ):
   if infolevel > 1 then
     printf("%s %a\n", `Bound D_2 for assessing global identifiability: `, D2):
   end if:
@@ -274,7 +274,10 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   if infolevel > 1 then
     printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
   end if:
-
+  printf(`Et = %a\n`, Et):
+  printf(`X = %a\n`, X):
+  printf(`Y = %a\n`, Y):
+  # done:
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
   for each in known_values do
@@ -284,10 +287,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
   for poly in Et_hat do
     Et_x_vars := Et_x_vars union { op(GetVars(poly, x_vars)) }:
   end do:
-  if infolevel > 1 then
-    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat), `equations in `, nops(Et_x_vars) + nops(mu), ` variables`);
-  end if:
+
   Q_hat := subs(u_hat, Q):
+
+  if infolevel > 1 then
+    printf("%s %a %s %a %s\n", `The polynomial system \widehat{E^t} contains `, nops(Et_hat)+nops(Q_hat), `equations in `, nops(Et_x_vars) + nops(mu), ` variables`);
+  end if:
 
   vars := [
     op(sort([op(Et_x_vars)], (a, b) -> CompareDiffVar(a, b, x_vars))),
@@ -408,9 +413,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
         P := select(x->evalb(indets(x)={var}), G):
-        solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
-        if infolevel > 1 then
-          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
+        if numelems(P) > 0 then
+          solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
+          if infolevel > 1 then
+            printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
+          end if:
         end if:
       end do:
     end if:  
