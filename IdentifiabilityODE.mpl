@@ -9,7 +9,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
         prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, new_to_process, solutions_table,
-        Et_x_vars, var, G, P, output, known_states_local:
+        Et_x_vars, var, G, P, output, non_id, input_table, weight_subs, weights_table, _var_, check:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -413,11 +413,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
         P := select(x->evalb(indets(x)={var}), G):
-        if numelems(P) > 0 then
-          solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
-          if infolevel > 1 then
-            printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
-          end if:
+        solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
+        if infolevel > 0 then
+          printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
         end if:
       end do:
     end if:  
@@ -702,16 +700,15 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
 # non_id: non-identifiable parameters
 # s: number of parameters + number of states in sigma
 # m: number of outputs
-# x_vars: state variables
-# y_vars: output variables (y-functions)
 # mu: list of parameters from sigma
-# x_eqs: ODEs from sigma in polynomial form
 # y_eqs: output equations from sigma in polynomial form
+# X_eq: X equations from sigma in polynomial form
+# Y_eq: Y equations from sigma in polynomial form
 # all_vars: all variables in sigma
 #===============================================================================
   local counting_table_states, min_count, vts, rhs_terms, max_possible,
         rhs_term, indets_, term, substitutions, each, alg_indep,
-        all_subs, names, selection, other, all_odes, each_ode;
+        all_subs, names, selection, other, all_odes, each_ode, rhs_indets, new_et_hat;
 
   vts := GetMinLevelBFS(
     input_table["s"],
