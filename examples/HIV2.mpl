@@ -15,4 +15,4 @@ sigma := [
   y2(t) = z(t)
 ];
 
-IdentifiabilityODE(sigma, GetParameters(sigma)):
+IdentifiabilityODE(sigma, GetParameters(sigma), weighted_ordering=true):
