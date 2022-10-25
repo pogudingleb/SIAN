@@ -45,7 +45,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       known_states_local[i] := MakeDerivative(FunctionToVariable(known_states_local[i]), 0):
     end if:
   end do:
-  
+
   y_vars := map(FunctionToVariable, y_functions):
   u_vars := map(FunctionToVariable, u_functions):
   theta := map(ParamToInner, params_to_assess):
@@ -409,7 +409,6 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         end if:
         solutions_table[var] := 1:
       end do:
-  
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
         P := select(x->evalb(indets(x)={var}), G):
