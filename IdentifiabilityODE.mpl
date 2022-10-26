@@ -20,7 +20,7 @@
 
 
 
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
@@ -265,7 +265,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     end if:
   end do:
 
-  # TODO: REMOVE DERIVATIVES OF LOCALLY IDENTIFIABLE THINGS FROM TR. BASIS CONSIDERATION
+
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
   x_theta_vars := [op(theta_l), op(x_theta_vars_)];
   alg_indep := [];
@@ -273,7 +273,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars));
     rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
     pivots := {}:
-    for row_idx from 1 to nops(eqs_i) do #nops(theta) do
+    for row_idx from 1 to nops(Et) do #nops(theta) do
         row := rrefJacX[row_idx]:
         pivot_idx := 1:
         while row[pivot_idx]=0 and add(row)<>0 do
