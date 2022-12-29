@@ -1,0 +1,35 @@
+    |\^/|     Maple 2022 (APPLE ARM64 MACOS)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2022
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+> kernelopts(printbytes=false, assertlevel=1):
+> interface(echo=0, prettyprint=0):
+Warning, (in IdentifiabilityODE) `poly_system` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `vts` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `Et_hat_original` is implicitly declared local
+|../IdentifiabilityODE.mpl:296|
+Warning, (in IdentifiabilityODE) `weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:307|
+Warning, (in IdentifiabilityODE) `max_degree` is implicitly declared local
+|../IdentifiabilityODE.mpl:308|
+Warning, (in IdentifiabilityODE) `new_weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+Warning, (in IdentifiabilityODE) `each` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+TABLE([betaOGFM = 1, IOGM_ = 0, SF_ = 2, gammaGF = 2, gammaOM = 1, betaGGMF = 2
+, nuOGM = 1, IOF_ = 1, betaOOFM = 1, betaGOFM = 1, nuGOM = 1, gammaGM = 1, IGF_
+= 1, betaOGMF = 2, betaGOMF = 2, IOGF_ = 1, nuOGF = 2, SM_ = 1, gammaOF = 2, 
+IOM_ = 0, betaOOMF = 2, betaGGFM = 1, IGM_ = 0, nuGOF = 2, mu = 1]), {IGF_0, 
+IGF_1, IGF_2, IGF_3, IGF_4, IGF_5, IGF_6, IGF_7, IGF_8, IGM_0, IGM_1, IGM_2, 
+IGM_3, IGM_4, IGM_5, IGM_6, IGM_7, IGM_8, IGM_9, IOF_0, IOF_1, IOF_2, IOF_3, 
+IOF_4, IOF_5, IOF_6, IOF_7, IOF_8, IOGF_0, IOGF_1, IOGF_2, IOGF_3, IOGF_4, 
+IOGF_5, IOGF_6, IOGF_7, IOGF_8, IOGM_0, IOGM_1, IOGM_2, IOGM_3, IOGM_4, IOGM_5,
+IOGM_6, IOGM_7, IOGM_8, IOGM_9, IOM_0, IOM_1, IOM_2, IOM_3, IOM_4, IOM_5, IOM_6
+, IOM_7, IOM_8, IOM_9, SF_0, SF_1, SF_2, SF_3, SF_4, SF_5, SF_6, SF_7, SM_0, 
+SM_1, SM_2, SM_3, SM_4, SM_5, SM_6, SM_7, SM_8}, [SM_, IOM_, IGM_, IOGM_, SF_,
+IOF_, IGF_, IOGF_]
+out := NULL
+memory used=4537.8MB, alloc=190.7MB, time=13.40

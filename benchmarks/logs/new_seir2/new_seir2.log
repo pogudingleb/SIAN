@@ -1,0 +1,28 @@
+    |\^/|     Maple 2022 (APPLE ARM64 MACOS)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2022
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+# Ex 16 from  https://arxiv.org/abs/2006.14295
+> kernelopts(printbytes=false, assertlevel=1):
+> interface(echo=0, prettyprint=0):
+Warning, (in IdentifiabilityODE) `poly_system` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `vts` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `Et_hat_original` is implicitly declared local
+|../IdentifiabilityODE.mpl:296|
+Warning, (in IdentifiabilityODE) `weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:307|
+Warning, (in IdentifiabilityODE) `max_degree` is implicitly declared local
+|../IdentifiabilityODE.mpl:308|
+Warning, (in IdentifiabilityODE) `new_weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+Warning, (in IdentifiabilityODE) `each` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+TABLE([i_ = 0, e_ = 1, mu = 1, s_ = 2, r_ = 0, eps = 1, b = 2, rho = 2, d0 = 1]
+), {e_0, e_1, e_2, e_3, e_4, e_5, e_6, e_7, e_8, i_0, i_1, i_2, i_3, i_4, i_5,
+i_6, i_7, i_8, i_9, r_0, r_1, r_2, r_3, r_4, r_5, r_6, r_7, r_8, r_9, s_0, s_1,
+s_2, s_3, s_4, s_5, s_6, s_7}, [s_, e_, i_, r_]
+out := NULL
+memory used=119.6MB, alloc=87.5MB, time=0.32

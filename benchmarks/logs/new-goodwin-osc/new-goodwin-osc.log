@@ -1,0 +1,31 @@
+    |\^/|     Maple 2022 (APPLE ARM64 MACOS)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2022
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+> kernelopts(printbytes=false, assertlevel=1):
+> interface(echo=0, prettyprint=0):
+Warning, (in IdentifiabilityODE) `poly_system` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `vts` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `Et_hat_original` is implicitly declared local
+|../IdentifiabilityODE.mpl:296|
+Warning, (in IdentifiabilityODE) `weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:307|
+Warning, (in IdentifiabilityODE) `max_degree` is implicitly declared local
+|../IdentifiabilityODE.mpl:308|
+Warning, (in IdentifiabilityODE) `new_weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+Warning, (in IdentifiabilityODE) `each` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+sigma := [diff(x1(t),t) = (-b*c*x1(t)-b*x1(t)*x4(t)+1)/(c+x4(t)), diff(x2(t),t)
+= alpha*x1(t)-beta*x2(t), diff(x3(t),t) = gama*x2(t)-delta*x3(t), diff(x4(t),t)
+= (gama*sgm*x2(t)*x4(t)-delta*sgm*x3(t)*x4(t))/x3(t), y(t) = x1(t)]
+TABLE([sgm = 2, b = 1, delta = 2, beta = 3, x3_ = 2, gama = 2, alpha = 3, x4_ =
+1, x2_ = 2, x1_ = 0, c = 1]), {x1_0, x1_1, x1_2, x1_3, x1_4, x1_5, x1_6, x1_7,
+x1_8, x1_9, x2_0, x2_1, x2_2, x2_3, x2_4, x2_5, x2_6, x2_7, x3_0, x3_1, x3_2, 
+x3_3, x3_4, x3_5, x3_6, x3_7, x4_0, x4_1, x4_2, x4_3, x4_4, x4_5, x4_6, x4_7, 
+x4_8}, [x1_, x2_, x3_, x4_]
+out := NULL
+memory used=464.1MB, alloc=112.3MB, time=1.60
