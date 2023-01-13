@@ -3,7 +3,7 @@
 # diff(x2(t),t) = d0 * x2(t),
 # y(t) = x1(t)
 # ];
-# Et, x_theta_vars, all_subs, y_hat, u_hat, theta_l, X_eq, Y_eq := IdentifiabilityODE(sigma, GetParameters(sigma));  
+# Et, x_theta_vars, all_subs, y_hat, u_hat, theta_l, X_eq, Y_eq := IdentifiabilityODE(sigma, GetParameters(sigma));
 # JacX := VectorCalculus[Jacobian]( subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), x_theta_vars);
 # JacX_sub := subs(X_eq, subs(X_eq, subs(X_eq, JacX)));
 # JacX_gaus_elim := LinearAlgebra:-GaussianElimination(JacX_sub);
@@ -20,18 +20,24 @@
 
 
 
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0}) 
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0})
 #===============================================================================
- local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
-        sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
-        eqs_i, JacX, vars, vars_to_add, ord_var, var_index, deg_variety, D2, 
-        y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq, 
+ local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1,
+        sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible,
+        eqs_i, JacX, vars, vars_to_add, ord_var, var_index, deg_variety, D2,
+        y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq,
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
-        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process, 
-        new_to_process, solutions_table, theta_l_new, x_theta_vars_, alg_indep, rrefJacX, pivots, row_idx, row, pivot_idx, identifiable_states, x_theta_vars_to_be_removed, x_theta_vars_filtered, number_of_choices, choices, current_choice, derivs, non_id, global_table, sigma_new, Et_hat_old, et_hat_monomials, degree_table, rhs_cols, idxs, parameter, idx, A, solution, choice_idx, sum_degrees_new, occurrence_table, each, denom_, val, perm, alg_indep_derivs, alg_indep_params,
-        faux_outputs, faux_odes, faux_equations, y_faux, Et_x_vars, var, G, P, output, non_id, input_table, weight_subs, weights_table, _var_, check:
+        prime, max_rank, R, tr, e, p_local, xy_ders, polys_to_process,
+        new_to_process, solutions_table, theta_l_new, x_theta_vars_, alg_indep, rrefJacX, pivots, row_idx, row,
+        pivot_idx, identifiable_states,
+        x_theta_vars_to_be_removed, x_theta_vars_filtered, number_of_choices, choices,
+         current_choice, derivs,
+        global_table, sigma_new, Et_hat_old, et_hat_monomials, degree_table, rhs_cols,
+        idxs, parameter, idx, A, solution, choice_idx, sum_degrees_new, occurrence_table, each, denom_, val, perm, alg_indep_derivs, alg_indep_params,
+        faux_outputs, faux_odes, faux_equations, y_faux, Et_x_vars, var, G, P, output,
+        non_id, input_table, weight_subs, weights_table, _var_, check:
 
   #----------------------------------------------
   # 0. Extract inputs, outputs, states, and parameters from the system
@@ -80,7 +86,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   x_eqs := subs(subst_zero_order, subs(subst_first_order, select(e -> type(int(lhs(e), t), function(name)), system_ODEs))):
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
 
-  # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error 
+  # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error
   # at most 10^(-18) (for Maple 2017)
   p_local := p + nops(params_to_assess) * 10^(-18):
   if p_local >= 1 then
@@ -118,7 +124,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   all_vars := [ op(x_vars), op(y_vars), op(u_vars) ]:
   eqs := [op(x_eqs), op(y_eqs)]:
   Q := foldl( (f, g) -> lcm(f, g), op( map(f -> denom(rhs(f)), eqs) )):
-  
+
 
   # (b,c) ---------------
   X := []:
@@ -134,7 +140,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       poly_d := Differentiate(poly_d, all_vars):
     end do:
   end do:
-  
+
   # (d,e) ---------------
   Y := []:
   Y_eq := []:
@@ -176,7 +182,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   all_subs := sample[4]:
   u_hat := sample[2]:
   y_hat := sample[1]:
- 
+
   # (e) ------------------
   alpha := [seq(1, i = 1..n)]:
   beta := [seq(0, i = 1..m)]:
@@ -217,7 +223,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
         else
           prolongation_possible[i] := 0;
         end if:
-      end if: 
+      end if:
     end do:
   end do:
   # is used for assessing local identifiabilty
@@ -238,26 +244,26 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       end if:
     end do:
   end do:
- 
+
   if infolevel > 1 then
     printf("%s %a\n", `Orders of prolongations of the outputs (beta) = `, beta):
     printf("%s %a\n", `Orders of prolongations of the state variables (alpha) = `, alpha):
   end if:
- 
+
   ##############################
 
   if infolevel > 0 then
     PrintHeader("3. Assessing local identifiability"):
   end if:
- 
+
   theta_l := []:
   theta := select(x->not x in known_states_local, theta):
   known_values := select(x->lhs(x) in known_states_local, all_subs):
   Et_with_known_values := subs(known_values, Et):
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
-    JacX := VectorCalculus[Jacobian]( 
-        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et_with_known_values), 
+    JacX := VectorCalculus[Jacobian](
+        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et_with_known_values),
         other_params = subs(all_subs, other_params)
     ):
     if LinearAlgebra[Rank](JacX) <> max_rank then
@@ -269,7 +275,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
   x_theta_vars := [op(theta_l), op(x_theta_vars_)];
   alg_indep := [];
-  if substitute_tr_basis then 
+  if substitute_tr_basis then
     JacX := VectorCalculus[Jacobian](subs({op(u_hat), op(y_hat)}, Et), x_theta_vars = subs(all_subs, x_theta_vars));
     rrefJacX := LinearAlgebra[ReducedRowEchelonForm](JacX):
     pivots := {}:
@@ -297,7 +303,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
         while numelems(choices) < max_comb do
           choices := {op(choices), combinat[randperm](x_theta_vars_filtered)[..numelems(alg_indep)]};
         end do;
-      end if; 
+      end if;
     end if;
   end if:
   derivs:={op(x_theta_vars)} minus {op(mu)};
@@ -317,7 +323,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     if infolevel>1 then
       printf("%s %a\n", `Algebraically independent parameters`, map(x-> ParamToOuter(x, all_vars), alg_indep)):
     end if:
-    
+
     if optimize_tr_basis then
       if infolevel>0 then
         printf("%s\n", `Applying heuristic to pick the best possible transcendence basis.`):
@@ -328,7 +334,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       Et_hat_old := GenerateEtHatOld(Et, theta_l, d0, beta, p_local, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q, infolevel):
       et_hat_monomials := map(each->op(expand(each)), Et_hat_old):
       degree_table := table([]);
-      for alg_indep in choices do  
+      for alg_indep in choices do
         rhs_cols := []:
         idxs := []:
         for parameter in alg_indep do
@@ -367,7 +373,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
           degree_table[param] := add([seq(convert(- val * log(val)/log(2), float), val in degree_table[param])]);
         end do;
         global_table[alg_indep] := sort([entries(degree_table, 'nolist')]);
-      end do:  
+      end do:
       perm:=sort([entries(global_table, 'nolist')], 'output=permutation'):
       alg_indep := lhs([entries(global_table, 'pairs')][perm[-1]]):
       if infolevel > 0 then
@@ -414,7 +420,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
       Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
       Y_eq := [op(Y_eq), op(faux_equations)]:
-      
+
       if infolevel>1 then
         printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
         printf("\t%s %a\n", `New system:`, Et):
@@ -490,7 +496,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     input_table := table(
       [
         "sigma"=system_ODEs,
-        "poly_system"=[op(Et_hat), z_aux * Q_hat - 1], "poly_vars"=vars, "non_id"=non_id, 
+        "poly_system"=[op(Et_hat), z_aux * Q_hat - 1], "poly_vars"=vars, "non_id"=non_id,
         "s"=s, "m"=m, "x_vars"=x_vars, "y_vars"=y_vars,
         "mu"=mu, "x_eqs"=x_eqs, "y_eqs"=y_eqs, "Y_eq"=Y_eq, "X_eq"=X_eq, "all_vars"=all_vars
       ]
@@ -503,7 +509,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     Et_hat := [op(Et_hat), z_aux * Q_hat - 1]:
   end if;
   ###########
-  
+
   if infolevel > 1 then
     printf("Variable ordering to be used for Groebner basis computation %a\n", vars);
     printf("%s %a\n", `Weight assignment:`, [entries(weights_table, `pairs`)]);
@@ -524,13 +530,13 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       local gb_loc, fname;
       if infolevel > 2 then
         fname := cat("SIAN_GB_computation_separated_for_", var):
-        writedata(fname, 
+        writedata(fname,
           [
             "with(Groebner):",
             cat("polys := ", convert(args_node[1], string), ":"),
             cat("ordering := tdeg(op(", convert(args_node[2], string), ")):"),
             "Basis(polys, ordering);"
-          ], 
+          ],
           string):
       end if:
       gb_loc := Groebner[Basis](op(args_node)):
@@ -551,11 +557,11 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       gb := []:
       for i from 1 to nops(theta_l) do
         gb := [
-          op(gb), 
+          op(gb),
           at_node(
-            theta_l[i], 
+            theta_l[i],
             [[op(Et_hat), z_aux * Q_hat - 1, (theta_l[i] - subs(theta_hat, theta_l[i])) * w_aux - 1], tdeg(op(vars))]
-           ) 
+           )
         ]:
       end do:
     end if:
@@ -568,7 +574,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
           printf("%s %a %s %a\n", `Groebner basis corresponding to the parameter `, theta_l[i], ` is `, gb[i]):
         end if:
       end if:
-    end do:    
+    end do:
   elif method = 2 then
     gb := Groebner[Basis](Et_hat, tdeg(op(vars)), characteristic=char);
     for i from 1 to nops(theta_l) do
@@ -582,7 +588,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       end if:
     end do:
 
-    if count_solutions then 
+    if count_solutions then
       solutions_table := table([]):
       for var in theta_g do
         if infolevel > 0 then
@@ -593,12 +599,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
       for var in select(p -> not p in theta_g, theta_l) do
         G := Groebner[Walk](gb, tdeg(op(vars)), lexdeg([op({op(vars)} minus {var})], [var])):
         P := select(x->evalb(indets(x)={var}), G):
-        solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]): 
+        solutions_table[var]:=degree(P[1], [op(indets(P))])/degree(weights_table[var]):
         if infolevel > 0 then
           printf("%s %a %s %a\n",`The number of solutions for`, var, `is`, solutions_table[var]):
         end if:
       end do:
-    end if:  
+    end if:
   else
     print(`No such method`):
   end if:
@@ -617,7 +623,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
     non_identifiable = {op(map(x -> ParamToOuter(x, all_vars), select(p -> not p in theta_l, theta)))}
   ]):
 
-  if count_solutions then 
+  if count_solutions then
      PrintHeader("WARNING: The result of solution counting is guaranteed with high probability, however it NOT the same probability 'p' as provided in the input."):
     output[num_solutions] := solutions_table:
   end if:
@@ -626,12 +632,12 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
 end proc:
 
 #==============================================================================
-PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2}) 
+PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1, method := 2})
 #===============================================================================
- local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1, 
-        sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible, 
-        eqs_i, JacX, vars, vars_to_add, ord_var, var_index, deg_variety, D2, 
-        y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq, 
+ local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1,
+        sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible,
+        eqs_i, JacX, vars, vars_to_add, ord_var, var_index, deg_variety, D2,
+        y_hat, u_hat, theta_hat, Et_hat, Q_hat, theta_l, theta_g, gb, v, X_eq, Y_eq,
         poly_d, separant, leader,vars_local, x_functions, y_functions, u_functions,
         all_symbols_rhs, mu, x_vars, y_vars, u_vars, theta, subst_first_order,
         subst_zero_order, x_eqs, y_eqs, param, other_params, to_add, at_node,
@@ -678,7 +684,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
   x_eqs := subs(subst_zero_order, subs(subst_first_order, select(e -> type(int(lhs(e), t), function(name)), system_ODEs))):
   y_eqs := subs(subst_zero_order, select(e -> not type(int(lhs(e), t), function(name)), system_ODEs)):
 
-  # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error 
+  # taking into account that fact that Groebner[Basis] is Monte Carlo with probability of error
   # at most 10^(-18) (for Maple 2017)
   p_local := p + nops(params_to_assess) * 10^(-18):
   if p_local >= 1 then
@@ -716,7 +722,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
   all_vars := [ op(x_vars), op(y_vars), op(u_vars) ]:
   eqs := [op(x_eqs), op(y_eqs)]:
   Q := foldl( (f, g) -> lcm(f, g), op( map(f -> denom(rhs(f)), eqs) )):
-  
+
 
   # (b,c) ---------------
   X := []:
@@ -732,7 +738,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
       poly_d := Differentiate(poly_d, all_vars):
     end do:
   end do:
-  
+
   # (d,e) ---------------
   Y := []:
   Y_eq := []:
@@ -766,7 +772,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
   all_subs := sample[4]:
   u_hat := sample[2]:
   y_hat := sample[1]:
- 
+
   # (e) ------------------
   alpha := [seq(1, i = 1..n)]:
   beta := [seq(0, i = 1..m)]:
@@ -808,7 +814,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
         else
           prolongation_possible[i] := 0;
         end if:
-      end if: 
+      end if:
     end do:
   end do:
   # is used for assessing local identifiabilty
@@ -833,8 +839,8 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
   theta_l := []:
   for param in theta do
     other_params := subs(param = NULL, x_theta_vars):
-    JacX := VectorCalculus[Jacobian]( 
-        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), 
+    JacX := VectorCalculus[Jacobian](
+        subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et),
         other_params = subs(all_subs, other_params)
     ):
     if LinearAlgebra[Rank](JacX) <> max_rank then
@@ -857,7 +863,7 @@ PreprocessODE := proc(system_ODEs, params_to_assess, {p := 0.99, infolevel := 1,
     sample := SamplePoint(D2, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q):
     y_hat := sample[1]:
     u_hat := sample[2]:
-    theta_hat := sample[3]:  
+    theta_hat := sample[3]:
     # if infolevel > 1 then
     #   printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
     # end if:
@@ -941,7 +947,7 @@ end proc:
 
 
 #===============================================================================
-Differentiate := proc(diff_poly, var_list) 
+Differentiate := proc(diff_poly, var_list)
 #===============================================================================
   local result, aux, v, h, diff_v:
   result := 0:
@@ -980,8 +986,8 @@ end proc:
 #===============================================================================
 SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q, {known_vals := [], known_st := []})
 #===============================================================================
-  local n, m, s, all_params, all_vars, theta_hat, u_variables, 
-        u_hat, x_hat, y_hat, eq, eq_num, eq_denom, 
+  local n, m, s, all_params, all_vars, theta_hat, u_variables,
+        u_hat, x_hat, y_hat, eq, eq_num, eq_denom,
         v, poly, i, j, all_subs, roll, to_compute;
   n := nops(x_vars):
   m := nops(y_vars):
@@ -991,13 +997,13 @@ SamplePoint := proc(bound, x_vars, y_vars, u_vars, mu, X_eq, Y_eq, Q, {known_val
   known_theta_hat := table(known_vals):
   roll := rand(0 .. bound):
   while true do
-    theta_hat := map(p -> if p in known_st then p=known_theta_hat[p] else p = roll() end if, all_params):    
+    theta_hat := map(p -> if p in known_st then p=known_theta_hat[p] else p = roll() end if, all_params):
     u_variables := [];
     for i from 1 to nops(u_vars) do
       u_variables := [ op(u_variables), seq(MakeDerivative(u_vars[i], j), j = 0..s + 1) ]:
     end do:
-    u_hat := map(p -> p = roll(), u_variables) :   
-  
+    u_hat := map(p -> p = roll(), u_variables) :
+
     all_subs := [op(theta_hat), op(u_hat)]:
     if subs(all_subs, Q) = 0 then
       next
@@ -1031,7 +1037,7 @@ GenerateReplica := proc(equations, r)
   for i from 1 to r do
     subst := map(f -> f = convert(cat(convert(f, string), "_r", i), symbol), without_t):
     result := [op(result), op(map(e -> subs(subst, e), equations))]:
-  end do: 
+  end do:
   return result:
 end proc:
 
@@ -1109,7 +1115,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
     current_level := current_level + 1:
     continue:=true:
     poly_d := Y_eq_dict[j];
-    for k from 0 to j-1 do 
+    for k from 0 to j-1 do
       poly_d := subs(X_eq_dict[j-k], poly_d);
       candidates := select(x-> not (GetOrderVar(x)[1]  in y_vars), indets(poly_d)):
       if op(map(x->not assigned(visibility_table[GetStateName(x)]), candidates)) <> NULL then
@@ -1119,7 +1125,7 @@ GetMinLevelBFS := proc(s, m, mu, y_eqs, X_eq, Y_eq)
       fi:
     od;
     for each in candidates do
-      if not assigned(visibility_table[GetStateName(each)]) then 
+      if not assigned(visibility_table[GetStateName(each)]) then
           visibility_table[GetStateName(each)] := current_level:
       fi:
     od;
@@ -1161,7 +1167,7 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
   all_odes := map(x->expand(rhs(x)), select(f->is_diff(lhs(f)), input_table["sigma"]));
   rhs_indets := []:
   for each_ode in all_odes do
-    rhs_indets := [op(rhs_indets), op(indets(each_ode) minus {t})]; 
+    rhs_indets := [op(rhs_indets), op(indets(each_ode) minus {t})];
   end do;
 
   max_possible := max(map(rhs, [entries(vts, `pairs`)]));
@@ -1171,7 +1177,7 @@ SubsByDepth := proc(input_table, {trdegsub:=false})
         substitutions[FunctionToVariable(term)] := vts[FunctionToVariable(term)]+1:
       end if;
     else
-      if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then # 
+      if not term in input_table["non_id"] and vts[term]=max_possible and assigned(vts[term]) then #
         substitutions[term] := vts[term]+1:
       end if;
     end if:
