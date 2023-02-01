@@ -1,4 +1,4 @@
-IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0})
+IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solutions:=true, weighted_ordering:=true, known_states := [], substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, infolevel := 1, method := 2, num_nodes := 6, char:=0})
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1,
         sample, all_subs,alpha, beta, Et, x_theta_vars, prolongation_possible,
@@ -250,7 +250,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   end do:
 
 
-  x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l)})]);
+  x_theta_vars_ := ListTools[Reverse]([op({op(x_theta_vars)} minus {op(theta_l), op(known_states_local)})]);
   x_theta_vars := [op(theta_l), op(x_theta_vars_)];
   alg_indep := [];
   if substitute_tr_basis then
@@ -438,9 +438,9 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute
   if infolevel > 1 then
     printf("%s %a\n", `Random sample for the outputs and inputs is generated from `, theta_hat):
   end if:
-  printf(`Et = %a\n`, Et):
-  printf(`X = %a\n`, X):
-  printf(`Y = %a\n`, Y):
+  # printf(`Et = %a\n`, Et):
+  # printf(`X = %a\n`, X):
+  # printf(`Y = %a\n`, Y):
   # done:
   # (d) ------------
   Et_hat := map(e -> subs([op(y_hat), op(u_hat)], e), Et):
