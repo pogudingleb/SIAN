@@ -1,25 +1,3 @@
-# #===============================================================================
-# sigma:=[diff(x1(t), t) = c * x1(t) + b * x2(t),
-# diff(x2(t),t) = d0 * x2(t),
-# y(t) = x1(t)
-# ];
-# Et, x_theta_vars, all_subs, y_hat, u_hat, theta_l, X_eq, Y_eq := IdentifiabilityODE(sigma, GetParameters(sigma));
-# JacX := VectorCalculus[Jacobian]( subs( { op(u_hat), param = subs(all_subs, param), op(y_hat) }, Et), x_theta_vars);
-# JacX_sub := subs(X_eq, subs(X_eq, subs(X_eq, JacX)));
-# JacX_gaus_elim := LinearAlgebra:-GaussianElimination(JacX_sub);
-# all_functions := [];
-
-# for i from 1 to nops(Et) do
-#   for j from 1 to nops(Et) do
-#     if not type(JacX_sub[i][j],numeric) then
-#       all_functions := {op(all_functions), JacX_sub[i][j]};
-#     end if
-#   end do;
-# end do;
-
-
-
-
 IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, substitute_tr_basis:=false, optimize_tr_basis:=false, max_comb:=100, count_solutions:=true, infolevel := 1, method := 2, num_nodes := 6, char:=0})
 #===============================================================================
  local i, j, k, n, m, s, all_params, all_vars, eqs, Q, X, Y, poly, d0, D1,
