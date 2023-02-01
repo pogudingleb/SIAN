@@ -355,7 +355,7 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
       perm:=sort([entries(global_table, 'nolist')], 'output=permutation'):
       alg_indep := lhs([entries(global_table, 'pairs')][perm[-1]]):
       if infolevel > 0 then
-        printf("%s %a %s\n", `Picked the best choice`, alg_indep, `based on heuristic:`, rhs([entries(global_table, 'pairs')][perm[-1]])):
+        printf("%s %a %s %a\n", `Picked the best choice`, alg_indep, `based on heuristic:`, rhs([entries(global_table, 'pairs')][perm[-1]])):
       end if;
     else
       if infolevel > 0 then
