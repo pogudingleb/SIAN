@@ -362,49 +362,50 @@ IdentifiabilityODE := proc(system_ODEs, params_to_assess, {p := 0.99, count_solu
         printf("%s %a\n", `Heuristic turned off. Picking default transcendence basis`, alg_indep):
       end if:
     end if:
-    alg_indep_derivs := {op(alg_indep)} intersect derivs:
-    alg_indep_params := ({op(alg_indep)} intersect {op(non_id)}) minus {op(alg_indep_derivs)}:
-    faux_outputs := []:
-    faux_odes := []:
-    idx := 1:
-    for each in alg_indep_params do
-      if not (each in x_vars) then
-        sigma_new := subs({each=each(t)}, sigma_new):
-        faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=each(t)]:
-        faux_odes := [op(faux_odes), diff(each(t), t)=0]:
-      else
-        faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=parse(convert(each, string)[..-2])(t)]:
-      end if:
-      idx := idx+1:
-    end do:
-    sigma_new := [op(faux_odes), op(sigma_new), op(faux_outputs)]:
-    if infolevel>1 then
-      printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep_params)):
-      printf("%s %a\n", `Algebraically independent parameters among derivatives:`, map(x-> ParamToOuter(x, all_vars), alg_indep_derivs)):
-    end if:
+    # alg_indep_derivs := {op(alg_indep)} intersect derivs:
+    # alg_indep_params := ({op(alg_indep)} intersect {op(non_id)}) minus {op(alg_indep_derivs)}:
+    # faux_outputs := []:
+    # faux_odes := []:
+    # idx := 1:
+    # for each in alg_indep_params do
+      # if not (each in x_vars) then
+      #   sigma_new := subs({each=each(t)}, sigma_new):
+      #   faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=each(t)]:
+      #   faux_odes := [op(faux_odes), diff(each(t), t)=0]:
+      # else
+      #   faux_outputs := [op(faux_outputs), parse(cat("y_faux", idx, "(t)"))=parse(convert(each, string)[..-2])(t)]:
+      # end if:
+      # idx := idx+1:
+    # end do:
+    # sigma_new := [op(faux_odes), op(sigma_new), op(faux_outputs)]:
+    # if infolevel>1 then
+    #   printf("%s %a\n", `Algebraically independent parameters among nonidentifiable:`, map(x-> ParamToOuter(x, all_vars), alg_indep_params)):
+    #   printf("%s %a\n", `Algebraically independent parameters among derivatives:`, map(x-> ParamToOuter(x, all_vars), alg_indep_derivs)):
+    # end if:
 
-    if infolevel>1 then
-      printf("\t%s %a\n", `Adding ODEs:`, faux_odes):
-      printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
-      printf("\t%s %a\n", `New system:`, sigma_new):
-    end if:
+    # if infolevel>1 then
+    #   printf("\t%s %a\n", `Adding ODEs:`, faux_odes):
+    #   printf("\t%s %a\n", `Adding output functions:`, faux_outputs):
+    #   printf("\t%s %a\n", `New system:`, sigma_new):
+    # end if:
 
-    X_eq, Y_eq, Et, theta_l_new, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
-    if numelems(alg_indep_derivs)>0 then
-      if infolevel>1 then
-        printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
-      end if:
-      faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
-      y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
-      Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
-      Y_eq := [op(Y_eq), op(faux_equations)]:
+    # X_eq, Y_eq, Et, theta_l_new, x_vars, y_vars, mu, beta, Q, d0 := PreprocessODE(sigma_new, GetParameters(sigma_new)):
+    # if numelems(alg_indep_derivs)>0 then
+    #   if infolevel>1 then
+    #     printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
+    #   end if:
+    #   faux_equations := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_0"))=alg_indep_derivs[idx], idx in 1..numelems(alg_indep_derivs))]:
+    #   y_faux := [seq(parse(cat("y_faux", idx+numelems(alg_indep_params), "_")), idx=1..numelems(alg_indep_derivs))]:
+    #   Et := [op(Et), op(map(x->lhs(x)-rhs(x), faux_equations))]:
+    #   Y_eq := [op(Y_eq), op(faux_equations)]:
 
-      if infolevel>1 then
-        printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
-        printf("\t%s %a\n", `New system:`, Et):
-        printf("\t%s %a\n", `New system:`, Y_eq):
-      end if:
-    end if:
+    #   if infolevel>1 then
+    #     printf("\t%s %a\n", `Adding new y-equations:`, faux_equations):
+    #     printf("\t%s %a\n", `New system:`, Et):
+    #     printf("\t%s %a\n", `New system:`, Y_eq):
+    #   end if:
+    # end if:
+    known_values := [op(known_values), op(select(x->lhs(x) in alg_indep, all_subs))];
   elif not substitute_tr_basis and infolevel>0 then
     printf("%s\n", `Transcendence basis check turned off. Consider setting substitute_tr_basis=true for potential speedup.`);
   elif numelems(alg_indep)=0 and infolevel>1 then
