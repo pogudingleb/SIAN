@@ -1,5 +1,9 @@
-# The system is taken from
+# The system is taken from equation (6)
 # Wodarz, D., Nowak, M.
+# Mathematical models of HIV pathogenesis and treatment 
+# https://onlinelibrary.wiley.com/doi/pdf/10.1002/bies.10196
+# The first term in the w' equation is corrected based on the text after (6) and
+# the original paper by the same authors
 # Specific therapy regimes could lead to long-term immunological control of HIV
 # https://doi.org/10.1073/pnas.96.25.14464
 # Page 1
