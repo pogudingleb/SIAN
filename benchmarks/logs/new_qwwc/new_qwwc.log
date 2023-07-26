@@ -1,0 +1,30 @@
+    |\^/|     Maple 2022 (APPLE ARM64 MACOS)
+._|\|   |/|_. Copyright (c) Maplesoft, a division of Waterloo Maple Inc. 2022
+ \  MAPLE  /  All rights reserved. Maple is a trademark of
+ <____ ____>  Waterloo Maple Inc.
+      |       Type ? for help.
+> kernelopts(printbytes=false, assertlevel=1):
+> interface(echo=0, prettyprint=0):
+Warning, (in IdentifiabilityODE) `poly_system` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `vts` is implicitly declared local
+|../IdentifiabilityODE.mpl:2|
+Warning, (in IdentifiabilityODE) `Et_hat_original` is implicitly declared local
+|../IdentifiabilityODE.mpl:296|
+Warning, (in IdentifiabilityODE) `weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:307|
+Warning, (in IdentifiabilityODE) `max_degree` is implicitly declared local
+|../IdentifiabilityODE.mpl:308|
+Warning, (in IdentifiabilityODE) `new_weights` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+Warning, (in IdentifiabilityODE) `each` is implicitly declared local
+|../IdentifiabilityODE.mpl:309|
+sigma := [diff(x(t),t) = -x(t)*a+z(t)*y(t)+a*y(t), diff(w(t),t) = e*z(t)-w(t)*f
++x(t)*y(t), diff(z(t),t) = -c*z(t)-w(t)*d+x(t)*y(t), diff(y(t),t) = b*x(t)+b*y(
+t)-x(t)*z(t), g(t) = x(t)]
+TABLE([x_ = 0, a = 1, f = 3, c = 2, w_ = 2, d = 2, z_ = 1, y_ = 1, b = 2, e = 3
+]), {w_0, w_1, w_2, w_3, w_4, w_5, w_6, w_7, x_0, x_1, x_2, x_3, x_4, x_5, x_6,
+x_7, x_8, x_9, y_0, y_1, y_2, y_3, y_4, y_5, y_6, y_7, y_8, z_0, z_1, z_2, z_3,
+z_4, z_5, z_6, z_7, z_8}, [x_, w_, z_, y_]
+out := NULL
+memory used=136.9MB, alloc=114.2MB, time=0.47
